@@ -1,9 +1,13 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import Layout from './front/js/Layout'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import Layout from "./front/js/Layout";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+import { ThemeProvider } from "@material-tailwind/react";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Layout />
-  </React.StrictMode>,
-)
+    <ThemeProvider>
+      <Layout />
+    </ThemeProvider>
+  </React.StrictMode>
+);
