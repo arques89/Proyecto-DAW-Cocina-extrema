@@ -13,6 +13,8 @@ flask-mail = "*"
 flask-migrate = "*"
 alembic = "*"
 flask-bcrypt = "*"
+flask-session = "*"
+cloudinary = "*"
 
 [dev-packages]
 

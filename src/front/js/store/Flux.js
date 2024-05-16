@@ -1,4 +1,3 @@
-// import { genConfig } from "react-nice-avatar";
 import config from "../../config";
 import toast from "react-hot-toast";
 // import * as jwt_decode from "jwt-decode";
@@ -13,7 +12,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       userName: null,
       userSurname: null,
       is_active: false,
-      avatar: null,
       demo: [
         {
           title: "FIRST",
