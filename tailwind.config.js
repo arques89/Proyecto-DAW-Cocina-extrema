@@ -10,10 +10,10 @@ module.exports = withMT({
     extend: {
       colors: {
         primary: "#C1BEB8",
-        shape_red: "#FCECDF",
-        shape_orange_2: "#E67817",
-        shape_orange_hover: "#E6781780",
-        shape_green: "#E2E6CE",
+        shape_red: "#CE4F20",
+        shape_border_button: "#707070",
+        shape_input: "#B1AFA9",
+        grey_span: "#333333",
         shape_green_2: "#6D8108",
         shape_green_3: "#A4B064",
         shape_green_hover: "#6D810880",

@@ -6,6 +6,7 @@ import facebook from "../../img/facebook.png";
 import instagram from "../../img/instagram.png";
 import linkedin from "../../img/linkedin.png";
 import youtube from "../../img/youtube.png";
+import { Login } from "../pages/login/login";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -46,15 +47,8 @@ export function NavBar() {
                   </div>
 
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
-                  type="button"
-                  className="relative rounded-full  p-1 text-black-400 hover:text-white focus:outline-none focus:user-2 focus:ring-white focus:user-offset-2 "
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <UserIcon className="h-7 w-7" aria-hidden="true" />
-                </button>
-
+      
+                  <Login />
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>

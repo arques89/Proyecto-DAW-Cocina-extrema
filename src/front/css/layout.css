@@ -6,6 +6,11 @@
 #menu {
     height: 814px;
 }
+#menu-login {
+    margin-top: 34px;
+    right: -84px;
+    height: 814px;
+}
 #navbar-h {
     height: 96px;
 }
