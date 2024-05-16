@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar cuenta</title>
+    <style>
+        /* Estilos para el enlace */
+        .confirm-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .confirm-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        <strong>Hola {{ name }},</strong> has registrado correctamente tu cuenta pero es necesario confirmarla.
+    </p>
+    <p>
+        Presiona el siguiente enlace para confirmar tu cuenta:
+    </p>
+    <a href='http://localhost:5000/activate/{{token}}' class="confirm-link">Confirmar cuenta</a>
+    
+    <p>
+        Si no has creado esta cuenta, puedes ignorar el mensaje.
+    </p>
+    <p>Detalles de la cuenta:</p>
+    <ul>
+        <li>Nombre: {{ name }}</li>
+        <li>Correo electrónico: {{ email }}</li>
+    </ul>
+    <p>
+        Estamos emocionados de tenerte con nosotros. Para comenzar a disfrutar de todos nuestros servicios, simplemente inicia sesión con tu email y la contraseña que elegiste durante el registro.
+    </p>
+    <p>
+        Si tienes alguna pregunta o necesitas ayuda, no dudes en ponerte en contacto con nuestro equipo de soporte a través de <a href="mailto:help@carrotflix.com">help@carrotflix.com</a>.
+    </p>
+    <p>Atentamente,</p>
+    <p>Equipo de CarrotFlix.</p>
+</body>
+</html>
