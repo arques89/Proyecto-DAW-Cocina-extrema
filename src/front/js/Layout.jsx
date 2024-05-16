@@ -4,6 +4,7 @@ import { Routes } from "react-router-dom";
 import Home from "./pages/home";
 import '../css/layout.css'
 import { NavBar } from "./components/navbar";
+import injectContext from "./store/appContext";
 const Layout = () => {
   return (
     <BrowserRouter>
@@ -15,4 +16,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default injectContext(Layout);
