@@ -1,36 +1,27 @@
-// import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-// export const Video = ({ title , image , season , chapter , description , time }) => {
+export const Video = ({ image, season, chapter, go }) => {
+  Video.propTypes = {
+    image: PropTypes.string,
+    season: PropTypes.string,
+    chapter: PropTypes.string,
+    go: PropTypes.string,
+  };
 
-//     Video.propTypes = {
-//         title: PropTypes.String,
-//         image: PropTypes.string,
-//         season: PropTypes.string,
-//         chapter: PropTypes.string,
-//         description: PropTypes.string,
-//         time: PropTypes.string,
-//       };
-
-//     return (
-    
-//     <>
-//     <div className="col-md-12">
-//         <p className="text-decorated">{title}</p>
-//     </div>
-//     <div className="contenedor">
-//         <img src={image} alt="Fondo" />
-//         <div className="texto-superpuesto">
-//             <p>{season}</p>
-//             <p>{chapter}</p>
-//             <p>
-//                 {description}
-//             </p>
-//             <p>{time}</p>
-//             {/* <button className="play-button"><img src={Play} alt="Play" /> VER AHORA</button> */}
-//             {/* <button className="play-button play-button-transparent">Más info</button> */}
-//         </div>
-//     </div>
-//     </>
-
-//     );
-// };
+  return (
+    <>
+      <div className="contenedor w-full flex">
+        <img className="flex w-full px-32" src={image} alt="Fondo" />
+        <div className="texto-superpuesto ms-32 flex text-center">
+          <p className="">{season}</p>
+          <p className="text-4xl mt-10">{chapter}</p>
+          <div className="w-full justify-center flex">
+            <p className="mt-12 border border-white rounded-full w-36 py-0.5">
+              {go}
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
