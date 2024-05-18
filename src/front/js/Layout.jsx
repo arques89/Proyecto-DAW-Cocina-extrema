@@ -7,15 +7,16 @@ import { NavBar } from "./components/navbar";
 import Home from "./pages/home";
 
 import "../css/layout.css";
-// import "../styles/media.css";
+import "../css/media.css";
+import "../css/styles.css";
 // import { Chefs } from './pages/chefs';
 // import { upFile } from './pages/upFile/upFile';
 // import { Concursantes } from './pages/concursantes';
-// import { Login } from './pages/login/login';
-// import { Register } from './pages/register/register';
 // import { Dashboard } from './pages/dashboard/index';
 
 import injectContext from "./store/appContext";
+import { Login } from "./pages/login";
+import { Register } from "./pages/register";
 // import { ForgotPassword } from './pages/forgot_password/index';
 const Layout = () => {
   return (
@@ -23,15 +24,15 @@ const Layout = () => {
       <NavBar />
       <Routes>
         <Route path="/" Component={Home} />
-        {/* <Route path="/login" Component={Login} />
+        <Route path="/login" Component={Login} />
         <Route path="/register" Component={Register} />
-        <Route path="/chefs" Component={Chefs} />
+        {/* <Route path="/chefs" Component={Chefs} />
         <Route path="/concursantes" Component={Concursantes} />
         <Route path="/dashboard" Component={Dashboard} />
         <Route path="/forgot" Component={ForgotPassword} />
         <Route path="/form" Component={upFile} /> */}
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 };
