@@ -2,7 +2,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { Routes } from "react-router-dom";
 
 import { NavBar } from "./components/navbar";
-// import { Footer } from "./components/footer";
+import { Footer } from "./components/footer";
 
 import Home from "./pages/home";
 
@@ -17,6 +17,7 @@ import "../css/styles.css";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
+import { Settings } from "./pages/setting";
 // import { ForgotPassword } from './pages/forgot_password/index';
 const Layout = () => {
   return (
@@ -26,6 +27,7 @@ const Layout = () => {
         <Route path="/" Component={Home} />
         <Route path="/login" Component={Login} />
         <Route path="/register" Component={Register} />
+        <Route path="/settings" Component={Settings} />
         {/* <Route path="/chefs" Component={Chefs} />
         <Route path="/concursantes" Component={Concursantes} />
         <Route path="/dashboard" Component={Dashboard} />

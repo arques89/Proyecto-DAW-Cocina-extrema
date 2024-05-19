@@ -2,8 +2,8 @@ import { Disclosure, Menu } from "@headlessui/react";
 import { Bars3Icon, UserIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../../img/LogoNavBar.png";
 
-import { Login } from "../pages/login/index";
-import { Register } from "../pages/register";
+// import { Login } from "../pages/login/index";
+// import { Register } from "../pages/register";
 import { Options } from "./options";
 import { Menu_navbar } from "./menu_navbar";
 
@@ -21,7 +21,7 @@ export function NavBar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <Disclosure as="nav" className="bg-primary">
+    <Disclosure as="nav" className="bg-shape_primary px-16">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-full px-2 sm:px-6 lg:px-8">
@@ -51,7 +51,7 @@ export function NavBar() {
               <div className="absolute w-full justify-center">
                 <span
                   id="title"
-                  className="flex justify-center text-5xl sedgwick-ave-display-regular"
+                  className="flex justify-center text-4xl sedgwick-ave-display-regular"
                 >
                   Cocina Extrema
                 </span>
@@ -71,7 +71,7 @@ export function NavBar() {
                   {store.token === null && store.is_active === false ? (
                     <Menu.Items
                       id="menu-login-register"
-                      className="absolute flex z-10 w-custom origin-top-right -md bg-primary py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                      className="absolute flex z-10 w-custom origin-top-right -md bg-shape_primary py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     >
                       <div className="block w-full">
                         <Options />

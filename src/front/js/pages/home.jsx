@@ -6,6 +6,13 @@ import Escuela from "../../img/educacion.png";
 import Tienda from "../../img/tienda.png";
 import video1 from "../../img/canal-cocina-portada-1100x619.jpg";
 import { CardDefault } from "../components/card/index";
+import { CarouselDefault } from "../components/carousel";
+
+import sponsor from "../../img/bosch.png";
+import sponsor1 from "../../img/elcorteingles.png";
+import sponsor2 from "../../img/arcos.png";
+import sponsor3 from "../../img/lecreuset.png";
+import sponsor4 from "../../img/aeg.png";
 
 const Home = () => {
   return (
@@ -76,7 +83,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="flex px-32 w-full mb-24">
+      <section className="flex px-32 w-full mb-2">
         <div className="text-white font-thin">
           <p className="text-4xl">Inspirate</p>
           <p className="text-sm my-8">
@@ -86,6 +93,30 @@ const Home = () => {
       </section>
 
       <section className="flex px-32 w-full mb-24">
+        <CarouselDefault />
+      </section>
+
+      <section>
+      <div id="slider" className="mb-5 carousel slide-patrocinadores" data-ride="carousel">
+                <h2 className="patrocinadores">Patrocinadores</h2>
+                <div className="imagenes-patrocinadores">
+                    <a href="http://bosch.es" target="_blank" rel="noopener noreferrer"
+                        ><img src={sponsor} className="img-fluid" alt="Imagen Grande"
+                    /></a>
+                    <a href="http://elcorteingles.es" target="_blank" rel="noopener noreferrer"
+                        ><img src={sponsor1} className="img-fluid" alt="Imagen Grande"
+                    /></a>
+                    <a href="http://arcos.es" target="_blank" rel="noopener noreferrer"
+                        ><img src={sponsor2} className="img-fluid" alt="Imagen Grande"
+                    /></a>
+                    <a href="http://lecreuset.es" target="_blank" rel="noopener noreferrer"
+                        ><img src={sponsor3} className="img-fluid" alt="Imagen Grande"
+                    /></a>
+                    <a href="http://aeg.es" target="_blank" rel="noopener noreferrer"
+                        ><img src={sponsor4} className="img-fluid" alt="Imagen Grande"
+                    /></a>
+                </div>
+            </div>
       </section>
     </main>
   );

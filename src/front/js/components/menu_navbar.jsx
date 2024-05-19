@@ -13,7 +13,7 @@ export const Menu_navbar = () => {
   return (
     <Menu.Items
       id="menu"
-      className="absolute -right-8 z-10 mt-7 w-custom origin-top-right -md bg-primary py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+      className="absolute -right-8 z-10 mt-7 w-custom origin-top-right -md bg-shape_primary py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
     >
       <Menu.Item className="flex justify-end me-32 text-5xl mt-16">
         {({ active }) => (
@@ -93,7 +93,7 @@ export const Menu_navbar = () => {
           </a>
         )}
       </Menu.Item>
-      <div className="flex mt-24 w-custom bg-primary py-1 justify-end">
+      <div className="flex mt-24 w-custom bg-shape_primary py-1 justify-end">
         <Menu.Item className="flex justify-end me-14 text-7xl">
           <a href="#" className="block px-0 py-2 text-gray-700">
             <img
