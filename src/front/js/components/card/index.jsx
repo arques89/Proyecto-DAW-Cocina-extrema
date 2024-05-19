@@ -1,39 +1,29 @@
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography,
-  Button,
-} from "@material-tailwind/react";
 import { cardDetails } from "./mocks";
 
-export function CardDefault () {
+export function CardDefault() {
   const renderCardDetails = () => {
     return cardDetails.map((item) => (
       <div key={item.id}>
-        <Card className="mt-6 bg-black w-full">
-          <CardHeader className="relative h-96 rounded-none">
-            <img src={item.image} alt="card-image" />
-          </CardHeader>
-          <CardBody>
-            <Typography
-              variant="h5"
-              className="my-4 text-md font-thin text-center text-white"
-            >
+        <div className="max-w-sm mx-auto overflow-hidden shadow-lg">
+          <img
+            className="relative h-96 rounded-none"
+            src={item.image}
+            alt="card-image"
+          />
+          <div className="px-6 py-4">
+            <h5 className="my-4 text-md font-thin text-center text-white">
               {item.description}
-            </Typography>
-          </CardBody>
-          <CardFooter className="pt-0 text-center rounded-full ">
-            <Button className="border border-white rounded-full w-40 py-1 font-thin bg-black">
+            </h5>
+          </div>
+          <div className="pt-0 text-center rounded-full">
+            <button className="text-xs border border-white rounded-full w-40 py-1 font-thin bg-black text-white">
               COMPRAR AHORA
-            </Button>
-          </CardFooter>
-        </Card>
+            </button>
+          </div>
+        </div>
       </div>
     ));
   };
 
-  return(<>{renderCardDetails()}</>
-)
+  return <>{renderCardDetails()}</>;
 }
