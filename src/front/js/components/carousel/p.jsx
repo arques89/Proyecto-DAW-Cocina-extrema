@@ -21,7 +21,7 @@ export const CarouselDefault = () => {
       >
         {/* Carousel indicators */}
         <div
-          className="absolute bottom-0 left-0 right-0 z-[2] mx-[20%] mb-4 flex list-none justify-end p-0"
+          className="absolute bottom-0 left-0 right-0 z-[2] mx-[15%] mb-4 flex list-none justify-end p-0"
           data-twe-carousel-indicators
         >
           <button
@@ -33,6 +33,7 @@ export const CarouselDefault = () => {
             aria-current="true"
             aria-label="Slide 1"
           ></button>
+
           <button
             type="button"
             data-twe-target="#carouselExampleCaptions"
@@ -47,13 +48,20 @@ export const CarouselDefault = () => {
             className="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-white bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
             aria-label="Slide 3"
           ></button>
+          <button
+            type="button"
+            data-twe-target="#carouselExampleCaptions"
+            data-twe-slide-to="2"
+            className="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-white bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
+            aria-label="Slide 3"
+          ></button>
         </div>
 
         {/* Carousel items */}
-        <div className="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
+        <div className="relative w-full overflow-hidden after:clear-both after:block after:content-[''] justify-end">
           {/* First item */}
           <div
-            className="relative float-left -mr-[100%] w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none bg-grey_span"
+            className="relative float-left -mr-100 w-full transition-transform duration-600 ease-in-out motion-reduce:transition-none bg-grey_span "
             data-twe-carousel-active
             data-twe-carousel-item
             style={{ backfaceVisibility: "hidden" }}
@@ -63,37 +71,39 @@ export const CarouselDefault = () => {
               className="block w-1/2"
               alt="..."
             />
-            <div className="absolute w-1/2 top-12 inset-x-[50%] bottom-5 hidden py-5 text-center text-white md:block">
-              <h5 className="text-3xl">DÍA DE LA MADRE</h5>
-              <p className="text-xs mt-8">
+            <div className="absolute right-0 inset-x-15 bottom-5 hidden py-5 text-center text-white md:block w-1/2 top-0 ">
+              <h5 className="text-4xl mt-16">DÍA DE LA MADRE</h5>
+              <p className="text-sm mt-8">
                 Celebra este día tan especial con un regalo generoso para tu
-                madre.
+                madre
               </p>
-              <button className="border border-white rounded-full text-xs w-28 py-1 mt-8">SABER MAS</button>
+              <button className="rounded-full border border-white w-36 text-xs mt-8">SABER MÁS</button>
             </div>
           </div>
+
           {/* Second item */}
           <div
-            className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none bg-grey_span"
+            className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none bg-grey_span "
             data-twe-carousel-item
             style={{ backfaceVisibility: "hidden" }}
           >
             <img
-              src="https://tecdn.b-cdn.net/img/Photos/Slides/img%20(22).jpg"
+              src="https://concepto.de/wp-content/uploads/2015/03/paisaje-e1549600034372.jpg"
               className="block w-1/2"
               alt="..."
             />
-            <div className="absolute w-1/2 top-12 inset-x-[50%] bottom-5 hidden py-5 text-center text-white md:block">
-              <h5 className="text-3xl">REGALO PERFECTO</h5>
-              <p className="text-xs mt-8">
-                Inspírate con nosotros y descubre regalos para toda la vida
+            <div className="absolute right-0 inset-x-15 bottom-5 hidden py-5 text-center text-white md:block w-1/2 top-0 ">
+              <h5 className="text-4xl mt-16">DÍA DE LA MADRE</h5>
+              <p className="text-sm mt-8">
+                Celebra este día tan especial con un regalo generoso para tu
+                madre
               </p>
-              <button className="border border-white rounded-full text-xs w-28 py-1 mt-8">SABER MAS</button>
+              <button className="rounded-full border border-white w-36 text-xs mt-8">SABER MÁS</button>
             </div>
           </div>
           {/* Third item */}
           <div
-            className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none bg-grey_span"
+            className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none bg-grey_span "
             data-twe-carousel-item
             style={{ backfaceVisibility: "hidden" }}
           >
@@ -102,20 +112,21 @@ export const CarouselDefault = () => {
               className="block w-1/2"
               alt="..."
             />
-            <div className="absolute w-1/2 top-12 inset-x-[50%] bottom-5 hidden py-5 text-center text-white md:block">
-              <h5 className="text-3xl mt-">RECETAS SALUDABLES</h5>
-              <p className="text-xs mt-8">
-                Aprende a realizar recetas saludables para mejorar el transito
-                intestinal
+            <div className="absolute right-0 inset-x-15 bottom-5 hidden py-5 text-center text-white md:block w-1/2 top-0 ">
+              <h5 className="text-4xl mt-16">DÍA DE LA MADRE</h5>
+              <p className="text-sm mt-8">
+                Celebra este día tan especial con un regalo generoso para tu
+                madre
               </p>
-              <button className="border border-white rounded-full text-xs w-28 py-1 mt-8">SABER MAS</button>
+              <button className="rounded-full border border-white w-36 text-xs mt-8">SABER MÁS</button>
             </div>
           </div>
         </div>
+        {/* Content outside of carousel */}
 
         {/* Carousel controls - prev item */}
         <button
-          className="absolute bottom-2 left-0 z-[1] flex w-[140%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
+          className="absolute bottom-0 left-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
           type="button"
           data-twe-target="#carouselExampleCaptions"
           data-twe-slide="prev"
@@ -142,7 +153,7 @@ export const CarouselDefault = () => {
         </button>
         {/* Carousel controls - next item */}
         <button
-          className="absolute bottom-2 right-0 z-[1] flex w-[35%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
+          className="absolute bottom-0 right-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
           type="button"
           data-twe-target="#carouselExampleCaptions"
           data-twe-slide="next"
@@ -168,7 +179,6 @@ export const CarouselDefault = () => {
           </span>
         </button>
       </div>
-      ;
     </>
   );
 };

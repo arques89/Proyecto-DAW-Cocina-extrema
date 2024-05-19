@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
     /* Background colors */
     --main-bg-color: #000000;
@@ -252,8 +256,4 @@ button.circle {
     width: 80%;
     margin:auto;
     border-radius: 1.25rem
-}
-
-#inspirate {
-    font-weight: lighter;
 }

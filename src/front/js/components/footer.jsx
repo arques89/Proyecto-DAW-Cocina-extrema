@@ -3,6 +3,7 @@ import facebook from "../../img/facebook.png";
 import twitter from "../../img/x.png";
 import instagram from "../../img/instagram.png";
 
+import "../../css/styles.css"
 export const Footer = () => {
     return(
         // <!-- Footer -->
@@ -10,7 +11,7 @@ export const Footer = () => {
             <div className="container text-center">
                 <div className="row justify-content-center">
                     <div className="col-sm-6">
-                        <div className="container main-logo w-60">
+                        <div className="container main-logo">
                             <a href="/"
                                 ><img
                                     src={logoCompleto}
@@ -19,9 +20,9 @@ export const Footer = () => {
                             /></a>
                         </div>
                     </div>
-                    <div className="col-sm-6 flex-container flex">
+                    <div className="col-sm-6 flex-container">
                         <div className="container mt-10">
-                            <ul className="list-unstyled d-inline-flex align-items-center justify-content-center mb-0 me-60">
+                            <ul className="list-unstyled d-inline-flex align-items-center justify-content-center mb-0">
                                 <li><a href="/" className="text-light">Home</a></li>
                                 <li><a href="/" className="text-light">Programas</a></li>
                                 <li><a href="/" className="text-light">Recetas</a></li>
@@ -35,7 +36,7 @@ export const Footer = () => {
                     <div className="col-sm-6 social-links">
                         <div className="container">
                             <a href="http://facebook.es/" target="_blank" rel="noopener noreferrer"
-                                ><img src={facebook} alt="Facebook" className="img-fluid mx-2 w-12 h-12"
+                                ><img src={facebook} alt="Facebook" className="img-fluid mx-2"
                             /></a>
                             <a href="https://twitter.com/?lang=es"
                                 ><img src={twitter} alt="Twitter" className="img-fluid mx-2"
