@@ -21,10 +21,10 @@ export function NavBar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <Disclosure as="nav" className="bg-shape_primary px-16">
+    <Disclosure as="nav" className="bg-shape_primary px-20">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-full px-2 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-full sm:px-0">
             <div
               id="navbar-h"
               className="relative flex h-20 items-center justify-between"
