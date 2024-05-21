@@ -1,61 +1,54 @@
-import { Menu } from "@headlessui/react";
 import { useState } from "react";
 import { Login } from "../pages/login";
+import { Register } from "../pages/register";
 
-// import { inputRegister } from "./mocks";
-// import { useContext, useState } from "react";
-// import { Context } from "../../store/appContext";
+export const Options = ({ setOpen }) => {
+  const [selectedOption, setSelectedOption] = useState("login");
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
-export const Options = () => {
-const [change, setchange] = useState("/login")
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    if (option === "close") {
+      setOpen(false); // Cerrar el canvas cuando se hace clic en "X"
+    }
+  };
 
   return (
     <div>
-    <Menu.Item className="flex justify-end text-5xl mt-16 me-36">
-      {({ active }) => (
+      <div className="flex justify-end text-5xl mt-10 me-36">
         <a
           href="#"
-          className={classNames(
-            active ? "text-shape_red" : "",
-            "block py-3 text-black-700"
-          )}
+          className="block py-3 text-black-700"
+          onClick={() => handleOptionClick("close")} // Llamar a handleOptionClick con "close"
         >
           x
         </a>
-      )}
-    </Menu.Item>
-    <div className="flex justify-center mx-36">
-      <Menu.Item className="flex justify-start text-2xl mt-10 w-full">
-        {({ active }) => (
+      </div>
+      <div className="flex justify-center mx-36">
+        <div className="flex justify-start text-2xl mt-10 w-full">
           <a
-            href={change}
-            className={classNames(
-              active ? "text-shape_red" : "",
-              "block px-0 pb-2 text-shape_border_button border-b-2 me-8 border-shape_border_button"
-            )}
+            href="#"
+            className={`block px-0 pb-2 text-shape_border_button border-b-2 me-8 border-shape_border_button ${
+              selectedOption === "login" ? "font-bold" : ""
+            }`}
+            onClick={() => handleOptionClick("login")}
           >
             INICIAR SESION
           </a>
-        )}
-      </Menu.Item>
-      <Menu.Item className="flex justify-end text-2xl mt-10 w-full">
-        {({ active }) => (
+        </div>
+        <div className="flex justify-end text-2xl mt-10 w-full">
           <a
-            href={setchange("/register")}
-            className={classNames(
-              active ? "text-shape_red" : "",
-              "block px-0 pb-2 text-shape_border_button border-b-2 ms-8 border-shape_border_button "
-            )}
+            href="#"
+            className={`block px-0 pb-2 text-shape_border_button border-b-2 ms-8 border-shape_border_button ${
+              selectedOption === "register" ? "font-bold" : ""
+            }`}
+            onClick={() => handleOptionClick("register")}
           >
             CREAR CUENTA
           </a>
-        )}
-      </Menu.Item>
+        </div>
+      </div>
+      {selectedOption === "login" && <Login />}
+      {selectedOption === "register" && <Register />}
     </div>
-  </div>
-  )
-}
+  );
+};

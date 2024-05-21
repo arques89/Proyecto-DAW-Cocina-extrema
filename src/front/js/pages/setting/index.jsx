@@ -4,8 +4,8 @@ export const Settings = () => {
   return (
     <>
       <div className="bg-shape_primary">
-        <section className="flex ps-36 bg-red-300">
-          <div className="block mt-16 pt-0 bg-green-200">
+        <section className="flex ps-36">
+          <div className="block mt-16 pt-0">
             {/* Button UserIcon */}
             <div>
               <span className="absolute -inset-1.5" />
@@ -37,7 +37,7 @@ export const Settings = () => {
           </div>
         </section>
 
-        <section className="block ps-36 pb-12 bg-blue-gray-500">
+        <section className="block ps-36 pb-12">
           <div className="mt-6 font-thin">
             <ul className="mt-6">
               <li className="font-bold mb-2">MIS DATOS</li>

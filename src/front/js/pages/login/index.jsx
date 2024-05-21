@@ -2,14 +2,22 @@ import { CheckIcon } from "@heroicons/react/24/solid";
 import { useState, useContext } from "react";
 import { Context } from "../../store/appContext"; // Importa el contexto
 import { inputLogin } from "./mocks";
+import { ForgotPassword } from "../forgot_password";
 
-export const Login = () => {
+export const Login = (setOpen) => {
   const { actions } = useContext(Context); // Obtén las acciones y el estado del contexto
 
   const [isChecked, setIsChecked] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [selectedOption, setSelectedOption] = useState("login");
 
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    if (option === "close") {
+      setOpen(false); // Cerrar el canvas cuando se hace clic en "X"
+    }
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "email") setEmail(value);
@@ -24,7 +32,7 @@ export const Login = () => {
   const renderInputLogin = () => {
     return inputLogin.map((item) => (
       <div key={item.id}>
-        <div className="block text-2xl mt-5 mx-36">
+        <div className="block text-2xl mt-4 mx-36">
           <div className=" flex justify-start">
             <label
               htmlFor={item.htmlFor}
@@ -33,7 +41,7 @@ export const Login = () => {
               {item.label}
             </label>
           </div>
-          <div className="mt-5">
+          <div className="mt-4">
             <input
               className="block bg-shape_input w-full rounded-full border-0 py-1.5 pl-7 pr-20 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
               type={item.type}
@@ -57,9 +65,17 @@ export const Login = () => {
           <span className="flex justify-start w-full font-thin">
             Recordarme
           </span>
-          <span className="flex justify-end w-full text-shape_red">
-            ¿Has olvidado tu contraseña?
-          </span>
+          <a
+            href=""
+            className={`block px-0 pb-2 text-shape_border_button border-b-2 ms-8 border-shape_border_button ${
+              selectedOption === "forgot" ? "font-bold" : ""
+            }`}
+            onClick={() => handleOptionClick("forgot")}
+          >
+            <span className="flex justify-end w-full text-shape_red">
+              ¿Has olvidado tu contraseña?
+            </span>
+          </a>
         </div>
         <label className="flex items-center space-x-2">
           <input
@@ -81,6 +97,7 @@ export const Login = () => {
             INICIAR SESIÓN
           </button>
         </div>
+        {selectedOption === "forgot" && <ForgotPassword />}
       </form>
     </>
   );

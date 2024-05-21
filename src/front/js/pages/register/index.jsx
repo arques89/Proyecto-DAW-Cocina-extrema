@@ -47,7 +47,7 @@ export const Register = () => {
   const renderInputRegister = () => {
     return inputRegister.map((item) => (
       <div key={item.id}>
-        <div className="block text-2xl mt-10 mx-36">
+        <div className="block text-2xl mt-4 mx-36">
           <div className=" flex justify-start">
             <label
               htmlFor={item.htmlFor}
@@ -56,7 +56,7 @@ export const Register = () => {
               {item.label}
             </label>
           </div>
-          <div className="mt-5">
+          <div className="mt-4">
             <input
               className="block bg-shape_input w-full rounded-full border-0 py-1.5 pl-7 pr-20 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
               type={item.type}
@@ -82,7 +82,7 @@ export const Register = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form className="mb-24" onSubmit={handleSubmit}>
         {renderInputRegister()}
         <div className="flex w-full mt-8"></div>
         <label className="flex items-center space-x-2">
