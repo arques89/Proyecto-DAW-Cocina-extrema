@@ -1,186 +1,88 @@
-import { useEffect } from "react";
-import { Carousel, initTWE } from "tw-elements";
+import { useState, useEffect } from "react";
+import { Icon } from "react-icons-kit";
+import { arrow_left } from "react-icons-kit/ikons/arrow_left";
+import { arrow_right } from "react-icons-kit/ikons/arrow_right";
+import { mocksCarousel } from "./mocks";
 
-initTWE({ Carousel });
+export const Carousel = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-export const CarouselDefault = () => {
+  const nextImage = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === mocksCarousel.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? mocksCarousel.length - 1 : prevIndex - 1
+    );
+  };
+
   useEffect(() => {
-    initTWE({
-      Carousel,
-      initTWE,
-    });
+    const interval = setInterval(() => {
+      nextImage();
+    }, 3000); // Cambia la imagen cada 3 segundos
+
+    return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
   }, []);
 
+  const renderIndicators = () => {
+    return (
+      <div className="flex justify-center mt-2">
+        {mocksCarousel.map((_, index) => (
+          <div
+            key={index}
+            className={`w-8 h-1 mx-1 transition-opacity duration-300 ${
+              index === currentIndex ? "bg-red-600 opacity-100" : "bg-white opacity-50"
+            }`}
+          />
+        ))}
+      </div>
+    );
+  };
+
   return (
-    <div
-      id="carouselExampleCaptions"
-      className="relative w-full max-w-[calc(100%-260px)] mx-auto"
-      data-twe-carousel-init
-      data-twe-ride="carousel"
-    >
-      {/* Carousel indicators */}
-      <div
-        className="absolute bottom-0 left-0 right-0 z-[2] mx-[22%] mb-4 flex list-none justify-end"
-        data-twe-carousel-indicators
-      >
-        <button
-          type="button"
-          data-twe-target="#carouselExampleCaptions"
-          data-twe-slide-to="0"
-          data-twe-carousel-active
-          className="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-white bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none active:bg-red-500"
-          aria-current="true"
-          aria-label="Slide 1"
-        ></button>
-        <button
-          type="button"
-          data-twe-target="#carouselExampleCaptions"
-          data-twe-slide-to="1"
-          className="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-white bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
-          aria-label="Slide 2"
-        ></button>
-        <button
-          type="button"
-          data-twe-target="#carouselExampleCaptions"
-          data-twe-slide-to="2"
-          className="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-white bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
-          aria-label="Slide 3"
-        ></button>
-      </div>
-
-      {/* Carousel items */}
-      <div className="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
-        {/* First item */}
-        <div
-          className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-          data-twe-carousel-active
-          data-twe-carousel-item
-          style={{ backfaceVisibility: "hidden" }}
-        >
-          <div className="flex w-full h-full">
-            <div className="w-1/2">
-              <img
-                src="https://tecdn.b-cdn.net/img/Photos/Slides/img%20(15).jpg"
-                className="block w-full h-auto max-h-screen"
-                alt="..."
-              />
-            </div>
-            <div className="w-1/2 bg-grey_span opacity-55 flex flex-col justify-center items-center p-8 text-white">
-              <h5 className="text-3xl">DÍA DE LA MADRE</h5>
-              <p className="text-xs mt-8">
-                Celebra este día tan especial con un regalo generoso para tu
-                madre.
-              </p>
-              <button className="border border-white rounded-full text-xs w-28 py-1 mt-8">
-                SABER MAS
-              </button>
-            </div>
+    <div className="w-full bg-blue-gray-400 justify-center flex flex-col items-center my-4 mx-28">
+      <div className="relative w-full h-80 flex items-center">
+        <div className="w-full h-full flex">
+          <div className="bg-red-600 w-1/2 flex-grow flex justify-center items-center overflow-hidden">
+            <img
+              src={mocksCarousel[currentIndex].image}
+              alt=""
+              className="object-cover object-center h-full w-full"
+            />
           </div>
-        </div>
-        {/* Second item */}
-        <div
-          className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-          data-twe-carousel-item
-          
-          style={{ backfaceVisibility: "hidden" }}
-        >
-          <div className="flex w-full h-full">
-            <div className="w-1/2">
-              <img
-                src="https://tecdn.b-cdn.net/img/Photos/Slides/img%20(22).jpg"
-                className="block w-full h-auto max-h-screen"
-                alt="..."
-              />
-            </div>
-            <div className="w-1/2 bg-grey_span opacity-55 flex flex-col justify-center items-center p-8 text-white">
-              <h5 className="text-3xl">REGALO PERFECTO</h5>
-              <p className="text-xs mt-8">
-                Inspírate con nosotros y descubre regalos para toda la vida
-              </p>
-              <button className="border border-white rounded-full text-xs w-28 py-1 mt-8">
-                SABER MAS
+          <div className="bg-grey_span w-1/2 pt-12 flex-grow flex flex-col justify-center items-center">
+            <p className="text-3xl text-white pb-4">
+              {mocksCarousel[currentIndex].title}
+            </p>
+            <p className="text-sm text-white font-thin">
+              {mocksCarousel[currentIndex].subtitle}
+            </p>
+            <button className="border border-white rounded-full text-xs w-28 py-1 mt-8">
+              SABER MAS
+            </button>
+            <div className="flex mt-12 items-center">
+              <button
+                onClick={prevImage}
+                className="flex items-center justify-center mr-4"
+                style={{ width: '40px', height: '40px' }}
+              >
+                <Icon className="text-white opacity-50" icon={arrow_left} size={24} />
               </button>
-            </div>
-          </div>
-        </div>
-        {/* Third item */}
-        <div
-          className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
-          data-twe-carousel-item
-          style={{ backfaceVisibility: "hidden" }}
-        >
-          <div className="flex w-full h-full">
-            <div className="w-1/2">
-              <img
-                src="https://tecdn.b-cdn.net/img/Photos/Slides/img%20(23).jpg"
-                className="block w-full h-auto max-h-screen"
-                alt="..."
-              />
-            </div>
-            <div className="w-1/2 z-0 bg-grey_span opacity-55 flex flex-col justify-center items-center p-8 text-white relative">
-              <h5 className="text-3xl z-10 text-white">RECETAS SALUDABLES</h5>
-              <p className="text-xs mt-8 z-10">
-                Aprende a realizar recetas saludables para mejorar el tránsito
-                intestinal.
-              </p>
-              <button className="border border-white rounded-full text-xs w-28 py-1 mt-8 z-10">
-                SABER MAS
+              {renderIndicators()}
+              <button
+                onClick={nextImage}
+                className="flex items-center justify-center ml-4"
+                style={{ width: '40px', height: '40px' }}
+              >
+                <Icon className="text-white opacity-50" icon={arrow_right} size={24} />
               </button>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Carousel controls - prev item */}
-      <button
-        className="absolute top-2/3 mt-24 pt-2 right-96 me-24 transform -translate-y-1/2 z-[1] flex items-center justify-end border-0 bg-none text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
-        type="button"
-        data-twe-target="#carouselExampleCaptions"
-        data-twe-slide="prev"
-      >
-        <span className="inline-block h-8 w-8">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="h-6 w-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 19.5L8.25 12l7.5-7.5"
-            />
-          </svg>
-        </span>
-        <span className="sr-only">Previous</span>
-      </button>
-      {/* Carousel controls - next item */}
-      <button
-        className="absolute top-1/2 mt-40 right-72 me-4 transform -translate-y-1/2 z-[1] flex items-center justify-center border-0 bg-none text-center text-white opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-white hover:no-underline hover:opacity-90 hover:outline-none focus:text-white focus:no-underline focus:opacity-90 focus:outline-none motion-reduce:transition-none"
-        type="button"
-        data-twe-target="#carouselExampleCaptions"
-        data-twe-slide="next"
-      >
-        <span className="inline-block h-8 w-8">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="h-6 w-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M8.25 4.5l7.5 7.5-7.5 7.5"
-            />
-          </svg>
-        </span>
-        <span className="sr-only">Next</span>
-      </button>
     </div>
   );
 };

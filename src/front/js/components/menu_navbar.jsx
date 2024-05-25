@@ -1,5 +1,4 @@
-import { useState } from "react";
-
+import PropTypes from 'prop-types';
 import facebook from "../../img/facebook.png";
 import instagram from "../../img/instagram.png";
 import linkedin from "../../img/linkedin.png";
@@ -16,7 +15,7 @@ export const Menu_navbar = ({ setOpen }) => {
   return (
     <div className="flex w-full h-full me-36 justify-end">
       <div className="w-full block pe-36">
-        <div className="py-8 flex text-5xl mt-16 justify-end">
+        <div className="pb-8 flex text-5xl mt-0 justify-end">
           <a href="#" onClick={() => handleOptionClick("close")}>
             
             x
@@ -88,4 +87,7 @@ export const Menu_navbar = ({ setOpen }) => {
       </div>
     </div>
   );
+};
+Menu_navbar.propTypes = {
+  setOpen: PropTypes.func.isRequired // PropTypes para setOpen como función
 };

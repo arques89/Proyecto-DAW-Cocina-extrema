@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import PropTypes from 'prop-types';
 import { Dialog, Transition } from "@headlessui/react";
 import { Options } from "./options";
 import { Menu_navbar } from "./menu_navbar";
@@ -25,7 +26,7 @@ export function Canvas({ open, setOpen, content }) {
 
         <div className="fixed inset-0 overflow-hidden">
           <div className="absolute inset-0 overflow-hidden">
-            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-[1240px] pl-10">
+            <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-[1020px] pl-10">
               <Transition.Child
                 as={Fragment}
                 enter="transform transition ease-in-out duration-500 sm:duration-700"
@@ -38,20 +39,17 @@ export function Canvas({ open, setOpen, content }) {
                 <Dialog.Panel className="pointer-events-auto relative w-screen">
                   <div className="flex h-full mt-24 flex-col overflow-y-scroll py-6 shadow-xl bg-shape_primary">
                     <div className="relative mt-6 flex-1">
-                      {/* Your content */}
-                      {/* {content = "iconForgot"} */}
                       {content === "iconUser" ? (
                         <Options setOpen={setOpen} />
                       ) : content === "iconMenu" ? (
                         <Menu_navbar setOpen={setOpen} />
-                      ) : content === "forgotPassword" ? (
+                      ) : content === "iconForgot" ? (
                         <ForgotPassword setOpen={setOpen} />
                       ) : null}
-                      {/* <Options setOpen={setOpen} /> */}
                     </div>
                   </div>
                   <Toaster
-                    position="top-center"
+                    position="top-right"
                     reverseOrder={false}
                     toastOptions={{
                       // Define default options
@@ -59,8 +57,8 @@ export function Canvas({ open, setOpen, content }) {
                       style: {
                         background: "#363636",
                         color: "#fff",
-                        marginTop: "180px",
-                        marginRight: "730px",
+                        marginBottom: "0px",
+                        marginRight: "220px",
                       },
                     }}
                   />
@@ -73,3 +71,8 @@ export function Canvas({ open, setOpen, content }) {
     </Transition.Root>
   );
 }
+Canvas.propTypes = {
+  open: PropTypes.bool,
+  setOpen: PropTypes.func,
+  content: PropTypes.string,
+};

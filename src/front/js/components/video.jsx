@@ -11,8 +11,8 @@ export const Video = ({ image, season, chapter, go }) => {
   return (
     <>
       <div className="contenedor w-full flex">
-        <img className="flex w-full px-32" src={image} alt="Fondo" />
-        <div className="texto-superpuesto ms-32 flex text-center">
+        <img className="flex w-full px-28" src={image} alt="Fondo" />
+        <div className="texto-superpuesto ms-28 flex text-center">
           <p className="">{season}</p>
           <p className="text-4xl mt-10">{chapter}</p>
           <div className="w-full justify-center flex">

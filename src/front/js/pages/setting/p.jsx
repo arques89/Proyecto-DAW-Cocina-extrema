@@ -1,81 +1,81 @@
+import { UserIcon } from "@heroicons/react/24/outline";
 
-export const Settings = () => {
-    return (
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex flex-col items-center justify-between mb-12">
-          <h1 className="text-3xl font-bold text-gray-800">Prosalud</h1>
-          <nav className="mt-4">
-            <ul className="flex flex-row gap-4">
-              <li className="text-gray-600 hover:text-gray-800 transition-colors">
-                <a href="#">Home</a>
-              </li>
-              <li className="text-gray-600 hover:text-gray-800 transition-colors">
-                <a href="#">Programa</a>
-              </li>
-              <li className="text-gray-600 hover:text-gray-800 transition-colors">
-                <a href="#">Escuela</a>
-              </li>
-              <li className="text-gray-600 hover:text-gray-800 transition-colors">
-                <a href="#">Vlog</a>
-              </li>
-              <li className="text-gray-600 hover:text-gray-800 transition-colors">
-                <a href="#">Tienda</a>
-              </li>
+export const P = () => {
+  return (
+    <>
+      <div className="bg-shape_primary">
+        <section className="flex ps-36 bg-red-500">
+          <div className="block mt-16 pt-0">
+            {/* Button UserIcon */}
+            <div>
+              <span className="absolute -inset-1.5" />
+              <span className="sr-only">View notifications</span>
+              <UserIcon className="h-7 w-7" aria-hidden="true" />
+            </div>
+            <div className="text-xl w-52 mt-2">
+              <h3 className="mb-2 text-shape_border_button">HOLA !!</h3>
+              <h3 className="text-shape_red">JAVIER ARQUES</h3>
+              <hr className="mt-3 w-full" />
+            </div>
+          </div>
+          <div className="flex  w-full justify mt-14">
+            <div className="block w-full ps-32 px-60 ms-1">
+              <div className="flex w-full justify-between ps-72 px-16 text-xl font-thin">
+                <span>Home</span>
+                <span>Programa</span>
+                <span>Escuela</span>
+                <span>Vlog</span>
+                <span className="pe-32">Tienda</span>
+              </div>
+              <div className="mt-12 ms-80 ps-6 text-xl">
+                <h3 className="mb-3 text-shape_border_button">
+                  DATOS PERSONALES
+                </h3>
+                <hr />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="block ps-36 pb-12">
+          <div className="mt-6 font-thin">
+            <ul className="mt-6">
+              <li className="font-bold mb-2">MIS DATOS</li>
+              <li className="mb-2">Modificar mis datos</li>
+              <li className="mb-2">Mis direcciones</li>
+              <li className="mb-2">Mis tarjetas bancarias</li>
             </ul>
-          </nav>
-        </div>
-  
-        <div className="flex flex-col justify-start mb-12">
-          <h2 className="text-2xl font-semibold text-gray-800">HOLA!!</h2>
-          <h3 className="text-xl font-medium text-gray-600">JAVIER ARQUES</h3>
-          <div className="flex flex-row items-center gap-4 mt-4">
-            <p className="text-gray-600">Datos Personales</p>
-            <button className="rounded-full bg-gray-200 px-4 py-2 text-gray-600 hover:bg-gray-300 transition-colors">
-              Editar
-            </button>
+            <ul className="mt-6">
+              <li className="font-bold mb-2">MIS PEDIDOS</li>
+              <li className="mb-2">Ver mis pedidos</li>
+              <li className="mb-2">Devoluciones</li>
+              <li className="mb-2">Mi lista de deseos</li>
+            </ul>
+            <ul className="mt-6">
+              <li className="font-bold mb-2">MI CONTENIDO</li>
+              <li className="mb-2">Contenido compartido</li>
+              <li className="mb-2">Mis favoritos</li>
+            </ul>
+            <ul className="mt-6">
+              <li className="font-bold mb-2">¿NECESITAS AYUDA?</li>
+              <li>Contactanos</li>
+            </ul>
           </div>
-        </div>
-  
-        <div className="flex flex-col items-center justify-between mb-12">
-          <h4 className="text-lg font-medium text-gray-800">MIS DATOS</h4>
-          <div className="flex flex-row items-center gap-4 mt-4">
-            <div className="flex flex-col">
-              <label className="text-gray-600">Apellido</label>
-              <input
-                type="text"
-                className="mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Arques"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="text-gray-600">Mis Pedidos</label>
-              <input
-                type="text"
-                className="mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Ver pedidos"
-              />
-            </div>
+          <div className="text-xl w-52">
+            <hr className="mt-3 w-full" />
+            <img
+              className="mt-6 mb-2"
+              src="src\front\img\power_button.png"
+              width={28}
+              alt=""
+            />
+            <h3 className="mb-3 text-shape_border_button w-60">
+              NOS VEMOS PRONTO !!
+            </h3>
+            <h3 className="text-shape_red">CERRAR SESIÓN</h3>
           </div>
-          <div className="flex flex-row items-center gap-4 mt-4">
-            <div className="flex flex-col">
-              <label className="text-gray-600">Devoluciones</label>
-              <input
-                type="text"
-                className="mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Ver devoluciones"
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="text-gray-600">Teléfono</label>
-              <input
-                type="text"
-                className="mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="(555) 555-5555"
-              />
-            </div>
-          </div>
-        </div>
+        </section>
       </div>
-    );
-  };
-  
+    </>
+  );
+};

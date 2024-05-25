@@ -5,7 +5,9 @@ export const inputRegister = [
       label: 'Nombre',
       type: 'text',
       name: 'name',
-      placeholder: 'Nombre', 
+      className: 'block bg-shape_input w-full rounded-full border-0 py-1.5 pl-7 pr-20 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6',
+      value: ''
+
     },
     {
       id: 2,
@@ -13,7 +15,7 @@ export const inputRegister = [
       label: 'Apellido',
       type: 'text',
       name: 'surname',
-      placeholder: 'Apellido', 
+      className: "block bg-shape_input w-full rounded-full border-0 py-1.5 pl-7 pr-20 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6" 
     },
     {
       id: 3,
@@ -21,14 +23,22 @@ export const inputRegister = [
       label: 'Correo',
       type: 'email',
       name: 'email',
-      placeholder: 'Email', 
+      className: "block bg-shape_input w-full rounded-full border-0 py-1.5 pl-7 pr-20 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6" 
     },
     {
       id: 4,
+      htmlFor: 'phone',
+      label: 'Teléfono',
+      type: 'text',
+      name: 'phone',
+      className: "block bg-shape_input w-full rounded-full border-0 py-1.5 pl-7 pr-20 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6" 
+    },
+    {
+      id: 5,
       htmlFor: 'password',
       label: 'Contraseña',
       type: 'password',
       name: 'password',
-      placeholder: 'Contraseña', 
-    }
+      className: "block bg-shape_input w-full rounded-full border-0 py-1.5 pl-7 pr-20 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6" 
+    },
   ]

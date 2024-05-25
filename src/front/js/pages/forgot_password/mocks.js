@@ -5,7 +5,6 @@ export const InputForgotPassword = [
       label: 'Correo*',
       type: 'email',
       name: 'email',
-      placeholder: 'Correo', 
     },
     {
       id: 2,
@@ -13,6 +12,5 @@ export const InputForgotPassword = [
       label: 'Confirmar correo*',
       type: 'email',
       name: 'email',
-      placeholder: 'Confirmar correo', 
     },
   ]

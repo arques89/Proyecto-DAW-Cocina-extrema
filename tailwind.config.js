@@ -1,10 +1,8 @@
-const withMT = require("@material-tailwind/react/utils/withMT");
-
-module.exports = withMT({
+module.exports = {
   content: [
-    "./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}",
-    "./src/**/*.{html,js}",
-    "./node_modules/tw-elements/js/**/*.js"
+    "./index.html", 
+    "./src/**/*.{vue,js,ts,jsx,tsx}",
+    "./src/**/*.{html,js}"
   ],
   theme: {
     screens: {
@@ -19,14 +17,13 @@ module.exports = withMT({
         shape_input: "#B1AFA9",
         font_icon: "#979797",
         grey_span: "#5E5E5E",
-
         shape_green_2: "#6D8108",
         shape_green_3: "#A4B064",
       },
       width: {
         custom: "960px", // Cambia '50%' al valor de ancho que desees
       },
-      heigth: {
+      height: {
         custo: "847px", // Cambia '50%' al valor de ancho que desees
       },
       fontFamily: {
@@ -35,6 +32,6 @@ module.exports = withMT({
       },
     },
   },
-  plugins: [require("tw-elements/plugin.cjs")],
+  plugins: [],
   darkMode: "class"
-});
+};

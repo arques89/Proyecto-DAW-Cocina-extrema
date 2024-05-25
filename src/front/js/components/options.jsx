@@ -1,9 +1,13 @@
 import { useState } from "react";
+import { CheckIcon } from "@heroicons/react/24/solid";
+import PropTypes from 'prop-types'; // Importamos PropTypes
 import { Login } from "../pages/login";
 import { Register } from "../pages/register";
+import { ForgotPassword } from "../pages/forgot_password";
 
 export const Options = ({ setOpen }) => {
   const [selectedOption, setSelectedOption] = useState("login");
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -12,13 +16,56 @@ export const Options = ({ setOpen }) => {
     }
   };
 
+  const renderInputSection = () => {
+    if (selectedOption === "login") {
+      return (
+        <>
+          <Login />
+          <div className="w-full mt-14">
+            <div className="flex mx-36 text-xl">
+              <span className="flex justify-start w-full font-thin">
+                Recordarme
+              </span>
+              <a
+                href="#"
+                className={`block w-full px-0 pb-2 ms-8 ${
+                  selectedOption === "forgot" ? "font-bold" : ""
+                }`}
+                onClick={() => handleOptionClick("forgot")}
+              >
+                <span className="flex justify-end w-full text-shape_red">
+                  ¿Has olvidado tu contraseña?
+                </span>
+              </a>
+            </div>
+            <label className="flex items-center space-x-2">
+              <input
+                className="appearance-none checked:border-transparent rounded-full w-9 h-9 ms-24 mt-4"
+                type="checkbox"
+                checked={isChecked}
+                onChange={() => setIsChecked(!isChecked)}
+              />
+              <div className="w-9 h-9 mt-4 bg-shape_input rounded-full flex items-center justify-center">
+                {isChecked && <CheckIcon className="w-7 h-7 text-blue-600" />}
+              </div>
+            </label>
+          </div>
+        </>
+      );
+    } else if (selectedOption === "register") {
+      return <Register />;
+    } else if (selectedOption === "forgot") {
+      return <ForgotPassword />;
+    }
+  };
+
   return (
     <div>
-      <div className="flex justify-end text-5xl mt-10 me-36">
+      <div className="flex justify-end text-5xl mt-0 me-36">
         <a
           href="#"
-          className="block py-3 text-black-700"
-          onClick={() => handleOptionClick("close")} // Llamar a handleOptionClick con "close"
+          className="block py-0 text-black-700"
+          onClick={() => handleOptionClick("close")}
         >
           x
         </a>
@@ -32,23 +79,28 @@ export const Options = ({ setOpen }) => {
             }`}
             onClick={() => handleOptionClick("login")}
           >
-            INICIAR SESION
+            INICIAR SESIÓN
           </a>
         </div>
-        <div className="flex justify-end text-2xl mt-10 w-full">
-          <a
-            href="#"
-            className={`block px-0 pb-2 text-shape_border_button border-b-2 ms-8 border-shape_border_button ${
-              selectedOption === "register" ? "font-bold" : ""
-            }`}
-            onClick={() => handleOptionClick("register")}
-          >
-            CREAR CUENTA
-          </a>
-        </div>
+        {(selectedOption === "login" || selectedOption === "register") && (
+          <div className="flex justify-end text-2xl mt-10 w-full">
+            <a
+              href="#"
+              className={`block px-0 pb-2 text-shape_border_button border-b-2 ms-8 border-shape_border_button ${
+                selectedOption === "register" ? "font-bold" : ""
+              }`}
+              onClick={() => handleOptionClick("register")}
+            >
+              CREAR CUENTA
+            </a>
+          </div>
+        )}
       </div>
-      {selectedOption === "login" && <Login />}
-      {selectedOption === "register" && <Register />}
+      {renderInputSection()}
     </div>
   );
+};
+
+Options.propTypes = {
+  setOpen: PropTypes.func.isRequired // PropTypes para setOpen como función
 };
