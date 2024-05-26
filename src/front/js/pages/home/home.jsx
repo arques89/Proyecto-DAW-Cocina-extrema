@@ -97,7 +97,7 @@ const Home = () => {
       <section className="flex px-28 w-full mb-2">
         <div className="text-white font-thin">
           <p className="text-4xl">Inspirate</p>
-          <p className="text-sm my-8">
+          <p className="text-sm mt-8">
             Consejos de expertos sobre cómo aprovechar al máximo tus utensilios
             de cocina, recomendaciones de regalos perfectos y recetas
             exquisitas.
@@ -105,7 +105,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="flex  w-full mb-24 justify-center">
+      <section className="flex  w-full mb-20 justify-center">
         <Carousel />
       </section>
       <Sponsor />

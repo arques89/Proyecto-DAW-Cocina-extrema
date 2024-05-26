@@ -4,11 +4,12 @@ db = SQLAlchemy()
 
 
 class User(db.Model):
-    __tablename__="user"
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(80), nullable=False)
     surname = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False, name='uq_email')
+    phone = db.Column(db.String(120), unique=True, nullable=False, name='uq_phone')
     password = db.Column(db.String(250), nullable=False)
     is_active = db.Column(db.Boolean(), nullable=False)
     token = db.Column(db.Text, nullable=True)
@@ -22,8 +23,10 @@ class User(db.Model):
             'id': self.id,
             'name': self.name,
             'surname': self.surname,
-            'email': self.email
+            'email': self.email,
+            'phone' : self.phone
         }
+
             # do not serialize the password, its a security breach
 
 class Chef(db.Model):

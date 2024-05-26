@@ -1,8 +1,9 @@
 import { useState, useContext } from "react";
 import { Context } from "../../store/appContext";
 import { InputForgotPassword } from "./mocks";
+import PropTypes from 'prop-types';
 
-export const ForgotPassword = () => {
+export const ForgotPassword = ({setOpen}) => {
   const { actions } = useContext(Context);
   const [email, setEmail] = useState("");
 
@@ -14,6 +15,7 @@ export const ForgotPassword = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     await actions.forgotPassword(email); // Llama a la acción de recuperación de contraseña
+    setOpen(false)
   };
 
   const renderInputForgotPassword = () => {
@@ -60,4 +62,7 @@ export const ForgotPassword = () => {
       </div>
     </form>
   );
+};
+ForgotPassword.propTypes = {
+  setOpen: PropTypes.func,
 };

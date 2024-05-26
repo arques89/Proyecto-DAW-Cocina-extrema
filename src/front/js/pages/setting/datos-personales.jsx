@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { RenderInputLogin2 } from "../../components/input";
+import { RenderInputDatosPersonales } from "../../components/input";
 import { changePassword } from "./mocks";
 
 export const DatosPersonales = () => {
   const [change, setChange] = useState(true);
 
   const handleChange = () => {
-    change === true ? setChange(false) : setChange(true);
+    setChange(!change);
   };
+
   const renderInputChangePassword = () => {
     return changePassword.map((item) => (
       <div key={item.id} className="border-shape_border_button">
@@ -22,6 +23,7 @@ export const DatosPersonales = () => {
       </div>
     ));
   };
+
   const renderChangePassword = () => {
     return (
       <div hidden={change}>
@@ -42,29 +44,28 @@ export const DatosPersonales = () => {
       </div>
     );
   };
+
   return (
     <div>
       <div className="text-xl">
-        <h3 className=" pb-3 text-shape_border_button bg-pink-600">
+        <h3 className="pb-3 text-shape_border_button">
           DATOS PERSONALES
         </h3>
         <hr />
       </div>
       <div className="flex">
-        <div className=" w-2/4 pe-4">
-          <RenderInputLogin2 />
+        <div className="w-2/4 pe-4">
+          <RenderInputDatosPersonales />
           <div className="flex justify-end mt-3">
             <button
               name="changePassword"
-              onClick={() => handleChange()}
+              onClick={handleChange}
               className="justify-end text-shape_red"
             >
               Cambiar
             </button>
           </div>
-
           {renderChangePassword()}
-
           <div className="block text-2xl mt-5">
             <button
               type="submit"

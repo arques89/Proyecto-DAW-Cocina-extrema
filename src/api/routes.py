@@ -102,11 +102,12 @@ def login_user():
     "id": user.id,
     'email': user.email,
     'name': user.name,
-    'surname': user.surname
+    'surname': user.surname,
+    'phone': user.phone
     }
         
     token = create_access_token(identity=data, expires_delta=timedelta(minutes=1))
-    return jsonify(token), 200
+    return jsonify({"token": token}), 200
 
 
 ##----------------------------------------------------------------------------##
@@ -129,7 +130,7 @@ def register_user():
     token = create_access_token(identity=str(email))  # Suponiendo que la generación del token sea exitosa
     
     # Llamada a create_token pasando el correo electrónico
-    new_user = User(email=email , password=hashed_password , name=body['name'], surname=body['surname'], token=token, is_active=False, is_admin=False)
+    new_user = User(email=email , password=hashed_password , name=body['name'], surname=body['surname'], phone=body['phone'], token=token, is_active=False, is_admin=False)  # Añadir phone al nuevo usuario
     db.session.add(new_user)
     db.session.commit()
     
@@ -140,8 +141,10 @@ def register_user():
         "email" : new_user.email,
         'name': new_user.name,
         'surname': new_user.surname,
+        'phone' : new_user.phone,
         'token': token  # Agregar el token a la respuesta JSON
     })
+
 
 @api.route('/confirm_account')
 def confirm_account(email, name, token):

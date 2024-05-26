@@ -20,7 +20,7 @@ export const Options = ({ setOpen }) => {
     if (selectedOption === "login") {
       return (
         <>
-          <Login />
+          <Login setOpen={setOpen} />
           <div className="w-full mt-14">
             <div className="flex mx-36 text-xl">
               <span className="flex justify-start w-full font-thin">
@@ -53,9 +53,9 @@ export const Options = ({ setOpen }) => {
         </>
       );
     } else if (selectedOption === "register") {
-      return <Register />;
+      return <Register setOpen={setOpen} />;
     } else if (selectedOption === "forgot") {
-      return <ForgotPassword />;
+      return <ForgotPassword setOpen={setOpen} />;
     }
   };
 

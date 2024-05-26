@@ -1,9 +1,12 @@
 import { useState, useContext } from "react";
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 import { Context } from "../../store/appContext"; // Importa el contexto
 import { inputLogin } from "./mocks";
 
-export const Login = () => {
+export const Login = ({ setOpen }) => { // Agrega setOpen como prop
   const { actions } = useContext(Context); // Obtén las acciones del contexto
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,14 +19,16 @@ export const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
+
     // Verificar si los campos están vacíos
     if (!email || !password) {
       console.error("Por favor, completa todos los campos");
       return;
     }
 
-    await actions.login(email, password); // Llama a la acción de inicio de sesión
+    await actions.login(email, password);
+    setOpen(false); // Cierra el canvas después de un inicio de sesión exitoso
+    navigate('/settings');
   };
 
   const renderInputLogin = () => {
@@ -67,3 +72,9 @@ export const Login = () => {
     </form>
   );
 };
+
+Login.propTypes = {
+  setOpen: PropTypes.func,
+};
+
+export default Login;
