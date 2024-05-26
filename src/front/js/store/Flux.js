@@ -11,6 +11,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       userEmail: null,
       userName: null,
       userSurname: null,
+      userPhone: null,
       is_active: false,
       demo: [
         {
@@ -56,7 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             userEmail: userData.email,
             userName: userData.name,
             userSurname: userData.surname,
-            is_active: userData.is_active,
+            userPhone: userData.phone,
           });
 
           // Guarda los datos del token en el localStorage
@@ -65,19 +66,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           localStorage.setItem("userEmail", userData.email);
           localStorage.setItem("userName", userData.name);
           localStorage.setItem("userSurname", userData.surname);
-          localStorage.setItem("is_active", userData.is_active);
+          localStorage.setItem("userPhone", userData.phone);
         } catch (error) {
           console.error("Error al iniciar sesión:", error);
         }
       },
-      register: async (email, password, name, surname) => {
+      register: async (email, password, name, surname, phone) => {
         try {
           const response = await fetch(`${config.hostname}/register`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ email, password, name, surname }),
+            body: JSON.stringify({ email, password, name, surname, phone }),
           });
           if (!response.ok) {
             // console.log(response)
@@ -129,7 +130,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
 
         // Redirigir al usuario a la página de inicio de sesión
-        window.location.href = "/login";
+        window.location.href = "http://localhost:5173/";
       },
 
       // Use getActions to call a function within a fuction

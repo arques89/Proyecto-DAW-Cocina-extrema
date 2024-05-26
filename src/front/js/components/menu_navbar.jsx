@@ -1,144 +1,93 @@
-import { Menu } from "@headlessui/react";
-
+import PropTypes from 'prop-types';
 import facebook from "../../img/facebook.png";
 import instagram from "../../img/instagram.png";
 import linkedin from "../../img/linkedin.png";
 import youtube from "../../img/youtube.png";
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+export const Menu_navbar = ({ setOpen }) => {
 
-export const Menu_navbar = () => {
+  const handleOptionClick = (option) => {
+    if (option === "close") {
+      setOpen(false); // Cerrar el canvas cuando se hace clic en "X"
+    }
+  };
+
   return (
-    <Menu.Items
-      id="menu"
-      className="absolute -right-8 z-10 mt-7 w-custom origin-top-right -md bg-shape_primary py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-    >
-      <Menu.Item className="flex justify-end me-32 text-5xl mt-16">
-        {({ active }) => (
-          <a
-            href="#"
-            className={classNames(
-              active ? "text-shape_red" : "",
-              "block px-4 py-3 text-black-700"
-            )}
-          >
+    <div className="flex w-full h-full me-36 justify-end">
+      <div className="w-full block pe-36">
+        <div className="pb-8 flex text-5xl mt-0 justify-end">
+          <a href="#" onClick={() => handleOptionClick("close")}>
+            
             x
           </a>
-        )}
-      </Menu.Item>
-      <Menu.Item className="flex justify-end me-32 text-6xl mt-12 ">
-        {({ active }) => (
-          <a
-            href="#"
-            className={classNames(
-              active ? "text-shape_red" : "",
-              "block px-4 py-3 text-black-700"
-            )}
-          >
+        </div>
+        <div className="py-8 flex justify-end text-6xl">
+          <a href="#">
             Home
           </a>
-        )}
-      </Menu.Item>
-      <Menu.Item className="flex justify-end me-32 text-6xl">
-        {({ active }) => (
-          <a
-            href="#"
-            className={classNames(
-              active ? "text-shape_red" : "",
-              "block px-4 py-3 text-black-700"
-            )}
-          >
+        </div>
+        <div className="py-8 flex justify-end text-6xl">
+          <a href="#">
             Programa
           </a>
-        )}
-      </Menu.Item>
-      <Menu.Item className="flex justify-end me-32 text-6xl">
-        {({ active }) => (
-          <a
-            href="#"
-            className={classNames(
-              active ? "text-shape_red" : "",
-              "block px-4 py-3 text-black-700"
-            )}
-          >
+        </div>
+        <div className="py-8 flex justify-end text-6xl">
+          <a href="#">
             Escuela
           </a>
-        )}
-      </Menu.Item>
-      <Menu.Item className="flex justify-end me-32 text-6xl">
-        {({ active }) => (
-          <a
-            href="#"
-            className={classNames(
-              active ? "text-shape_red" : "",
-              "block px-4 py-3 text-black-700"
-            )}
-          >
+        </div>
+        <div className="py-8 flex justify-end text-6xl">
+          <a href="#">
             Vlogs
           </a>
-        )}
-      </Menu.Item>
-      <Menu.Item className="flex justify-end me-32 text-6xl">
-        {({ active }) => (
-          <a
-            href="#"
-            className={classNames(
-              active ? "text-shape_red" : "",
-              "block px-4 py-3 text-black-700"
-            )}
-          >
+        </div>
+        <div className="py-8 flex justify-end text-6xl">
+          <a href="#">
             Tienda
           </a>
-        )}
-      </Menu.Item>
-      <div className="flex mt-24 w-custom bg-shape_primary py-1 justify-end">
-        <Menu.Item className="flex justify-end me-14 text-7xl">
-          <a href="#" className="block px-0 py-2 text-gray-700">
-            <img
-              src={facebook}
-              alt=""
-              style={{ height: "23px", width: "10px" }}
-            />
-          </a>
-        </Menu.Item>
-        <Menu.Item className="flex justify-end me-12 text-7xl">
-          <a href="#" className="block px-3 py-2 text-gray-700">
-            <img
-              src={linkedin}
-              alt=""
-              style={{ height: "22px", width: "22px" }}
-            />
-          </a>
-        </Menu.Item>
-        <Menu.Item className="flex justify-end me-12 text-7xl">
-          <a href="#" className="block px-1 py-2 text-gray-700">
-            <img
-              src={instagram}
-              alt=""
-              style={{ height: "23px", width: "23px" }}
-            />
-          </a>
-        </Menu.Item>
-        <Menu.Item className="flex justify-end me-32 text-7xl">
-          {({ active }) => (
-            <a
-              href="#"
-              className={classNames(
-                active ? "text-shape_red" : "",
-                "block px-4 py-3 text-gray-700"
-              )}
-            >
+        </div>
+        <div className="flex w-full mt-24 items-center justify-end">
+          <div className="me-14">
+            <a href="#">
+              <img
+                src={facebook}
+                alt="facebook"
+                style={{ height: "23px", width: "10px" }}
+              />
+            </a>
+          </div>
+          <div className="me-14">
+            <a href="#">
+              <img
+                src={linkedin}
+                alt="linkedin"
+                style={{ height: "22px", width: "22px" }}
+              />
+            </a>
+          </div>
+          <div className="me-14">
+            <a href="#">
+              <img
+                src={instagram}
+                alt="instagram"
+                style={{ height: "23px", width: "23px" }}
+              />
+            </a>
+          </div>
+          <div>
+            <a href="#">
               <img
                 src={youtube}
-                alt=""
+                alt="youtube"
                 style={{ height: "18px", width: "28px" }}
               />
             </a>
-          )}
-        </Menu.Item>
+          </div>
+        </div>
       </div>
-    </Menu.Items>
+    </div>
   );
+};
+Menu_navbar.propTypes = {
+  setOpen: PropTypes.func.isRequired // PropTypes para setOpen como función
 };

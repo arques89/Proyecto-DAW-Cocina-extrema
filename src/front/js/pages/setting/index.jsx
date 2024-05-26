@@ -1,81 +1,170 @@
+import { useContext, useEffect, useState } from "react";
 import { UserIcon } from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
+import { DatosDirecciones } from "./datos-direcciones";
+import { DatosBancarios } from "./datos-bancarios";
+import { DatosPersonales } from "./datos-personales";
+import { DatosPedidos } from "./datos-pedidos";
+import { Sponsor } from "../../components/sponsor";
+import { Context } from "../../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 export const Settings = () => {
+  const { store, actions } = useContext(Context);
+  const { userName, userSurname } = store;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Verifica si hay un token presente en el contexto global
+    const token = store.token;
+
+    // Si no hay un token, redirige al usuario a la página de inicio de sesión
+    if (!token) {
+      navigate("/");
+    }
+  }, [store.token, navigate]);
+
+  const [selectOption, setSelectedOption] = useState("personales");
+  const handlechange = (nombre) => {
+    setSelectedOption(nombre);
+  };
+
+  // Función para renderizar el componente basado en selectOption
+  const renderContent = () => {
+    if (selectOption === "personales") {
+      return <DatosPersonales />;
+    } else if (selectOption === "direcciones") {
+      return <DatosDirecciones />;
+    } else if (selectOption === "bancarios") {
+      return <DatosBancarios />;
+    } else if (selectOption === "pedidos") {
+      return <DatosPedidos />;
+    } else {
+      return <div>Opción no válida</div>;
+    }
+  };
+
+  const handleLogout = () => {
+    // Llama a la función logout del contexto
+    actions.logout();
+    // Redirige al usuario a la página de inicio de sesión
+    navigate("/");
+  };
+
   return (
     <>
-      <div className="bg-shape_primary">
-        <section className="flex ps-36 bg-red-300">
-          <div className="block mt-16 pt-0 bg-green-200">
-            {/* Button UserIcon */}
-            <div>
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">View notifications</span>
-              <UserIcon className="h-7 w-7" aria-hidden="true" />
-            </div>
-            <div className="text-xl w-52 mt-2">
-              <h3 className="mb-2 text-shape_border_button">HOLA !!</h3>
-              <h3 className="text-shape_red">JAVIER ARQUES</h3>
-              <hr className="mt-3 w-full" />
-            </div>
-          </div>
-          <div className="flex  w-full justify mt-14">
-            <div className="block w-full ps-32 px-60 ms-1">
-              <div className="flex w-full justify-between ps-72 px-16 text-xl font-thin">
-                <span>Home</span>
-                <span>Programa</span>
-                <span>Escuela</span>
-                <span>Vlog</span>
-                <span className="pe-32">Tienda</span>
+      <div className="flex h-full bg-shape_primary pb-16">
+        {/* Columna verde de 1/4 de ancho y altura completa */}
+        <div className="w-4/5 ps-20">
+          <section className="flex w-full">
+            <div className="w-3/5">
+              <div className="block mt-14">
+                {/* Button UserIcon */}
+                <div>
+                  <span className="" />
+                  <span className="sr-only">View notifications</span>
+                  <UserIcon className="h-7 w-7" aria-hidden="true" />
+                </div>
+                <div className="text-xl mt-2 ">
+                  <h3 className="mb-2 text-shape_border_button">HOLA !!</h3>
+                  <h3 className="text-shape_red">
+                    {userName} {userSurname}
+                  </h3>
+                  <hr className="mt-3 w-1/2" />
+                </div>
               </div>
-              <div className="mt-12 ms-80 ps-6 text-xl">
-                <h3 className="mb-3 text-shape_border_button">
-                  DATOS PERSONALES
+            </div>
+          </section>
+          <section className="flex">
+            <div className="w-3/5">
+              <div className="mt-6 font-thin">
+                <ul className="mt-6">
+                  <Link>
+                    <li className="font-bold mb-2">MIS DATOS</li>
+                  </Link>
+                  <li className="mb-2 hover:text-shape_red">
+                    <a onClick={() => handlechange("personales")} href="#">
+                      Modificar mis datos
+                    </a>
+                  </li>
+                  <li className="mb-2 hover:text-shape_red">
+                    <a onClick={() => handlechange("direcciones")} href="#">
+                      Mis direcciones
+                    </a>
+                  </li>
+                  <li className="mb-2 hover:text-shape_red">
+                    <a onClick={() => handlechange("bancarios")} href="#">
+                      Mis tarjetas bancarias
+                    </a>
+                  </li>
+                </ul>
+                <ul className="mt-6">
+                  <li className="mb-2 font-bold">MIS PEDIDOS</li>
+                  <li className="mb-2 hover:text-shape_red">
+                    <a onClick={() => handlechange("pedidos")} href="#">
+                      Ver mis pedidos
+                    </a>
+                  </li>
+                  <li className="mb-2 hover:text-shape_red">Devoluciones</li>
+                  <li className="mb-2 hover:text-shape_red">
+                    Mi lista de deseos
+                  </li>
+                </ul>
+                <ul className="mt-6">
+                  <li className="font-bold mb-2">MI CONTENIDO</li>
+                  <li className="mb-2 hover:text-shape_red">
+                    Contenido compartido
+                  </li>
+                  <li className="mb-2 hover:text-shape_red">Mis favoritos</li>
+                </ul>
+                <ul className="mt-6">
+                  <li className="font-bold mb-2">¿NECESITAS AYUDA?</li>
+                  <li className="hover:text-shape_red">Contactanos</li>
+                </ul>
+              </div>
+              <hr className="my-4 w-1/2" />
+              <div className="text-xl w-52">
+                <img
+                  className="mt-6 mb-2"
+                  src="src/front/img/power_button.png"
+                  width={28}
+                  alt=""
+                />
+                <h3 className="mb-2 text-shape_border_button w-60">
+                  NOS VEMOS PRONTO !!
                 </h3>
-                <hr />
+                <button onClick={handleLogout}>
+                  <h3 className="text-shape_red mb-1">CERRAR SESIÓN</h3>
+                </button>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
 
-        <section className="block ps-36 pb-12 bg-blue-gray-500">
-          <div className="mt-6 font-thin">
-            <ul className="mt-6">
-              <li className="font-bold mb-2">MIS DATOS</li>
-              <li className="mb-2">Modificar mis datos</li>
-              <li className="mb-2">Mis direcciones</li>
-              <li className="mb-2">Mis tarjetas bancarias</li>
-            </ul>
-            <ul className="mt-6">
-              <li className="font-bold mb-2">MIS PEDIDOS</li>
-              <li className="mb-2">Ver mis pedidos</li>
-              <li className="mb-2">Devoluciones</li>
-              <li className="mb-2">Mi lista de deseos</li>
-            </ul>
-            <ul className="mt-6">
-              <li className="font-bold mb-2">MI CONTENIDO</li>
-              <li className="mb-2">Contenido compartido</li>
-              <li className="mb-2">Mis favoritos</li>
-            </ul>
-            <ul className="mt-6">
-              <li className="font-bold mb-2">¿NECESITAS AYUDA?</li>
-              <li>Contactanos</li>
-            </ul>
+        {/* Contenedor para el resto de la estructura */}
+        <div className="flex flex-col w-full">
+          {/* Fila roja en la parte superior */}
+          <div className="w-full ">
+            <section className="flex h-full w-full bg-blue-gray-600 pe-20">
+              <div className="flex w-full mt-12">
+                <div className="block w-full">
+                  <div className="flex w-full mb-16 text-center justify-between text-xl font-thin">
+                    <span>Home</span>
+                    <span>Programa</span>
+                    <span>Escuela</span>
+                    <span>Vlog</span>
+                    <span>Tienda</span>
+                  </div>
+                </div>
+              </div>
+            </section>
           </div>
-          <div className="text-xl w-52">
-            <hr className="mt-3 w-full" />
-            <img
-              className="mt-6 mb-2"
-              src="src\front\img\power_button.png"
-              width={28}
-              alt=""
-            />
-            <h3 className="mb-3 text-shape_border_button w-60">
-              NOS VEMOS PRONTO !!
-            </h3>
-            <h3 className="text-shape_red">CERRAR SESIÓN</h3>
-          </div>
-        </section>
+
+          {/* Renderizado condicional basado en selectOption */}
+          {renderContent()}
+        </div>
       </div>
+      <Sponsor />
     </>
   );
 };

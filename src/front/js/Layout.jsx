@@ -17,8 +17,11 @@ import "../css/styles.css";
 import injectContext from "./store/appContext";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
-import { Settings } from "./pages/setting";
-// import { ForgotPassword } from './pages/forgot_password/index';
+import { Settings } from "./pages/setting/index";
+import { Prueba } from "./components/prueba";
+import { ForgotPassword } from './pages/forgot_password/index';
+// import { RenderInputLogin2 } from "./components/input";
+
 const Layout = () => {
   return (
     <BrowserRouter>
@@ -28,13 +31,15 @@ const Layout = () => {
         <Route path="/login" Component={Login} />
         <Route path="/register" Component={Register} />
         <Route path="/settings" Component={Settings} />
-        {/* <Route path="/chefs" Component={Chefs} />
-        <Route path="/concursantes" Component={Concursantes} />
-        <Route path="/dashboard" Component={Dashboard} />
+        <Route path="/prueba" Component={Prueba} />
+        {/* <Route path="/p" Component={RenderInputLogin2} /> */}
+        {/* <Route path="/chefs" Component={Chefs} /> */}
+        {/* <Route path="/concursantes" Component={Concursantes} /> */}
+        {/* <Route path="/dashboard" Component={Dashboard} /> */}
         <Route path="/forgot" Component={ForgotPassword} />
-        <Route path="/form" Component={upFile} /> */}
+        {/* <Route path="/form" Component={upFile} /> */}
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </BrowserRouter>
   );
 };

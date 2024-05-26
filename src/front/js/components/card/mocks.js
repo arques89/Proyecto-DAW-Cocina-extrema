@@ -1,7 +1,7 @@
 export const cardDetails = [
     {
         id: 1,
-        image:"src/front/img/img_home/bottle.jpg",
+        image:"src/front/img/img_home/bottle.webp",
         description:"2 botellas términcas por 49€",
     },
     {

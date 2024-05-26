@@ -5,14 +5,9 @@ import Bandeja from "../../../img/img_home/icons/rojo_bandeja.png";
 import Escuela from "../../../img/img_home/icons/educacion.png";
 import Tienda from "../../../img/img_home/icons/tienda.png";
 import video1 from "../../../img/img_home/canal-cocina-portada-1100x619.jpg";
-import { CardDefault } from "../../components/card/index";
-import { CarouselDefault } from "../../components/carousel";
-
-import sponsor from "../../../img/img_home/sponsor/bosch.png";
-import sponsor1 from "../../../img/img_home/sponsor/elcorteingles.png";
-import sponsor2 from "../../../img/img_home/sponsor/arcos.png";
-import sponsor3 from "../../../img/img_home/sponsor/lecreuset.png";
-import sponsor4 from "../../../img/img_home/sponsor/aeg.png";
+import { Card } from "../../components/card/index";
+import { Sponsor } from "../../components/sponsor";
+import { Carousel } from "../../components/carousel/index";
 
 const Home = () => {
   return (
@@ -75,7 +70,7 @@ const Home = () => {
         </div>
 
         <Video
-          className="flex px-32"
+          className="flex px-28"
           title="Una receta para chuparte los dedos"
           season="Programa 10"
           chapter="ÚLTIMO PROGRAMA"
@@ -95,14 +90,14 @@ const Home = () => {
           </div>
 
           <div className="mt-16 flex w-full justify-between">
-            <CardDefault />
+            <Card />
           </div>
         </div>
       </section>
-      <section className="flex px-32 w-full mb-2">
+      <section className="flex px-28 w-full mb-2">
         <div className="text-white font-thin">
           <p className="text-4xl">Inspirate</p>
-          <p className="text-sm my-8">
+          <p className="text-sm mt-8">
             Consejos de expertos sobre cómo aprovechar al máximo tus utensilios
             de cocina, recomendaciones de regalos perfectos y recetas
             exquisitas.
@@ -110,44 +105,11 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="flex  w-full mb-24 justify-center">
-        <CarouselDefault />
+      <section className="flex  w-full mb-20 justify-center">
+        <Carousel />
       </section>
-
-      <section>
-        <div
-          id="slider"
-          className="mb-5 carousel slide-patrocinadores"
-          data-ride="carousel"
-        >
-          <h2 className="patrocinadores">Patrocinadores</h2>
-          <div className="imagenes-patrocinadores">
-            <a href="http://bosch.es" target="_blank" rel="noopener noreferrer">
-              <img src={sponsor} className="img-fluid" alt="Imagen Grande" />
-            </a>
-            <a
-              href="http://elcorteingles.es"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img src={sponsor1} className="img-fluid" alt="Imagen Grande" />
-            </a>
-            <a href="http://arcos.es" target="_blank" rel="noopener noreferrer">
-              <img src={sponsor2} className="img-fluid" alt="Imagen Grande" />
-            </a>
-            <a
-              href="http://lecreuset.es"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img src={sponsor3} className="img-fluid" alt="Imagen Grande" />
-            </a>
-            <a href="http://aeg.es" target="_blank" rel="noopener noreferrer">
-              <img src={sponsor4} className="img-fluid" alt="Imagen Grande" />
-            </a>
-          </div>
-        </div>
-      </section>
+      <Sponsor />
+      
     </main>
   );
 };
