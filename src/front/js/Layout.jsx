@@ -12,7 +12,6 @@ import "../css/styles.css";
 // import { Chefs } from './pages/chefs';
 // import { upFile } from './pages/upFile/upFile';
 // import { Concursantes } from './pages/concursantes';
-// import { Dashboard } from './pages/dashboard/index';
 
 import injectContext from "./store/appContext";
 import { Login } from "./pages/login";
