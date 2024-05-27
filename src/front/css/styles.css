@@ -19,7 +19,11 @@
 body {
     background-color: var(--main-bg-color);
 }
-
+.hola {
+    height: 410px;
+    width: 500px;
+    
+}
 /* Estilo personalizado para el menú desplegable */
 .navbar .dropdown-menu-right {
     position: absolute;
@@ -192,7 +196,7 @@ body {
     padding: 1.5rem;
 }
 
-/* Footer
+Footer
 footer .main-logo {
     width: 15rem;
 }
@@ -210,9 +214,9 @@ footer .main-logo {
     display: flex;
 }
 
-footer .social-links img {
-    width: 3rem;
-    height: 3rem;
+/* footer .social-links img {
+    width: 2rem;
+    height: 2rem;
 } */
 
 .avatar {

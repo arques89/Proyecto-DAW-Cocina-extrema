@@ -1,17 +1,21 @@
-import { CheckIcon } from "@heroicons/react/24/solid";
-
+// src\front\js\pages\register\index.jsx
 import { inputRegister } from "./mocks";
 import { useContext, useState } from "react";
+import PropTypes from 'prop-types';
 import { Context } from "../../store/appContext";
+import { CheckIcon } from "@heroicons/react/24/outline";
+import { ValidatePassword } from '../../components/validate_password';
+import { GoEye, GoEyeClosed } from "react-icons/go"; 
+export const Register = ({setOpen}) => {
+  const { actions } = useContext(Context); // Obtén las acciones del contexto
 
-export const Register = () => {
-  const { actions } = useContext(Context); // Obtén las acciones y el estado del contexto
-
-  const [isChecked, setIsChecked] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
+  const [surname, setSurname] = useState("")
+  const [phone, setPhone] = useState("");
+  const [isChecked, setIsChecked] = useState(false); // Manejar el estado del checkbox
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -23,17 +27,13 @@ export const Register = () => {
     }
 
     // Verificar si los campos están vacíos
-    if (!name || !surname || !email || !password) {
+    if (!name || !surname || !email || !password || !phone) {
       console.error("Por favor, completa todos los campos");
       return;
     }
-    // Llamar a la acción register con los datos del formulario
-    actions.register(email, password, name, surname);
 
-    // const avatarConfig = await actions.register(email, password, name, surname);
-    // if (avatarConfig) {
-    //   setAvatarConfig(avatarConfig);
-    // }
+    await actions.register(email, password, name, surname, phone); // Llama a la acción de registro
+    setOpen(false); // Cierra el canvas después de un inicio de sesión exitoso
   };
 
   const handleChange = (event) => {
@@ -42,49 +42,55 @@ export const Register = () => {
     if (name === "password") setPassword(value);
     if (name === "name") setName(value);
     if (name === "surname") setSurname(value);
-  };
-
-  const renderInputRegister = () => {
-    return inputRegister.map((item) => (
-      <div key={item.id}>
-        <div className="block text-2xl mt-10 mx-36">
-          <div className=" flex justify-start">
-            <label
-              htmlFor={item.htmlFor}
-              className="text-xl text-shape_border_button mt-4"
-            >
-              {item.label}
-            </label>
-          </div>
-          <div className="mt-5">
-            <input
-              className="block bg-shape_input w-full rounded-full border-0 py-1.5 pl-7 pr-20 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-              type={item.type}
-              name={item.name}
-              value={
-                item.name === "email"
-                  ? email
-                  : item.name === "password"
-                  ? password
-                  : item.name === "name"
-                  ? name
-                  : surname
-              }
-              onChange={handleChange}
-              required
-              placeholder={item.placeholder}
-            />
-          </div>
-        </div>
-      </div>
-    ));
+    if (name === "phone") setPhone(value);
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        {renderInputRegister()}
-        <div className="flex w-full mt-8"></div>
+    <form onSubmit={handleSubmit}>
+      {inputRegister.map((item) => (
+        <div key={item.id} className="block text-2xl mt-2 mx-36">
+          <div className="flex justify-start">
+            <label htmlFor={item.htmlFor} className="text-xl text-shape_border_button mt-4">
+              {item.label}
+            </label>
+          </div>
+          <div className="mt-3 relative">
+            <input
+              className={item.className}
+              type={item.type === 'password' && showPassword ? 'text' : item.type}
+              name={item.name}
+              value={
+                item.name === "email" ? email :
+                item.name === "password" ? password :
+                item.name === "name" ? name :
+                item.name === "surname" ? surname :
+                item.name === "phone" ? phone : ''
+              }
+              onChange={(e) => {
+                handleChange(e);
+                if (item.name === "password") {
+                  handleChange(e);
+                }
+              }}
+              required
+              placeholder={item.placeholder}
+            />
+            {item.type === 'password' && (
+              <>
+                <button
+                  type="button"
+                  className="absolute right-0 top-0 mt-0 mr-4"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <GoEye size={18} className="mt-3.5" /> : <GoEyeClosed size={18} className="mt-3.5" />}
+                </button>
+                <ValidatePassword password={password} />
+              </>
+            )}
+          </div>
+        </div>
+      ))}
+      <div className="w-full mt-8">
         <label className="flex items-center space-x-2">
           <input
             className="flex items-center appearance-none checked:border-transparent rounded-full w-9 h-9 ms-24 mt-4"
@@ -96,13 +102,13 @@ export const Register = () => {
             {isChecked && <CheckIcon className="w-7 h-7 text-blue-600" />}
           </div>
           <span className="align-middle">
-            Inscríbase para recibir las noticias exclusivas, las novedades y las
-            ofertas personalizadas. <br /> Puede darse de baja en cualquier
-            momento.
+            Inscríbase para recibir las noticias exclusivas, las novedades
+            y las ofertas personalizadas. <br /> Puede darse de baja en
+            cualquier momento.
           </span>
         </label>
 
-        <div className="block text-2xl mt-5 mx-36">
+        <div className="block text-2xl mt-5 mx-36 mb-24">
           <button
             type="submit"
             className="w-full text-2xl text-white rounded-full bg-shape_border_button"
@@ -110,7 +116,10 @@ export const Register = () => {
             REGISTRARSE
           </button>
         </div>
-      </form>
-    </>
+      </div>
+    </form>
   );
+};
+Register.propTypes = {
+  setOpen: PropTypes.func,
 };
