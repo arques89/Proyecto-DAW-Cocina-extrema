@@ -7,6 +7,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+from models import db, User, Video, Comment, Like, Favorite, Category, VideoCategory
 import bcrypt
 from flask_mail import Message , Mail
 import random
@@ -68,6 +69,58 @@ class APIException(HTTPException):
 #     mail.send(msg)
 #     return 'Correo electrónico enviado correctamente!'
 # Generador de contraseñas
+from flask import request, jsonify
+import cloudinary.uploader
+
+@api.route('/upload_video', methods=['POST'])
+def upload_video():
+    # Verificar si se envía un archivo
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part in the request"}), 400
+    
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    if file:
+        # Subir archivo a Cloudinary
+        result = cloudinary.uploader.upload(file, resource_type="video")
+        video_url = result.get('secure_url')
+
+        if not video_url:
+            return jsonify({"error": "Failed to upload video to Cloudinary"}), 500
+
+        # Obtener otros datos del request
+        description = request.form.get('description')
+        user_id = request.form.get('user_id')
+
+        if not description or not user_id:
+            return jsonify({"error": "Description and user_id are required"}), 400
+
+        # Crear un nuevo registro de Video en la base de datos
+        new_video = Video(
+            src=video_url,
+            description=description,
+            user_id=user_id
+        )
+
+        db.session.add(new_video)
+        db.session.commit()
+
+        return jsonify(new_video.serialize()), 201
+
+    return jsonify({"error": "File upload failed"}), 500
+
+@api.route('/api/videos', methods=['GET'])
+def get_videos():
+    try:
+        videos = Video.query.all()
+        videos_serialized = [video.serialize() for video in videos]
+        return jsonify(videos_serialized), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 def gen_pass():
     minus = "abcdefghijklmnopqrstuvwxyz"
     mayus = minus.upper()

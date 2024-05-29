@@ -44,8 +44,8 @@ class Video(db.Model):
             'src': self.src,
             'description': self.description,
             'user_id': self.user_id,
-            'likes_count': len(self.likes),
-            'comments_count': len(self.comments)
+            'likes': len(self.likes) if self.likes else 0,  # Número de likes
+            'comments': len(self.comments) if self.comments else 0  # Número de comentarios
         }
 
 class Comment(db.Model):

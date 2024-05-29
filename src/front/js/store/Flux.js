@@ -38,6 +38,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       userSurname: null,
       userPhone: null,
       is_active: false,
+      videos: [],
       demo: [
         {
           title: "FIRST",
@@ -209,7 +210,19 @@ const getState = ({ getStore, getActions, setStore }) => {
           toast.error("Error al actualizar la contraseña");
         }
       },
-    
+      getVideos: async () => { // Nueva acción para obtener videos
+        try {
+          const response = await fetch(`${config.hostname}/api/videos`);
+          if (!response.ok) {
+            throw new Error("Error fetching videos");
+          }
+          const data = await response.json();
+          setStore({ videos: data });
+        } catch (error) {
+          console.error("Error fetching videos:", error);
+          toast.error("Error al obtener videos");
+        }
+      },
       logout: () => {
         // Eliminar todos los datos del localStorage
         localStorage.clear();
