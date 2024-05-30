@@ -39,6 +39,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       userPhone: null,
       is_active: false,
       videos: [],
+      comments: [],
       demo: [
         {
           title: "FIRST",
@@ -223,6 +224,123 @@ const getState = ({ getStore, getActions, setStore }) => {
           toast.error("Error al obtener videos");
         }
       },
+      likeVideo: async (videoId) => {
+        const store = getStore();
+        const { token } = store;
+        try {
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}/like`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          if (!response.ok) {
+            throw new Error("Error liking video");
+          }
+          const data = await response.json();
+          console.log(data.message);
+        } catch (error) {
+          console.error("Error liking video:", error);
+        }
+      },
+      unlikeVideo: async (videoId) => {
+        const store = getStore();
+        const { token } = store;
+        try {
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}/like`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          if (!response.ok) {
+            throw new Error("Error unliking video");
+          }
+          const data = await response.json();
+          console.log(data.message);
+        } catch (error) {
+          console.error("Error unliking video:", error);
+        }
+      },
+      getComments: async (videoId) => {
+        try {
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}/comments`);
+          if (!response.ok) {
+            throw new Error("Error fetching comments");
+          }
+          const data = await response.json();
+          setStore({ comments: data });
+        } catch (error) {
+          console.error("Error fetching comments:", error);
+        }
+      },
+      addComment: async (videoId, text) => {
+        const store = getStore();
+        const { token } = store;
+        console.log("addComment called with:", { videoId, text, token });
+        try {
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}/comment`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ text })
+          });
+          if (!response.ok) {
+            throw new Error("Error adding comment");
+          }
+          const data = await response.json();
+          console.log("Comment added:", data.message);
+          getActions().getComments(videoId); // Refresh comments
+        } catch (error) {
+          console.error("Error adding comment:", error);
+        }
+      },
+
+      addLike: async (videoId) => {
+        const store = getStore();
+        const actions = getActions(); // Obtén las acciones aquí
+        const { token } = store;
+        try {
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}/like`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          if (response.ok) {
+            console.log("Like added successfully");
+            actions.getVideos(); // Refrescar los datos del video con el nuevo conteo de likes
+          } else {
+            console.error(await response.json());
+          }
+        } catch (error) {
+          console.error("Error liking video:", error);
+        }
+      },
+      addFavorite: async (videoId) => {
+        const store = getStore();
+        const { token } = store;
+        try {
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}/favorite`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          if (response.ok) {
+            console.log("Favorite added successfully");
+          } else {
+            console.error(await response.json());
+          }
+        } catch (error) {
+          console.error("Error adding favorite:", error);
+        }
+      },
+    
       logout: () => {
         // Eliminar todos los datos del localStorage
         localStorage.clear();

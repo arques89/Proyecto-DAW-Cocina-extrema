@@ -6,8 +6,7 @@ import { Home } from "./pages/home/home";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { Settings } from "./pages/setting/index";
-// impor t ForgotPassword from "./pages/forgot_password/index";
-import {  ForgotPassword } from "./pages/forgot_password/index";
+import { ForgotPassword } from "./pages/forgot_password/index";
 import { Vlog } from "./pages/vlog";
 import { VlogDetails } from "./pages/vlog/vlog-details";
 
@@ -27,7 +26,7 @@ const Layout = () => {
         <Route path="/settings" element={<Settings />} />
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/vlog" element={<Vlog />} />
-        <Route path="/vlog/:id" element={<VlogDetails />} />
+        <Route path="/vlog/:videoId" element={<VlogDetails />} /> {/* Usa solo esta ruta */}
       </Routes>
       <Footer />
     </BrowserRouter>
