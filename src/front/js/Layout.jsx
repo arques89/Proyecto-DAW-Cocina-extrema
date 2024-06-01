@@ -20,6 +20,7 @@ import { Register } from "./pages/register";
 import { Settings } from "./pages/setting/index";
 import { Prueba } from "./components/prueba";
 import { ForgotPassword } from './pages/forgot_password/index';
+import { School } from "./pages/school/school";
 // import { RenderInputLogin2 } from "./components/input";
 
 const Layout = () => {
@@ -32,6 +33,7 @@ const Layout = () => {
         <Route path="/register" Component={Register} />
         <Route path="/settings" Component={Settings} />
         <Route path="/prueba" Component={Prueba} />
+        <Route path="/school" Component={School} />
         {/* <Route path="/p" Component={RenderInputLogin2} /> */}
         {/* <Route path="/chefs" Component={Chefs} /> */}
         {/* <Route path="/concursantes" Component={Concursantes} /> */}
