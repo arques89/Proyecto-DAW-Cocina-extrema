@@ -40,33 +40,36 @@ export const CarouselSchool = () => {
   }, [currentIndex]);
 
   return (
-    <div className="relative w-full h-screen px-44 my-4">
+    <div className="relative w-full h-[480px] px-28 my-4">
       <div className="relative w-full h-full flex items-center">
         <img
           src={carouselSchool[currentIndex].image}
           alt=""
           className="object-cover object-center h-full w-full"
         />
-        <div className="absolute top-0 left-0 h-full w-1/3 bg-black bg-opacity-50 flex flex-col justify-center items-start p-8">
-          <p className="text-3xl text-white pb-4">
+        <div className="absolute top-0 left-0 h-full w-2/5 bg-black bg-opacity-50 flex flex-col justify-center items-center p-6">
+          <p className="text-2xl text-red-600 pb-4 text-center">
             {carouselSchool[currentIndex].title}
           </p>
-          <p className="text-sm text-white font-thin">
+          <p className="text-sm text-white font-thin text-center">
             {carouselSchool[currentIndex].subtitle}
           </p>
-          <div className="flex mt-12 items-center">
+          <button className="mt-4 border text-white py-2 px-4 rounded-full text-xs">
+            VER CONTENIDO
+          </button>
+          <div className="flex mt-12 items-center justify-center w-full">
             <button
               onClick={prevImage}
-              className="flex items-center justify-center mr-4"
-              style={{ width: '40px', height: '40px' }}
+              className="flex items-center justify-center mr-2"
+              style={{ width: '30px', height: '30px' }}
             >
               <img src={ChevronLeft} alt="Arrow Back" className="text-white opacity-50" />
             </button>
             {renderIndicators}
             <button
               onClick={nextImage}
-              className="flex items-center justify-center ml-4 text-white opacity-50"
-              style={{ width: '40px', height: '40px' }}
+              className="flex items-center justify-center ml-2"
+              style={{ width: '30px', height: '30px' }}
               size={24}
             >
               <img src={ChevronRight} alt="Chevron Right" />

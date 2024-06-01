@@ -1,4 +1,3 @@
-// import { Video } from "../../components/video";
 import Bandeja from "../../../img/img_school/icons/rojo_bandeja.png";
 import Tiempo from "../../../img/img_school/icons/tiempo.png";
 import Sombrero from "../../../img/img_school/icons/rojo_sombrero.png";
@@ -6,13 +5,13 @@ import Calendario from "../../../img/img_school/icons/calendario.png";
 import Reloj from "../../../img/img_school/icons/reloj.png";
 import Ubicacion from "../../../img/img_school/icons/ubicacion.png";
 import Euro from "../../../img/img_school/icons/euro.png";
-// import video1 from "../../../img/img_home/canal-cocina-portada-1100x619.jpg";
 import SchoolHeader from "../../../img/img_school/header.jpg";
 import SchoolEnd from "../../../img/img_school/end.jpg";
 import { Sponsor } from "../../components/sponsor";
 import { Slider2 } from "../../components/slider2";
 import SubscriptionPlans from "../../components/subscriptionPlans";
 import { CarouselSchool } from "../../components/carouselSchool";
+import ChefsSchool from "../../components/chefs-school";
 
 export const School = () => {
   return (
@@ -20,19 +19,19 @@ export const School = () => {
       <div className="relative">
         <Slider2 imageSrc={SchoolHeader} imageHeight="400px" darken={true} />
         <div
-          className="absolute top-0 right-0 bottom-0 flex flex-col justify-center items-center text-right text-white p-16 opacity-100 z-10"
+          className="absolute top-0 right-0 bottom-0 flex flex-col justify-center items-center text-center lg:text-right text-white p-16 opacity-100 z-10"
           style={{ width: "33.33%", right: 100 }}
         >
           <p className="text-4xl tracking-widest text-red-600">ESCUELA</p>
-          <p className="text-2xl mt-2">Cocina Extrema</p>
-          <p className="text-sm mt-2 text-shape_primary">
+          <p className="w-52 text-2xl mt-2">Cocina Extrema</p>
+          <p className="w-52 text-sm mt-2 text-shape_primary">
             Dirigida por Fernando Cruz
           </p>
-          <div className="mt-4">
-            <button className="bg-white text-black py-2 px-4 rounded-full mr-4 text-xs">
+          <div className="mt-4 flex justify-center w-full space-x-5">
+            <button className="bg-white text-black py-2 px-4 rounded-full text-xs flex-1 text-center">
               MATRICÚLATE
             </button>
-            <button className="bg-white text-black py-2 px-4 rounded-full mr-4 text-xs">
+            <button className="bg-white text-black py-2 px-4 rounded-full text-xs flex-1 text-center">
               TARJETA REGALO
             </button>
           </div>
@@ -68,16 +67,8 @@ export const School = () => {
             <p className="text-font_icon text-sm">Y concursantes</p>
           </div>
         </div>
-
-        {/* <Video
-          className="flex px-28"
-          title="Una receta para chuparte los dedos"
-          season="Programa 10"
-          chapter="ÚLTIMO PROGRAMA"
-          go="Ver ahora"
-          image={video1}
-        /> */}
       </div>
+      
       <section className="px-44">
         <div className="flex mt-16 w-full mb-24">
           <div className="w-1/2 text-white font-thin pr-4">
@@ -134,42 +125,6 @@ export const School = () => {
           </p>
         </div>
         <SubscriptionPlans />
-
-        {/* <div className="flex mt-16 w-full mb-24 space-x-36 h-64">
-          <div className="w-1/3 text-white font-thin p-4 border rounded-3xl flex flex-col justify-between items-center">
-            <p className="text-2xl tracking-widest text-shape_red mb-2">
-              MENSUAL
-            </p>
-            <p className="text-sm text-shape_primary mb-1">Precio promoción:</p>
-            <p className="text-3xl text-shape_red mb-1">9,95 €</p>
-            <p className="text-sm">Precio (19€)</p>
-            <button className="mt-4 bg-shape_red text-black font-semibold py-2 px-4 rounded-full text-sm">
-              MATRICÚLATE
-            </button>
-          </div>
-          <div className="w-1/3 text-white font-thin p-4 border rounded-3xl flex flex-col justify-between items-center">
-            <p className="text-2xl tracking-widest text-shape_red mb-2">
-              SEMESTRAL
-            </p>
-            <p className="text-sm text-shape_primary mb-1">Precio promoción:</p>
-            <p className="text-3xl  text-shape_red mb-1">49,95 €</p>
-            <p className="text-sm">Precio (114€)</p>
-            <button className="mt-4 bg-shape_red text-black font-semibold py-2 px-4 rounded-full text-sm">
-              MATRICÚLATE
-            </button>
-          </div>
-          <div className="w-1/3 text-white font-thin p-4 border rounded-3xl flex flex-col justify-between items-center">
-            <p className="text-2xl tracking-widest text-shape_red mb-2">
-              ANUAL
-            </p>
-            <p className="text-sm text-shape_primary mb-1">Precio promoción:</p>
-            <p className="text-3xl  text-shape_red mb-1">94,95 €</p>
-            <p className="text-sm">Precio (228€)</p>
-            <button className="mt-4 bg-shape_red text-black font-semibold py-2 px-4 rounded-full text-sm">
-              MATRICÚLATE
-            </button>
-          </div>
-        </div> */}
       </section>
 
       <section>
@@ -186,14 +141,13 @@ export const School = () => {
             </p>
           </div>
         </div>
-
         <div className="flex w-full px-16 mb-20 justify-center">
           <CarouselSchool />
         </div>
       </section>
 
-      <section className="mb-20">
-        <div className="px-44 w-full mb-2 mt-24">
+      <section className="mb-10">
+        <div className="px-44 w-full mb-2 mt-20">
           <div className="text-white font-thin">
             <p className="text-4xl">Los mejores docentes</p>
             <p className="text-sm mt-8">
@@ -205,7 +159,9 @@ export const School = () => {
             </p>
           </div>
         </div>
+        <ChefsSchool />
       </section>
+
       <div className="relative">
         <Slider2 imageSrc={SchoolEnd} imageHeight="300px" darken={true} />
         <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white opacity-100 z-10">
@@ -215,7 +171,9 @@ export const School = () => {
           </p>
           <p className="text-sm mt-2 text-shape_primary">
             Si completas todas las lecciones disponibles en la escuela podrás
-            descargar un certificado que acreditará tu pasión por la cocina.<br/>¡A qué esperas! ¡Completa todas las lecciones!
+            descargar un certificado que acreditará tu pasión por la cocina.
+            <br />
+            ¡A qué esperas! ¡Completa todas las lecciones!
           </p>
           <div className="mt-4">
             <button className="bg-white text-black py-2 px-4 rounded-full mr-4 text-xs">

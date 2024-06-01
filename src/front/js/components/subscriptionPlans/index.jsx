@@ -24,7 +24,7 @@ PlanCard.propTypes = {
   regularPrice: PropTypes.string.isRequired,
 };
 
-export const SubscriptionPlans = () => {
+const SubscriptionPlans = () => {
   return (
     <div className="flex mt-12 w-full mb-24 space-x-36 h-64">
       {subscriptionPlans.map((plan) => (
@@ -39,3 +39,4 @@ export const SubscriptionPlans = () => {
   );
 };
 
+export default SubscriptionPlans;
