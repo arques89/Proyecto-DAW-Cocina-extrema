@@ -11,7 +11,7 @@ export const Vlog = () => {
   const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    actions.getVideos();
+    actions.getVideosVlog();
   }, []);
 
   return (

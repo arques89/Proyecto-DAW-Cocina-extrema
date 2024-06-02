@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Dialog, Transition } from "@headlessui/react";
 import { Options } from "./options";
 import { Menu_navbar } from "./menu_navbar";
-import { Toaster } from "react-hot-toast";
 import { ForgotPassword } from "../pages/forgot_password";
 import { UserOptions } from "./user_options";
 import { Context } from "../store/appContext";
@@ -56,19 +55,6 @@ export function Canvas({ open, setOpen, content }) {
                       ) : null}
                     </div>
                   </div>
-                  <Toaster
-                    position="top-right"
-                    reverseOrder={false}
-                    toastOptions={{
-                      duration: 10000,
-                      style: {
-                        background: "#363636",
-                        color: "#fff",
-                        marginBottom: "0px",
-                        marginRight: "220px",
-                      },
-                    }}
-                  />
                 </Dialog.Panel>
               </Transition.Child>
             </div>

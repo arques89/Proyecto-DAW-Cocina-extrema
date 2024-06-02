@@ -8,6 +8,7 @@ import { DatosPedidos } from "./datos-pedidos";
 import { Sponsor } from "../../components/sponsor";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
+import { SharedData } from "./shared-data";
 
 export const Settings = () => {
   const { store, actions } = useContext(Context);
@@ -39,6 +40,8 @@ export const Settings = () => {
       return <DatosBancarios />;
     } else if (selectOption === "pedidos") {
       return <DatosPedidos />;
+    } else if (selectOption === "shared") {
+      return <SharedData />;
     } else {
       return <div>Opción no válida</div>;
     }
@@ -113,7 +116,9 @@ export const Settings = () => {
                 <ul className="mt-6">
                   <li className="font-bold mb-2">MI CONTENIDO</li>
                   <li className="mb-2 hover:text-shape_red">
-                    Contenido compartido
+                    <a onClick={() => handlechange("shared")} href="#">
+                      Contenido compartido
+                    </a>
                   </li>
                   <li className="mb-2 hover:text-shape_red">Mis favoritos</li>
                 </ul>
@@ -149,11 +154,21 @@ export const Settings = () => {
               <div className="flex w-full mt-12">
                 <div className="block w-full">
                   <div className="flex w-full mb-16 text-center justify-between text-xl font-thin">
-                    <span className="hover:text-shape_red"><a href="/">Home</a></span>
-                    <span className="hover:text-shape_red"><a href="/">Programa</a></span>
-                    <span className="hover:text-shape_red"><a href="/">Escuela</a></span>
-                    <span className="hover:text-shape_red"><a href="/">Vlog</a></span>
-                    <span className="hover:text-shape_red"><a href="/">Tienda</a></span>
+                    <span className="hover:text-shape_red">
+                      <a href="/">Home</a>
+                    </span>
+                    <span className="hover:text-shape_red">
+                      <a href="/">Programa</a>
+                    </span>
+                    <span className="hover:text-shape_red">
+                      <a href="/">Escuela</a>
+                    </span>
+                    <span className="hover:text-shape_red">
+                      <a href="/">Vlog</a>
+                    </span>
+                    <span className="hover:text-shape_red">
+                      <a href="/">Tienda</a>
+                    </span>
                   </div>
                 </div>
               </div>

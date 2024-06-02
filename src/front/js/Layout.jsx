@@ -9,7 +9,7 @@ import { Settings } from "./pages/setting/index";
 import { ForgotPassword } from "./pages/forgot_password/index";
 import { Vlog } from "./pages/vlog";
 import { VlogDetails } from "./pages/vlog/vlog-details";
-
+import { Toaster } from "react-hot-toast";
 import "../css/layout.css";
 import "../css/media.css";
 import "../css/styles.css";
@@ -28,6 +28,19 @@ const Layout = () => {
         <Route path="/vlog" element={<Vlog />} />
         <Route path="/vlog/:videoId" element={<VlogDetails />} /> {/* Usa solo esta ruta */}
       </Routes>
+      <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                    toastOptions={{
+                      duration: 10000,
+                      style: {
+                        background: "#363636",
+                        color: "#fff",
+                        marginBottom: "0px",
+                        marginRight: "220px",
+                      },
+                    }}
+                  />
       <Footer />
     </BrowserRouter>
   );

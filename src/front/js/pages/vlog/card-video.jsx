@@ -5,8 +5,6 @@ import PropTypes from "prop-types";
 
 export const CardVideo = ({ videos }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [comments, setComments] = useState({});
-  const [offsets, setOffsets] = useState({});
   const navigate = useNavigate();
 
   const handleMouseEnter = (index) => setHoveredIndex(index);
@@ -14,23 +12,6 @@ export const CardVideo = ({ videos }) => {
 
   const handlePlayClick = (id) => {
     navigate(`/vlog/${id}`);
-  };
-
-  const loadMoreComments = (videoId) => {
-    const currentOffset = offsets[videoId] || 0;
-    fetch(`/api/videos/${videoId}/comments?offset=${currentOffset}&limit=5`)
-      .then(response => response.json())
-      .then(data => {
-        setComments(prevComments => ({
-          ...prevComments,
-          [videoId]: [...(prevComments[videoId] || []), ...data]
-        }));
-        setOffsets(prevOffsets => ({
-          ...prevOffsets,
-          [videoId]: currentOffset + 5
-        }));
-      })
-      .catch(error => console.error('Error fetching comments:', error));
   };
 
   const renderRows = () => {
@@ -48,27 +29,12 @@ export const CardVideo = ({ videos }) => {
                 <div className="flex justify-end">
                   <img className="w-12 h-12 cursor-pointer" src={Play} alt="video vlog" onClick={() => handlePlayClick(video.id)} />
                 </div>
-                <div className="flex items-end h-1/2 justify-center space-x-8 pb-2">
-                  <p className="flex items-center bg-opacity-75 px-3 py-1 rounded">🤍 {video.likes ?? 0}</p>
-                  <p className="flex items-center bg-opacity-75 px-3 py-1 rounded">💬 {video.comments ?? 0}</p>
+                <div className="flex flex-col items-center justify-center space-y-2">
+                  <h3 className="text-2xl font-bold">{video.title}</h3>
+                  <p className="flex items-center bg-opacity-75 px-3 py-1 rounded">💖 {video.favorites_count ?? 0}</p>
+                  <p className="flex items-center bg-opacity-75 px-3 py-1 rounded">💬 {video.comments_count ?? 0}</p>
+                  <p className="flex items-center bg-opacity-75 px-3 py-1 rounded">👍 {video.likes_count ?? 0}</p>
                 </div>
-                <div className="flex h-1/2 justify-center items-start pt-2">
-                  <p className="text-2xl bg-opacity-75 py-1 rounded font-thin">{video.description}</p>
-                </div>
-              </div>
-              <div className="mt-4">
-                <h3 className="text-lg font-semibold">Comentarios</h3>
-                <div className="max-h-40 overflow-y-auto">
-                  {comments[video.id]?.map(comment => (
-                    <p key={comment.id} className="text-sm my-2">{comment.text}</p>
-                  ))}
-                </div>
-                <button
-                  onClick={() => loadMoreComments(video.id)}
-                  className="mt-2 text-blue-500 hover:underline"
-                >
-                  Ver más comentarios
-                </button>
               </div>
             </div>
           ))}
@@ -90,9 +56,10 @@ CardVideo.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       src: PropTypes.string.isRequired,
-      likes: PropTypes.number.isRequired,
-      comments: PropTypes.number.isRequired,
-      description: PropTypes.string.isRequired
+      favorites_count: PropTypes.number.isRequired,
+      comments_count: PropTypes.number.isRequired,
+      likes_count: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
     })
   ).isRequired
 };

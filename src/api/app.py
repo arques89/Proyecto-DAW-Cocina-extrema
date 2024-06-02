@@ -1,8 +1,16 @@
 from flask import Flask
 from flask_jwt_extended import JWTManager
 
+from routes.home import home_api
+from routes.login import login_api
+from routes.register import register_api
+from routes.forgot import forgot_api
+from routes.vlog import vlog_api
+from routes.vlog_details import vlog_details_api
+from routes.personal_data import personal_data_api
+from routes.shared_data import shared_data_api
+
 from config import Config
-from routes import api  # Asegúrate de que esta línea importe el Blueprint correctamente
 from cors import init_cors
 from database import db, init_db
 from mail import init_mail
@@ -28,8 +36,14 @@ def create_app():
     init_mail(app)
 
     # Registrar las rutas en la aplicación
-    app.register_blueprint(api)
-
+    app.register_blueprint(home_api)
+    app.register_blueprint(register_api)
+    app.register_blueprint(login_api)
+    app.register_blueprint(forgot_api)
+    app.register_blueprint(personal_data_api)
+    app.register_blueprint(shared_data_api)
+    app.register_blueprint(vlog_api)
+    app.register_blueprint(vlog_details_api)
     # Inicializar la interfaz de administración
     init_admin(app)
 

@@ -40,6 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       is_active: false,
       videos: [],
       comments: [],
+      categories: [],
       demo: [
         {
           title: "FIRST",
@@ -138,7 +139,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           toast.success(responseData.message, { position: "top-right" });
           return { success: true, message: responseData.message };
         } catch (error) {
-          toast.error("Error al enviar la solicitud", { position: "top-right" });
+          toast.error("Error al enviar la solicitud", {
+            position: "top-right",
+          });
           return { success: false, message: "Error al enviar la solicitud" };
         }
       },
@@ -151,7 +154,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             email: email,
             name: name,
             surname: surname,
-            phone: phone
+            phone: phone,
           };
 
           const response = await fetch(`${config.hostname}/users/${userId}`, {
@@ -189,29 +192,32 @@ const getState = ({ getStore, getActions, setStore }) => {
       updatePassword: async (password) => {
         const store = getStore();
         const { userId, token } = store;
-      
+
         try {
-          const response = await fetch(`${config.hostname}/users/${userId}/password`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({ password }),
-          });
-      
+          const response = await fetch(
+            `${config.hostname}/users/${userId}/password`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ password }),
+            }
+          );
+
           if (!response.ok) {
             const responseData = await response.json();
             throw new Error(responseData.error);
           }
-      
+
           toast.success("Contraseña actualizada exitosamente");
         } catch (error) {
           console.error("Error al actualizar la contraseña:", error);
           toast.error("Error al actualizar la contraseña");
         }
       },
-      getVideos: async () => { // Nueva acción para obtener videos
+      getVideosVlog: async () => {
         try {
           const response = await fetch(`${config.hostname}/api/videos`);
           if (!response.ok) {
@@ -221,20 +227,23 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ videos: data });
         } catch (error) {
           console.error("Error fetching videos:", error);
-          toast.error("Error al obtener videos");
         }
       },
+
       likeVideo: async (videoId) => {
         const store = getStore();
         const { token } = store;
         try {
-          const response = await fetch(`${config.hostname}/api/videos/${videoId}/like`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/like`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
             }
-          });
+          );
           if (!response.ok) {
             throw new Error("Error liking video");
           }
@@ -248,13 +257,16 @@ const getState = ({ getStore, getActions, setStore }) => {
         const store = getStore();
         const { token } = store;
         try {
-          const response = await fetch(`${config.hostname}/api/videos/${videoId}/like`, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/like`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
             }
-          });
+          );
           if (!response.ok) {
             throw new Error("Error unliking video");
           }
@@ -266,7 +278,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       getComments: async (videoId) => {
         try {
-          const response = await fetch(`${config.hostname}/api/videos/${videoId}/comments`);
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/comments`
+          );
           if (!response.ok) {
             throw new Error("Error fetching comments");
           }
@@ -281,14 +295,17 @@ const getState = ({ getStore, getActions, setStore }) => {
         const { token } = store;
         console.log("addComment called with:", { videoId, text, token });
         try {
-          const response = await fetch(`${config.hostname}/api/videos/${videoId}/comment`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ text })
-          });
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/comment`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ text }),
+            }
+          );
           if (!response.ok) {
             throw new Error("Error adding comment");
           }
@@ -305,12 +322,15 @@ const getState = ({ getStore, getActions, setStore }) => {
         const actions = getActions(); // Obtén las acciones aquí
         const { token } = store;
         try {
-          const response = await fetch(`${config.hostname}/api/videos/${videoId}/like`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${token}`
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/like`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
-          });
+          );
           if (response.ok) {
             console.log("Like added successfully");
             actions.getVideos(); // Refrescar los datos del video con el nuevo conteo de likes
@@ -325,12 +345,15 @@ const getState = ({ getStore, getActions, setStore }) => {
         const store = getStore();
         const { token } = store;
         try {
-          const response = await fetch(`${config.hostname}/api/videos/${videoId}/favorite`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${token}`
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/favorite`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
-          });
+          );
           if (response.ok) {
             console.log("Favorite added successfully");
           } else {
@@ -340,7 +363,325 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error adding favorite:", error);
         }
       },
-    
+
+      // SHARED DATA - INICIO
+      getVideosSharedData: async () => {
+        try {
+          const response = await fetch(`${config.hostname}/api/videos`);
+          if (!response.ok) {
+            throw new Error("Error fetching videos");
+          }
+          const data = await response.json();
+          setStore({ videos: data });
+        } catch (error) {
+          console.error("Error fetching videos:", error);
+          toast.error("Error al obtener videos");
+        }
+      },
+      saveRecipeSharedData: async (recipeData) => {
+        const store = getStore();
+        const { token, userId } = store;
+
+        const formData = new FormData();
+        formData.append("title", recipeData.title);
+        formData.append("description", recipeData.description);
+        formData.append("videoFile", recipeData.videoFile);
+        formData.append("duration", recipeData.duration);
+        formData.append("user_id", userId);
+        formData.append("ingredientsPart1", recipeData.ingredientsPart1);
+        formData.append("ingredientsPart2", recipeData.ingredientsPart2);
+
+        try {
+          const response = await fetch(`${config.hostname}/api/videos`, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+          });
+          if (!response.ok) {
+            throw new Error("Error saving recipe");
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error("Error saving recipe:", error);
+          toast.error("Error al guardar la receta");
+        }
+      },
+      deleteVideoSharedData: async (videoId) => {
+        const store = getStore();
+        const { token } = store;
+
+        try {
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}`,
+            {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          if (!response.ok) {
+            throw new Error("Error deleting video");
+          }
+          await response.json();
+          toast.success("Video eliminado correctamente");
+          getActions().getVideos(); // Refrescar la lista de videos
+        } catch (error) {
+          console.error("Error deleting video:", error);
+          toast.error("Error al eliminar el video");
+        }
+      },
+      getCategoriesSharedData: async () => {
+        try {
+          const response = await fetch(`${config.hostname}/api/categories`);
+          if (!response.ok) {
+            throw new Error("Error fetching categories");
+          }
+          const data = await response.json();
+          setStore({ categories: data });
+        } catch (error) {
+          console.error("Error fetching categories:", error);
+        }
+      },
+      // SHARED DATA - FIN
+      // VLOG DETAILS - INICIO
+       // 1. Añadir favoritos
+       addFavoriteVlogDetails: async (videoId) => {
+        const store = getStore();
+        const { token, userId } = store;
+
+        try {
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/favorite`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ user_id: userId }),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Error adding favorite");
+          }
+
+          const data = await response.json();
+          toast.success(data.message);
+          getActions().getFavorites();
+        } catch (error) {
+          console.error("Error adding favorite:", error);
+          toast.error("Error al añadir a favoritos");
+        }
+      },
+
+      // 2. Eliminar favoritos
+      removeFavoriteVlogDetails: async (videoId) => {
+        const store = getStore();
+        const { token, userId } = store;
+
+        try {
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/favorite`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ user_id: userId }),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Error removing favorite");
+          }
+
+          const data = await response.json();
+          toast.success(data.message);
+          getActions().getFavorites();
+        } catch (error) {
+          console.error("Error removing favorite:", error);
+          toast.error("Error al eliminar de favoritos");
+        }
+      },
+
+      // 3. Obtener comentarios
+      getCommentsVlogDetails: async (videoId) => {
+        try {
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/comments`
+          );
+          if (!response.ok) {
+            throw new Error("Error fetching comments");
+          }
+          const data = await response.json();
+          setStore({ comments: data });
+        } catch (error) {
+          console.error("Error fetching comments:", error);
+        }
+      },
+
+      // 4. Obtener número total de comentarios
+      getCommentsCountVlogDetails: async (videoId) => {
+        try {
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/comments/count`
+          );
+          if (!response.ok) {
+            throw new Error("Error fetching comments count");
+          }
+          const data = await response.json();
+          return data.count;
+        } catch (error) {
+          console.error("Error fetching comments count:", error);
+        }
+      },
+
+      // 5. Obtener video
+      getVideoVlogDetails: async (videoId) => {
+        try {
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}`);
+          if (!response.ok) {
+            throw new Error("Error fetching video");
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error("Error fetching video:", error);
+        }
+      },
+
+      // 6. Obtener título del video
+      getVideoTitleVlogDetails: async (videoId) => {
+        try {
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/title`
+          );
+          if (!response.ok) {
+            throw new Error("Error fetching video title");
+          }
+          const data = await response.json();
+          return data.title;
+        } catch (error) {
+          console.error("Error fetching video title:", error);
+        }
+      },
+
+      // 7. Añadir like
+      addLikeVlogDetails: async (videoId) => {
+        const store = getStore();
+        const { token, userId } = store;
+
+        try {
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/like`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ user_id: userId }),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Error adding like");
+          }
+
+          const data = await response.json();
+          toast.success(data.message);
+          getActions().getVideoVlogDetails(videoId); // Refresh the video data to update the likes count
+        } catch (error) {
+          console.error("Error adding like:", error);
+          toast.error("Error al añadir like");
+        }
+      },
+
+      // 8. Eliminar like
+      removeLikeVlogDetails: async (videoId) => {
+        const store = getStore();
+        const { token, userId } = store;
+
+        try {
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/like`,
+            {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ user_id: userId }),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Error removing like");
+          }
+
+          const data = await response.json();
+          toast.success(data.message);
+          getActions().getVideoVlogDetails(videoId); // Refresh the video data to update the likes count
+        } catch (error) {
+          console.error("Error removing like:", error);
+          toast.error("Error al eliminar like");
+        }
+      },
+
+      // 9. Obtener ingredientes parte 1
+      getIngredientsPart1VlogDetails: async (videoId) => {
+        try {
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/ingredients/part1`
+          );
+          if (!response.ok) {
+            throw new Error("Error fetching ingredients part 1");
+          }
+          const data = await response.json();
+          return data.ingredients_part1;
+        } catch (error) {
+          console.error("Error fetching ingredients part 1:", error);
+        }
+      },
+
+      // 10. Obtener ingredientes parte 2
+      getIngredientsPart2VlogDetails: async (videoId) => {
+        try {
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/ingredients/part2`
+          );
+          if (!response.ok) {
+            throw new Error("Error fetching ingredients part 2");
+          }
+          const data = await response.json();
+          return data.ingredients_part2;
+        } catch (error) {
+          console.error("Error fetching ingredients part 2:", error);
+        }
+      },
+
+      // 11. Obtener nombre del propietario de la receta
+      getVideoOwnerVlogDetails: async (videoId) => {
+        try {
+          const response = await fetch(
+            `${config.hostname}/api/videos/${videoId}/owner`
+          );
+          if (!response.ok) {
+            throw new Error("Error fetching video owner");
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error("Error fetching video owner:", error);
+        }
+      },
+      // VLOG DETAILS - FIN
       logout: () => {
         // Eliminar todos los datos del localStorage
         localStorage.clear();
