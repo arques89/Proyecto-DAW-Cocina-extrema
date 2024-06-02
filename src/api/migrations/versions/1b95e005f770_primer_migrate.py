@@ -1,8 +1,8 @@
-"""Actualizar base de datos con la nueva configuración2
+"""primer migrate
 
-Revision ID: 61c3ab13393f
-Revises: 03897780f207
-Create Date: 2024-05-27 23:13:45.236206
+Revision ID: 1b95e005f770
+Revises: 
+Create Date: 2024-06-02 17:29:37.346089
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '61c3ab13393f'
-down_revision = '03897780f207'
+revision = '1b95e005f770'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -28,21 +28,26 @@ def upgrade():
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('name', sa.String(length=80), nullable=False),
     sa.Column('surname', sa.String(length=80), nullable=False),
-    sa.Column('uq_email', sa.String(length=120), nullable=False),
-    sa.Column('uq_phone', sa.String(length=120), nullable=False),
+    sa.Column('email', sa.String(length=120), nullable=False),
+    sa.Column('phone', sa.String(length=120), nullable=False),
     sa.Column('password', sa.String(length=250), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=False),
     sa.Column('token', sa.Text(), nullable=True),
     sa.Column('is_admin', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('uq_email'),
-    sa.UniqueConstraint('uq_phone')
+    sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('phone')
     )
     op.create_table('video',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('src', sa.String(length=250), nullable=False),
     sa.Column('description', sa.String(length=500), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('title', sa.String(length=100), nullable=False),
+    sa.Column('ingredients_part1', sa.Text(), nullable=False),
+    sa.Column('ingredients_part2', sa.Text(), nullable=False),
+    sa.Column('duration', sa.Float(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

@@ -6,12 +6,16 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(80), nullable=False)
     surname = db.Column(db.String(80), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False, name='uq_email')
-    phone = db.Column(db.String(120), unique=True, nullable=False, name='uq_phone')
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    phone = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(250), nullable=False)
     is_active = db.Column(db.Boolean(), nullable=False)
     token = db.Column(db.Text, nullable=True)
     is_admin = db.Column(db.Boolean(), default=False)
+    videos = db.relationship('Video', backref='user', lazy=True)
+    comments = db.relationship('Comment', backref='user', lazy=True)
+    likes = db.relationship('Like', backref='user', lazy=True)
+    favorites = db.relationship('Favorite', backref='user', lazy=True)
 
     def __repr__(self):
         return '<User %r>' % self.email
@@ -22,7 +26,10 @@ class User(db.Model):
             'name': self.name,
             'surname': self.surname,
             'email': self.email,
-            'phone': self.phone
+            'phone': self.phone,
+            'is_active': self.is_active,
+            'token': self.token,
+            'is_admin': self.is_admin
         }
 
 class Video(db.Model):
@@ -34,6 +41,11 @@ class Video(db.Model):
     comments = db.relationship('Comment', backref='video', lazy=True)
     likes = db.relationship('Like', backref='video', lazy=True)
     favorites = db.relationship('Favorite', backref='video', lazy=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    title = db.Column(db.String(100), nullable=False)
+    ingredients_part1 = db.Column(db.Text, nullable=False)
+    ingredients_part2 = db.Column(db.Text, nullable=False)
+    duration = db.Column(db.Float, nullable=False)  # Nueva columna para la duración
 
     def __repr__(self):
         return '<Video %r>' % self.description
@@ -44,9 +56,15 @@ class Video(db.Model):
             'src': self.src,
             'description': self.description,
             'user_id': self.user_id,
-            'likes': len(self.likes) if self.likes else 0,  # Número de likes
-            'comments': len(self.comments) if self.comments else 0  # Número de comentarios
+            'created_at': self.created_at,
+            'title': self.title,
+            'ingredients_part1': self.ingredients_part1,
+            'ingredients_part2': self.ingredients_part2,
+            'duration': self.duration,
+            'likes': len(self.likes),
+            'comments': len(self.comments)
         }
+
 
 class Comment(db.Model):
     __tablename__ = "comment"
