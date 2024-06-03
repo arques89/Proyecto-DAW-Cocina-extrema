@@ -1,23 +1,3 @@
-# from flask import Flask, jsonify, Blueprint
-# from models import db, Video
-
-# vlog_api = Blueprint('vlog_api', __name__)
-
-# @vlog_api.route('/api/videos', methods=['GET'])
-# def get_videos():
-#     videos = Video.query.all()
-#     videos_data = [
-#         {
-#             'id': video.id,
-#             'title': video.title,
-#             'src': video.src,
-#             'favorites_count': len(video.favorites) or 0,
-#             'comments_count': len(video.comments) or 0,
-#             'likes_count': len(video.likes) or 0
-#         }
-#         for video in videos
-#     ]
-#     return jsonify(videos_data)
 from flask import Flask, jsonify, Blueprint
 from models import db, Video, Like
 
@@ -33,7 +13,7 @@ def get_videos():
             'src': video.src,
             'favorites_count': len(video.favorites) or 0,
             'comments_count': len(video.comments) or 0,
-            'likes_count': len(video.likes) or 0
+            'likes_count': len(video.likes) if video.likes else 0
         }
         for video in videos
     ]

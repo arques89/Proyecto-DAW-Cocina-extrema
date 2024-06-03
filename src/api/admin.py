@@ -1,6 +1,6 @@
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from models import db, User, Video, Comment, Like, Favorite, Category, VideoCategory
+from models import db, User, Video, Comment, Like, Favorite, Category, VideoCategory, Portada
 
 admin = Admin(name='Admin Panel', template_mode='bootstrap3')
 
@@ -45,7 +45,13 @@ class VideoCategoryModelView(ModelView):
     column_searchable_list = ('video_id', 'category_id')
     column_filters = ('video_id', 'category_id')
     form_columns = ('video_id', 'category_id')
-
+    
+class PortadaModelView(ModelView):
+    column_list = ('id', 'url', 'title', 'description', 'timestamp')
+    column_searchable_list = ('title', 'description')
+    column_filters = ('timestamp',)
+    form_columns = ('url', 'title', 'description')
+    
 def init_admin(app):
     admin = Admin(app, name='Admin Panel', template_mode='bootstrap3')
 
@@ -57,5 +63,6 @@ def init_admin(app):
     admin.add_view(FavoriteModelView(Favorite, db.session))
     admin.add_view(CategoryModelView(Category, db.session))
     admin.add_view(VideoCategoryModelView(VideoCategory, db.session))
+    admin.add_view(PortadaModelView(Portada, db.session))
 
     return admin

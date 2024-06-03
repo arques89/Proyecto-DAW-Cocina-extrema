@@ -13,25 +13,22 @@ export const VlogDetails = () => {
   const [newComment, setNewComment] = useState("");
   const [visibleComments, setVisibleComments] = useState(5);
   const { videoId } = useParams();
-  const video = store.videos.find((v) => v.id === parseInt(videoId));
+  const video = store.videoDetails;
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     if (videoId) {
       actions.getVideoVlogDetails(videoId);
-      actions.getVideoTitleVlogDetails(videoId);
       actions.getCommentsVlogDetails(videoId);
-      actions.getCommentsCountVlogDetails(videoId);
-      actions.getIngredientsPart1VlogDetails(videoId);
-      actions.getIngredientsPart2VlogDetails(videoId);
-      actions.getVideoOwnerVlogDetails(videoId);
+      actions.getFavoritesVlogDetails(videoId);
+      actions.getLikesVlogDetails(videoId);
       setIsFavorite(store.favorites.includes(parseInt(videoId)));
     }
   }, [videoId, store.favorites]);
 
   const handleAddComment = () => {
     if (videoId && newComment) {
-      actions.addComment(videoId, newComment);
+      actions.addCommentVlogDetails(videoId, newComment, store.user.id);
       setNewComment("");
     }
   };
@@ -49,9 +46,9 @@ export const VlogDetails = () => {
 
   const handleFavoriteClick = () => {
     if (isFavorite) {
-      actions.removeFavorite(videoId);
+      actions.removeFavoriteVlogDetails(videoId, store.user.id);
     } else {
-      actions.addFavorite(videoId);
+      actions.addFavoriteVlogDetails(videoId, store.user.id);
     }
     setIsFavorite(!isFavorite);
   };
@@ -79,7 +76,7 @@ export const VlogDetails = () => {
                 src={Send}
                 alt="Send"
                 className="cursor-pointer w-12"
-                onClick={() => actions.addFavorite(videoId)}
+                onClick={() => actions.addFavoriteVlogDetails(videoId, store.user.id)}
               />
               <img src={Speech} alt="Speech" className="cursor-pointer w-12" />
             </div>

@@ -41,6 +41,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       videos: [],
       comments: [],
       categories: [],
+      likes: [],
+      isLoading: true,
       demo: [
         {
           title: "FIRST",
@@ -217,19 +219,87 @@ const getState = ({ getStore, getActions, setStore }) => {
           toast.error("Error al actualizar la contraseña");
         }
       },
-      getVideosVlog: async () => {
-        try {
-          const response = await fetch(`${config.hostname}/api/videos`);
-          if (!response.ok) {
-            throw new Error("Error fetching videos");
-          }
-          const data = await response.json();
-          setStore({ videos: data });
-        } catch (error) {
-          console.error("Error fetching videos:", error);
+      // getVideosVlog: async () => {
+      //   try {
+      //     const response = await fetch(`${config.hostname}/api/videos`);
+      //     if (!response.ok) {
+      //       throw new Error("Error fetching videos");
+      //     }
+      //     const data = await response.json();
+      //     console.log("Fetched videos:", data);  // Confirma que los datos son correctos
+      //     setStore({ videos: data });
+      //   } catch (error) {
+      //     console.error("Error fetching videos:", error);
+      //   }
+      // },
+    //   getVideosVlog: async () => {
+    //     try {
+    //         const response = await fetch(`${config.hostname}/api/videos`);
+    //         if (!response.ok) {
+    //             throw new Error("Error fetching videos");
+    //         }
+    //         let data = await response.json();
+    //         console.log("Fetched videos:", data);  // Confirma que los datos son correctos
+    
+    //         // Asegúrate de que cada video tiene todas las propiedades necesarias
+    //         data = data.map(video => ({
+    //             ...video,
+    //             favorites_count: video.favorites_count || 0,
+    //             comments_count: video.comments_count || 0,
+    //             likes_count: video.likes_count || 0
+    //         }));
+    
+    //         setStore({ videos: data });
+    //     } catch (error) {
+    //         console.error("Error fetching videos:", error);
+    //     }
+    // },
+    // getVideosVlog: async () => {
+    //   try {
+    //     const response = await fetch(`${config.hostname}/api/videos`);
+    
+    //     if (!response.ok) {
+    //       throw new Error(`Error fetching videos: ${response.status} ${response.statusText}`); // Error más específico
+    //     }
+    
+    //     let data = await response.json();
+    //     console.log("Fetched videos:", data); 
+    
+    //     data = data.map(video => ({
+    //       ...video,
+    //       favorites_count: video.favorites_count || 0,
+    //       comments_count: video.comments_count || 0,
+    //       likes_count: parseInt(video.likes_count) || 0 // Validar y convertir a número
+    //     }));
+    
+    //     setStore({ videos: data });
+    //   } catch (error) {
+    //     console.error("Error fetching videos:", error.message); // Registrar el mensaje de error
+    //   }
+    // },
+    getVideosVlog: async () => {
+      try {
+        const response = await fetch(`${config.hostname}/api/videos`);
+        if (!response.ok) {
+          throw new Error("Error fetching videos");
         }
-      },
+        let data = await response.json();
+        // console.log("Fetched videos:", data);  // Confirmamos que los datos son correctos
 
+        // Aseguramos que cada video tiene todas las propiedades necesarias
+        data = data.map(video => ({
+          ...video,
+          favorites_count: video.favorites_count || 0,
+          comments_count: video.comments_count || 0,
+          likes_count: video.likes_count || 0
+        }));
+
+        setStore({ videos: data, isLoading: false }); // Actualizamos el estado de carga
+      } catch (error) {
+        console.error("Error fetching videos:", error);
+        setStore({ isLoading: false }); // En caso de error, también actualizamos el estado de carga
+      }
+    },
       likeVideo: async (videoId) => {
         const store = getStore();
         const { token } = store;
@@ -448,237 +518,137 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       // SHARED DATA - FIN
       // VLOG DETAILS - INICIO
-       // 1. Añadir favoritos
-       addFavoriteVlogDetails: async (videoId) => {
-        const store = getStore();
-        const { token, userId } = store;
-
+      getVideoVlogDetails: async (videoId) => {
         try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/favorite`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify({ user_id: userId }),
-            }
-          );
-
+          const response = await fetch(`/api/videos/${videoId}/videoVlogDetails`);
           if (!response.ok) {
-            throw new Error("Error adding favorite");
+            throw new Error('Error fetching video');
           }
-
           const data = await response.json();
-          toast.success(data.message);
-          getActions().getFavorites();
+          setStore({ videoDetails: data });
         } catch (error) {
-          console.error("Error adding favorite:", error);
-          toast.error("Error al añadir a favoritos");
+          console.error('Error fetching video:', error);
         }
       },
-
-      // 2. Eliminar favoritos
-      removeFavoriteVlogDetails: async (videoId) => {
-        const store = getStore();
-        const { token, userId } = store;
-
-        try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/favorite`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify({ user_id: userId }),
-            }
-          );
-
-          if (!response.ok) {
-            throw new Error("Error removing favorite");
-          }
-
-          const data = await response.json();
-          toast.success(data.message);
-          getActions().getFavorites();
-        } catch (error) {
-          console.error("Error removing favorite:", error);
-          toast.error("Error al eliminar de favoritos");
-        }
-      },
-
-      // 3. Obtener comentarios
       getCommentsVlogDetails: async (videoId) => {
         try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/comments`
-          );
+          const response = await fetch(`/api/videos/${videoId}/commentsVlogDetails`);
           if (!response.ok) {
-            throw new Error("Error fetching comments");
+            throw new Error('Error fetching comments');
           }
           const data = await response.json();
           setStore({ comments: data });
         } catch (error) {
-          console.error("Error fetching comments:", error);
+          console.error('Error fetching comments:', error);
         }
       },
-
-      // 4. Obtener número total de comentarios
-      getCommentsCountVlogDetails: async (videoId) => {
+      getFavoritesVlogDetails: async (videoId) => {
         try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/comments/count`
-          );
+          const response = await fetch(`/api/videos/${videoId}/favoriteVlogDetails`);
           if (!response.ok) {
-            throw new Error("Error fetching comments count");
+            throw new Error('Error fetching favorites');
           }
           const data = await response.json();
-          return data.count;
+          setStore({ favorites: data });
         } catch (error) {
-          console.error("Error fetching comments count:", error);
+          console.error('Error fetching favorites:', error);
         }
       },
-
-      // 5. Obtener video
-      getVideoVlogDetails: async (videoId) => {
+      getLikesVlogDetails: async (videoId) => {
         try {
-          const response = await fetch(`${config.hostname}/api/videos/${videoId}`);
+          const response = await fetch(`/api/videos/${videoId}/likeVlogDetails`);
           if (!response.ok) {
-            throw new Error("Error fetching video");
+            throw new Error('Error fetching likes');
           }
           const data = await response.json();
-          return data;
+          setStore({ likes: data });
         } catch (error) {
-          console.error("Error fetching video:", error);
+          console.error('Error fetching likes:', error);
         }
       },
-
-      // 6. Obtener título del video
-      getVideoTitleVlogDetails: async (videoId) => {
+      addCommentVlogDetails: async (videoId, text, userId) => {
         try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/title`
-          );
+          const response = await fetch(`/api/videos/${videoId}/commentsVlogDetails`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ text, user_id: userId }),
+          });
           if (!response.ok) {
-            throw new Error("Error fetching video title");
+            throw new Error('Error adding comment');
           }
-          const data = await response.json();
-          return data.title;
+          getActions().getCommentsVlogDetails(videoId);
         } catch (error) {
-          console.error("Error fetching video title:", error);
+          console.error('Error adding comment:', error);
         }
       },
-
-      // 7. Añadir like
-      addLikeVlogDetails: async (videoId) => {
-        const store = getStore();
-        const { token, userId } = store;
-
+      addFavoriteVlogDetails: async (videoId, userId) => {
         try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/like`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify({ user_id: userId }),
-            }
-          );
-
+          const response = await fetch(`/api/videos/${videoId}/favoriteVlogDetails`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user_id: userId }),
+          });
           if (!response.ok) {
-            throw new Error("Error adding like");
+            throw new Error('Error adding favorite');
           }
-
-          const data = await response.json();
-          toast.success(data.message);
-          getActions().getVideoVlogDetails(videoId); // Refresh the video data to update the likes count
+          getActions().getFavoritesVlogDetails(videoId);
         } catch (error) {
-          console.error("Error adding like:", error);
-          toast.error("Error al añadir like");
+          console.error('Error adding favorite:', error);
         }
       },
-
-      // 8. Eliminar like
-      removeLikeVlogDetails: async (videoId) => {
-        const store = getStore();
-        const { token, userId } = store;
-
+      removeFavoriteVlogDetails: async (videoId, userId) => {
         try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/like`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-              body: JSON.stringify({ user_id: userId }),
-            }
-          );
-
+          const response = await fetch(`/api/videos/${videoId}/favoriteVlogDetails`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user_id: userId }),
+          });
           if (!response.ok) {
-            throw new Error("Error removing like");
+            throw new Error('Error removing favorite');
           }
-
-          const data = await response.json();
-          toast.success(data.message);
-          getActions().getVideoVlogDetails(videoId); // Refresh the video data to update the likes count
+          getActions().getFavoritesVlogDetails(videoId);
         } catch (error) {
-          console.error("Error removing like:", error);
-          toast.error("Error al eliminar like");
+          console.error('Error removing favorite:', error);
         }
       },
-
-      // 9. Obtener ingredientes parte 1
-      getIngredientsPart1VlogDetails: async (videoId) => {
+      addLikeVlogDetails: async (videoId, userId) => {
         try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/ingredients/part1`
-          );
+          const response = await fetch(`/api/videos/${videoId}/likeVlogDetails`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user_id: userId }),
+          });
           if (!response.ok) {
-            throw new Error("Error fetching ingredients part 1");
+            throw new Error('Error adding like');
           }
-          const data = await response.json();
-          return data.ingredients_part1;
+          getActions().getLikesVlogDetails(videoId);
         } catch (error) {
-          console.error("Error fetching ingredients part 1:", error);
+          console.error('Error adding like:', error);
         }
       },
-
-      // 10. Obtener ingredientes parte 2
-      getIngredientsPart2VlogDetails: async (videoId) => {
+      removeLikeVlogDetails: async (videoId, userId) => {
         try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/ingredients/part2`
-          );
+          const response = await fetch(`/api/videos/${videoId}/likeVlogDetails`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user_id: userId }),
+          });
           if (!response.ok) {
-            throw new Error("Error fetching ingredients part 2");
+            throw new Error('Error removing like');
           }
-          const data = await response.json();
-          return data.ingredients_part2;
+          getActions().getLikesVlogDetails(videoId);
         } catch (error) {
-          console.error("Error fetching ingredients part 2:", error);
-        }
-      },
-
-      // 11. Obtener nombre del propietario de la receta
-      getVideoOwnerVlogDetails: async (videoId) => {
-        try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/owner`
-          );
-          if (!response.ok) {
-            throw new Error("Error fetching video owner");
-          }
-          const data = await response.json();
-          return data;
-        } catch (error) {
-          console.error("Error fetching video owner:", error);
+          console.error('Error removing like:', error);
         }
       },
       // VLOG DETAILS - FIN

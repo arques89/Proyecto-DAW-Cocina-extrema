@@ -1,4 +1,4 @@
-import VideoPortad from "../../img/img_vlog/video_vlog.mp4";
+import Portada from "../../img/img_home/portada_cocina.jpg";
 
 export const Slider = () => {
     return (
@@ -6,7 +6,7 @@ export const Slider = () => {
             <div className="carousel-inner w-full h-full">
                 <div className="carousel-item active w-full h-full">
                     <video autoPlay muted loop className="d-block w-full h-full object-cover">
-                        <source src={VideoPortad} type="video/mp4" />
+                        <source src={Portada} type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 </div>

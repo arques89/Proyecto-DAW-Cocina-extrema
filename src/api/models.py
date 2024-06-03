@@ -148,3 +148,18 @@ class VideoCategory(db.Model):
             'video_id': self.video_id,
             'category_id': self.category_id
         }
+class Portada(db.Model):
+    __tablename__ = 'portada'
+    id = db.Column(db.Integer, primary_key=True)
+    url = db.Column(db.String, nullable=False)
+    title = db.Column(db.String, nullable=False)
+    description = db.Column(db.String, nullable=True)
+    timestamp = db.Column(db.DateTime, default=db.func.current_timestamp())
+    
+    def __repr__(self):
+        return '<portada %r>' % self.id
+
+    def __init__(self, url, title, description=None):
+        self.url = url
+        self.title = title
+        self.description = description

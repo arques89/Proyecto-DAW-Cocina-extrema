@@ -1,17 +1,19 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { Context } from '../../store/appContext';
 import { CardVideo } from '../../components/card/card_video';
-import Appetizer from "../../../icon/vlog/appetizer.png";
-import Fish from "../../../icon/vlog/fish.png";
-import Meet from "../../../icon/vlog/meet.png";
-import Dessert from "../../../icon/vlog/dessert.png";
-import { Slider } from "../../components/vlog_slider";
+import Appetizer from '../../../icon/vlog/appetizer.png';
+import Fish from '../../../icon/vlog/fish.png';
+import Meet from '../../../icon/vlog/meet.png';
+import Dessert from '../../../icon/vlog/dessert.png';
+import { Slider } from '../../components/vlog_slider';
 
 export const Vlog = () => {
   const { store, actions } = useContext(Context);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    actions.getVideosVlog();
+    console.log('Vlog component mounted, fetching videos...');
+    actions.getVideosVlog().then(() => setIsLoading(false));
   }, []);
 
   return (
@@ -34,15 +36,19 @@ export const Vlog = () => {
         ))}
       </div>
 
-      <section className="flex px-28 mt-24 w-full mb-4">
-        <div className="font-thin">
-          <p className="text-4xl">Publicaciones</p>
-          <p className="text-sm my-8">Recetas Compartidas</p>
-        </div>
+      <section className="px-28 mt-24 w-full mb-4 font-thin">
+        <p className="text-4xl">Publicaciones</p>
+        <p className="text-sm my-8">Recetas Compartidas</p>
       </section>
 
       <div>
-        <CardVideo videos={store.videos} />
+        {isLoading ? (
+          <div className="flex justify-center items-center">
+            <p>Cargando videos...</p>
+          </div>
+        ) : (
+          <CardVideo videos={store.videos} />
+        )}
       </div>
     </main>
   );
