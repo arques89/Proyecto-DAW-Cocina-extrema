@@ -9,6 +9,7 @@ from routes.vlog import vlog_api
 from routes.vlog_details import vlog_details_api
 from routes.personal_data import personal_data_api
 from routes.shared_data import shared_data_api
+from routes.favorite_data import favorites_api
 
 from config import Config
 from cors import init_cors
@@ -44,6 +45,7 @@ def create_app():
     app.register_blueprint(shared_data_api)
     app.register_blueprint(vlog_api)
     app.register_blueprint(vlog_details_api)
+    app.register_blueprint(favorites_api)
     # Inicializar la interfaz de administración
     init_admin(app)
 

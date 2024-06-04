@@ -9,6 +9,8 @@ import { Sponsor } from "../../components/sponsor";
 import { Context } from "../../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { SharedData } from "./shared-data";
+import { Contact } from "./contact-data";
+import { FavoriteData } from "./favorite-data";
 
 export const Settings = () => {
   const { store, actions } = useContext(Context);
@@ -42,6 +44,10 @@ export const Settings = () => {
       return <DatosPedidos />;
     } else if (selectOption === "shared") {
       return <SharedData />;
+    } else if (selectOption === "favorite") {
+      return <FavoriteData />;
+    } else if (selectOption === "contact") {
+      return <Contact />;
     } else {
       return <div>Opción no válida</div>;
     }
@@ -120,11 +126,15 @@ export const Settings = () => {
                       Contenido compartido
                     </a>
                   </li>
+                    <a onClick={() => handlechange("favorite")} href="#">
                   <li className="mb-2 hover:text-shape_red">Mis favoritos</li>
+                    </a>
                 </ul>
                 <ul className="mt-6">
                   <li className="font-bold mb-2">¿NECESITAS AYUDA?</li>
+                    <a onClick={() => handlechange("contact")} href="#">
                   <li className="hover:text-shape_red">Contactanos</li>
+                    </a>
                 </ul>
               </div>
               <hr className="my-4 w-1/2" />

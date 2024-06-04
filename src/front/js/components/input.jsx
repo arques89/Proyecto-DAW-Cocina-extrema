@@ -1,6 +1,10 @@
-import { useEffect, useState } from "react";
+// src/components/RenderInputDatosPersonales.jsx
+import { useEffect, useState, useContext } from "react";
 import PropTypes from 'prop-types';
+import { Context } from "../store/appContext";
+
 export const RenderInputDatosPersonales = ({ onSubmit }) => {
+  const { store } = useContext(Context);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -13,36 +17,25 @@ export const RenderInputDatosPersonales = ({ onSubmit }) => {
   });
 
   useEffect(() => {
-    // Obtener los datos del localStorage y establecer los placeholders
-    const userName = localStorage.getItem("userName") || "";
-    const userSurname = localStorage.getItem("userSurname") || "";
-    const userEmail = localStorage.getItem("userEmail") || "";
-    const userPhone = localStorage.getItem("userPhone") || "";
+    if (store.user) {
+      setPlaceholders({
+        userName: store.user.name || "",
+        userSurname: store.user.surname || "",
+        userEmail: store.user.email || "",
+        userPhone: store.user.phone || ""
+      });
 
-    setPlaceholders({
-      userName,
-      userSurname,
-      userEmail,
-      userPhone
-    });
-
-    // También establecer el estado inicial
-    setName(userName);
-    setSurname(userSurname);
-    setEmail(userEmail);
-    setPhone(userPhone);
-  }, []);
+      setName(store.user.name || "");
+      setSurname(store.user.surname || "");
+      setEmail(store.user.email || "");
+      setPhone(store.user.phone || "");
+    }
+  }, [store.user]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (typeof onSubmit === "function") {
       onSubmit({ email, name, surname, phone });
-
-      // Actualizar el localStorage con los nuevos valores
-      localStorage.setItem("userName", name);
-      localStorage.setItem("userSurname", surname);
-      localStorage.setItem("userEmail", email);
-      localStorage.setItem("userPhone", phone);
     } else {
       console.error("onSubmit is not a function");
     }
@@ -126,6 +119,7 @@ export const RenderInputDatosPersonales = ({ onSubmit }) => {
     </form>
   );
 };
+
 RenderInputDatosPersonales.propTypes = {
   onSubmit: PropTypes.func.isRequired
 };

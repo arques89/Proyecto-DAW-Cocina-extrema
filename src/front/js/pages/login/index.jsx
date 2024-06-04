@@ -1,3 +1,4 @@
+// src/pages/Login.jsx
 import { useState, useContext } from "react";
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +21,7 @@ export const Login = ({ setOpen }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("Submitting login with:", { email, password });
 
     if (!email || !password) {
       toast.error("Por favor, completa todos los campos");
@@ -27,6 +29,8 @@ export const Login = ({ setOpen }) => {
     }
 
     const response = await actions.login(email, password);
+
+    console.log("Login response:", response);
 
     if (response.success) {
       setOpen(false);

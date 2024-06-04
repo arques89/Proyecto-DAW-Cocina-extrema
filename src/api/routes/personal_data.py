@@ -1,85 +1,61 @@
-# routes/personal_data.py
-
 from flask import Blueprint, request, jsonify
 from models import db, User
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 bcrypt = Bcrypt()
+
 personal_data_api = Blueprint('personal_data_api', __name__)
 
-# Rutas de usuario
-@personal_data_api.route('/users', methods=['GET'])
-def list_user():
-    users = User.query.all()
-    all_users = [user.serialize() for user in users]
-    return jsonify(all_users)
-
-@personal_data_api.route('/users/<int:id>', methods=['PUT'])
-def update_user(id):
-    user = User.query.get(id)
-    
-    if not user:
-        return jsonify({"error": "User not found"}), 404
-
-    body = request.get_json()
-    
-    if "name" in body:
-        user.name = body["name"]
-    if "surname" in body:
-        user.surname = body["surname"]
-    if "email" in body:
-        user.email = body["email"]
-    if "phone" in body:
-        user.phone = body["phone"]
-    if "password" in body:
-        user.password = bcrypt.generate_password_hash(body["password"]).decode('utf-8')
-    if "is_active" in body:
-        user.is_active = body["is_active"]
-    if "token" in body:
-        user.token = body["token"]
-    if "is_admin" in body:
-        user.is_admin = body["is_admin"]
-
-    try:
-        db.session.commit()
-        return jsonify(user.serialize()), 200
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 400
-
-@personal_data_api.route('/users/<int:id>', methods=['DELETE'])
-def delete_user(id):
-    user = User.query.get(id)
-
-    if user is None:
-        return jsonify({"error": "User not found"}), 404
-
-    db.session.delete(user)
-    db.session.commit()
-
-    return jsonify({"message": "User eliminado correctamente"}), 200
-
-@personal_data_api.route('/users/<int:id>/password', methods=['PUT'])
+# Obtener datos personales del usuario
+@personal_data_api.route('/personaldata', methods=['GET'])
 @jwt_required()
-def update_password(id):
-    user = User.query.get(id)
+def get_personal_data():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
     
-    if not user:
-        return jsonify({"error": "User not found"}), 404
+    if user is None:
+        return jsonify({"error": "Usuario no encontrado"}), 404
 
-    body = request.get_json()
-    new_password = body.get('password', None)
+    return jsonify(user.serialize()), 200
 
+# Actualizar datos personales del usuario
+@personal_data_api.route('/personaldata', methods=['PUT'])
+@jwt_required()
+def update_personal_data():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    
+    if user is None:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    data = request.json
+    user.name = data.get('name', user.name)
+    user.surname = data.get('surname', user.surname)
+    user.email = data.get('email', user.email)
+    user.phone = data.get('phone', user.phone)
+    
+    db.session.commit()
+    return jsonify(user.serialize()), 200
+
+# Actualizar contraseña del usuario
+@personal_data_api.route('/personaldata/password', methods=['PUT'])
+@jwt_required()
+def update_password():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    
+    if user is None:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    data = request.json
+    new_password = data.get('password')
+    
     if not new_password:
-        return jsonify({"error": "Password is required"}), 400
-
+        return jsonify({"error": "Contraseña es requerida"}), 400
+    
     hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
     user.password = hashed_password
-
-    try:
-        db.session.commit()
-        return jsonify({"message": "Password updated successfully"}), 200
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 400
+    
+    db.session.commit()
+    return jsonify({"message": "Contraseña actualizada exitosamente"}), 200

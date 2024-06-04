@@ -1,3 +1,4 @@
+// src/pages/SharedData/index.jsx
 import { useState, useContext, useEffect } from "react";
 import Modal from "react-modal";
 import { Context } from "../../store/appContext";
@@ -22,8 +23,12 @@ export const SharedData = () => {
   });
 
   useEffect(() => {
-    actions.getVideosSharedData();
-    actions.getCategoriesSharedData();
+    if (!store.videos.length) {
+      actions.getVideosSharedData();
+    }
+    if (!store.categories.length) {
+      actions.getCategoriesSharedData();
+    }
   }, []);
 
   const handleAddRecipe = () => {
@@ -75,9 +80,8 @@ export const SharedData = () => {
     try {
       const newVideo = await actions.saveRecipeSharedData(recipeData);
       if (newVideo) {
-        actions.getVideosSharedData();
+        setAddRecipe(false);
       }
-      setAddRecipe(false);
     } catch (error) {
       console.error("Error saving recipe:", error.message);
     } finally {
@@ -91,8 +95,8 @@ export const SharedData = () => {
     }
   };
 
-  const handleOpenCommentsModal = async (videoId) => {
-    const comments = await actions.getComments(videoId);
+  const handleOpenCommentsModal = (videoId) => {
+    const comments = actions.getComments(videoId);
     setComments(comments || []); // Nos aseguramos de que comments sea un array
     setCommentsModalIsOpen(true);
   };

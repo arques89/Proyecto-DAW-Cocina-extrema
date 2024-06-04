@@ -1,15 +1,22 @@
-import { useContext, useState } from "react";
+// src/pages/DatosPersonales.jsx
+import { useContext, useState, useEffect } from "react";
 import { RenderInputDatosPersonales } from "../../components/input";
 import { Context } from "../../store/appContext";
 import { ValidatePassword } from "../../components/validate_password";
-import { GoEye, GoEyeClosed } from "react-icons/go"; 
+import { GoEye, GoEyeClosed } from "react-icons/go";
 
 export const DatosPersonales = () => {
-  const { actions } = useContext(Context);
-
+  const { store, actions } = useContext(Context);
   const [change, setChange] = useState(false);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await actions.getPersonalData();
+    };
+    fetchData();
+  }, []);
 
   const handleChangePasswordToggle = () => {
     setChange(!change);
@@ -17,7 +24,6 @@ export const DatosPersonales = () => {
 
   const handleSubmit = async (data) => {
     const { email, name, surname, phone } = data;
-
     try {
       await actions.updatePersonalDetails(email, name, surname, phone);
       console.log("Detalles personales actualizados exitosamente");
@@ -28,7 +34,6 @@ export const DatosPersonales = () => {
 
   const handlePasswordSubmit = async (event) => {
     event.preventDefault();
-
     try {
       await actions.updatePassword(password);
       console.log("Contraseña actualizada exitosamente");
@@ -66,7 +71,7 @@ export const DatosPersonales = () => {
                 </label>
                 <div className="mt-3 relative">
                   <input
-                    type={showPassword ? "text" : "password"} // Cambiar tipo de input según el estado
+                    type={showPassword ? "text" : "password"}
                     id="new-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -76,7 +81,7 @@ export const DatosPersonales = () => {
                   />
                   <button
                     type="button"
-                    onClick={() => setShowPassword(!showPassword)} // Cambiar estado para mostrar/ocultar contraseña
+                    onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2"
                   >
                     {showPassword ? <GoEye /> : <GoEyeClosed />}
@@ -92,21 +97,6 @@ export const DatosPersonales = () => {
               </button>
             </form>
           )}
-        </div>
-        <div className="flex w-1/4 ps-24">
-          <div>
-            <span className="font-thin">Tratamiento *</span>
-            <div className="mt-4">
-              <input className="ms-0" type="radio" name="gender" id="sra" />
-              <label className="ms-2" htmlFor="sra">
-                Sra
-              </label>
-              <input className="ms-4" type="radio" name="gender" id="sr" />
-              <label className="ms-2" htmlFor="sr">
-                Sr
-              </label>
-            </div>
-          </div>
         </div>
       </div>
     </div>
