@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 export const DetallesPedido = ({ pedido, setDetallePedido }) => {
   const productos = [
@@ -130,4 +130,11 @@ export const DetallesPedido = ({ pedido, setDetallePedido }) => {
       </div>
     </div>
   );
+};
+DetallesPedido.propTypes = {
+  pedido: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    fecha: PropTypes.string.isRequired,
+  }).isRequired,
+  setDetallePedido: PropTypes.func.isRequired,
 };

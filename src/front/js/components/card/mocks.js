@@ -20,3 +20,11 @@ export const cardDetails = [
         description:"4 mini cazuelas por 69€",
     },
 ]
+
+export const cardVlog = [
+    {
+        id: 1,
+        video:"C:/Users/Javier/Desktop/Proyecto-DAW-Cocina-extrema/src/front/img/img_vlog/pizza.mp4",
+
+    },
+]

@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Icon from 'react-icons-kit';
-import { arrows_exclamation } from 'react-icons-kit/linea/arrows_exclamation';
-import { arrows_circle_check } from 'react-icons-kit/linea/arrows_circle_check';
-
+import { FaRegCircle } from "react-icons/fa6";
+import { FaRegCircleCheck } from "react-icons/fa6";
 export const ValidatePassword = ({ password }) => {
     const [lowerValidated, setLowerValidated] = useState(false);
     const [upperValidated, setUpperValidated] = useState(false);
@@ -32,31 +30,31 @@ export const ValidatePassword = ({ password }) => {
       <div className="text-base tracking-wide pt-6 rounded-sm">
         <div className={`flex items-center ${lowerValidated ? 'text-light-green-700' : 'text-red-600'}`}>
           <span className='me-2 text-lg'>
-            <Icon icon={lowerValidated ? arrows_circle_check : arrows_exclamation} size={24} />
+            {lowerValidated ? <FaRegCircleCheck /> : <FaRegCircle/>} 
           </span>
           At least one lowercase letter
         </div>
         <div className={`flex items-center ${upperValidated ? 'text-light-green-700' : 'text-red-600'}`}>
           <span className='me-2 text-lg'>
-            <Icon icon={upperValidated ? arrows_circle_check : arrows_exclamation} size={24} />
+            {upperValidated ? <FaRegCircleCheck /> : <FaRegCircle/>} 
           </span>
           At least one uppercase letter
         </div>
         <div className={`flex items-center ${numberValidated ? 'text-light-green-700' : 'text-red-600'}`}>
           <span className='me-2 text-lg'>
-            <Icon icon={numberValidated ? arrows_circle_check : arrows_exclamation} size={24} />
+            {numberValidated ? <FaRegCircleCheck /> : <FaRegCircle/>}
           </span>
           At least one number
         </div>
         <div className={`flex items-center ${specialValidated ? 'text-light-green-700' : 'text-red-600'}`}>
           <span className='me-2 text-lg'>
-            <Icon icon={specialValidated ? arrows_circle_check : arrows_exclamation} size={24} />
+            {specialValidated ? <FaRegCircleCheck /> : <FaRegCircle/>}
           </span>
           At least one special character
         </div>
         <div className={`flex items-center ${lengthValidated ? 'text-light-green-700' : 'text-red-600'}`}>
           <span className='me-2 text-lg'>
-            <Icon icon={lengthValidated ? arrows_circle_check : arrows_exclamation} size={24} />
+            {lengthValidated ? <FaRegCircleCheck /> : <FaRegCircle/>}
           </span>
           At least 8 characters
         </div>

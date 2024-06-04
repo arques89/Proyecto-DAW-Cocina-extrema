@@ -69,7 +69,7 @@ export const Footer = () => {
 
               <div className="bg-white rounded-full flex items-center justify-center h-8 w-8">
                 <a href="https://twitter.com/?lang=es">
-                  <img src={twitter} alt="Twitter" className="w-6 bg-white" />
+                  <img src={twitter} alt="X" className="w-4 bg-white" />
                 </a>
               </div>
               <div className="bg-white rounded-full flex items-center justify-center h-8 w-8">

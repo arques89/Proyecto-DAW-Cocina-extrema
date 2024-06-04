@@ -1,4 +1,4 @@
-import { Slider } from "../../components/slider";
+import { Slider } from "../../components/home_slider";
 import { Video } from "../../components/video";
 import Plaqueta from "../../../img/img_home/icons/rojo_video.png";
 import Bandeja from "../../../img/img_home/icons/rojo_bandeja.png";
@@ -9,7 +9,7 @@ import { Card } from "../../components/card/index";
 import { Sponsor } from "../../components/sponsor";
 import { Carousel } from "../../components/carousel/index";
 
-const Home = () => {
+export const Home = () => {
   return (
     <main>
       <Slider />
@@ -114,4 +114,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+
