@@ -15,6 +15,7 @@ alembic = "*"
 flask-bcrypt = "*"
 flask-session = "*"
 cloudinary = "*"
+bcrypt = "*"
 
 [dev-packages]
 

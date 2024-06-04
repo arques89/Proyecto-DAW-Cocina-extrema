@@ -5,7 +5,6 @@ export const inputLogin = [
       label: 'Correo',
       type: 'email',
       name: 'email',
-      placeholder: 'Email', 
     },
     {
       id: 2,
@@ -13,6 +12,5 @@ export const inputLogin = [
       label: 'Contraseña',
       type: 'password',
       name: 'password',
-      placeholder: 'Contraseña', 
     }
   ]

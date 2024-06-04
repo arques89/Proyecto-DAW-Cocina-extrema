@@ -1,60 +1,55 @@
-from flask import Flask, render_template
-from flask_mail import Mail, Message
-from models import db, User, Chef, Concursantes
-from routes import api
-from flask_cors import CORS
-from flask_admin import Admin
-from flask_admin.contrib.sqla import ModelView
-from flask_migrate import Migrate
-from config import Config
+from flask import Flask
 from flask_jwt_extended import JWTManager
 
-migrate = Migrate()
-mail = Mail()
-admin = Admin(name='Admin Panel', template_mode='bootstrap3')
+from routes.home import home_api
+from routes.login import login_api
+from routes.register import register_api
+from routes.forgot import forgot_api
+from routes.vlog import vlog_api
+from routes.vlog_details import vlog_details_api
+from routes.personal_data import personal_data_api
+from routes.shared_data import shared_data_api
+from routes.favorite_data import favorites_api
 
-admin.add_view(ModelView(User, db.session))
-admin.add_view(ModelView(Chef, db.session))
-admin.add_view(ModelView(Concursantes, db.session))
+from config import Config
+from cors import init_cors
+from database import db, init_db
+from mail import init_mail
+from admin import init_admin
 
 def create_app():
     # Crear una instancia de la aplicación Flask
     app = Flask(__name__)
 
-    # Configurar la clave secreta JWT
-    app.config["JWT_SECRET_KEY"] = "super-secret"
-    jwt = JWTManager(app)
-
     # Cargar la configuración desde config.py
     app.config.from_object(Config)
 
-    # Configurar CORS para permitir solicitudes desde http://localhost:5173
-    CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+    # Configurar la clave secreta JWT
+    jwt = JWTManager(app)
 
-    # Configurar la base de datos SQLAlchemy
-    db.init_app(app)
+    # Inicializar CORS
+    init_cors(app)
 
-    # Inicializar Flask-Migrate
-    migrate.init_app(app, db)
+    # Inicializar la base de datos
+    init_db(app)
 
-    # Inicializar Flask-Mail con los parámetros de Mailtrap
-    app.config['MAIL_SERVER']='sandbox.smtp.mailtrap.io'
-    app.config['MAIL_PORT'] = 2525
-    app.config['MAIL_USERNAME'] = 'e8c7b5d9a3fd13'
-    app.config['MAIL_PASSWORD'] = '56adb643104776'
-    app.config['MAIL_USE_TLS'] = True
-    app.config['MAIL_USE_SSL'] = False
-    mail.init_app(app)
+    # Inicializar Flask-Mail
+    init_mail(app)
 
     # Registrar las rutas en la aplicación
-    app.register_blueprint(api)
-
+    app.register_blueprint(home_api)
+    app.register_blueprint(register_api)
+    app.register_blueprint(login_api)
+    app.register_blueprint(forgot_api)
+    app.register_blueprint(personal_data_api)
+    app.register_blueprint(shared_data_api)
+    app.register_blueprint(vlog_api)
+    app.register_blueprint(vlog_details_api)
+    app.register_blueprint(favorites_api)
     # Inicializar la interfaz de administración
-    admin.init_app(app)
+    init_admin(app)
 
     return app
-
-
 
 # Comprobación para ejecutar el servidor de desarrollo
 if __name__ == "__main__":

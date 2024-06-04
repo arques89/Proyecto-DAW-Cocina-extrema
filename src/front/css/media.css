@@ -1,0 +1,83 @@
+@media (min-width: 769px) and (max-width: 915px) {
+    /* FOOTER PAGINAS LETRAS */
+    .container ul {
+        font-size: 12px;
+    }
+}
+
+
+@media (min-width: 576px) and (max-width: 768px) {
+    .texto-superpuesto {
+        width: 50%;
+        /* Ancho del fondo con opacidad */
+        font-size: 14px;
+    }
+
+    .navbar p.logo_title {
+        font-size: 30px;
+    }
+
+        /* FOOTER PAGINAS LETRAS */
+        .container ul {
+            font-size: 9px;
+        }
+
+
+}
+
+@media (max-width: 575px) {
+    /* LOGO WEB */
+    .navbar--logo {
+        width: 48px;
+    }
+/* TAMAÑO MENU DESPLEGABLE  */
+    .navbar-dark .navbar-toggler-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .video-icon img {
+        width: 90px;
+        height: 70px;
+    }
+    
+    .chef-icon img {
+        width: 80px;
+        height: 70px;
+    }
+    
+    .tray-icon img {
+        width: 120px;
+        height: 70px;
+    }
+
+/* FONDO IMAGENES OPACIDAD */
+    .texto-superpuesto {
+        width: 55%;
+        /* Ancho del fondo con opacidad */
+        font-size:10px;
+    }
+/* TEXTO DENTRO DE IMAGENES  */
+    #texto-img {
+        font-size: 8px;
+    }
+/* LETRA TITULO NAVBAR */
+    .navbar p.logo_title {
+        font-size: 20px;
+    }
+/* LETRA ICONOS  PARTE DE ARRIBA  */
+    p.small {
+        font-size: 10px;
+    }
+
+    /* FOOTER PAGINAS LETRAS */
+    .container ul {
+        font-size: 11px;
+    }
+/* FOOTER AVISO LEGAL Y PRIVACIDAD */
+    .text-left{
+        font-size: 13px;
+
+    }
+
+}
