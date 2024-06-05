@@ -48,6 +48,7 @@ class Address(db.Model):
     city = db.Column(db.String(80), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
     use_as = db.Column(db.String(100), nullable=False)  # Para "Usar como"
+    is_billing_default = db.Column(db.Boolean(), default=False)  # Campo para la dirección de facturación predeterminada
 
     def __repr__(self):
         return '<Address %r>' % self.id
@@ -63,8 +64,10 @@ class Address(db.Model):
             'postal_code': self.postal_code,
             'city': self.city,
             'phone': self.phone,
-            'use_as': self.use_as
+            'use_as': self.use_as,
+            'is_billing_default': self.is_billing_default
         }
+
 
 class Video(db.Model):
     __tablename__ = "video"

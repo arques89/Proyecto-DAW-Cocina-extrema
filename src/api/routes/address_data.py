@@ -1,10 +1,8 @@
 from flask import Blueprint, request, jsonify
 from models import db, User, Address
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from flask_cors import CORS
 
 address_api = Blueprint('address_api', __name__)
-CORS(address_api)  # Habilitar CORS para el blueprint específico
 
 @address_api.route('/api/addresses', methods=['GET'])
 @jwt_required()

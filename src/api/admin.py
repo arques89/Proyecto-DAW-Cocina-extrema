@@ -53,10 +53,11 @@ class PortadaModelView(ModelView):
     form_columns = ('url', 'title', 'description')
 
 class AddressModelView(ModelView):
-    column_list = ('id', 'user_id', 'name', 'surname', 'cif_nif', 'address', 'postal_code', 'city', 'phone', 'use_as')
+    column_list = ('id', 'user_id', 'name', 'surname', 'cif_nif', 'address', 'postal_code', 'city', 'phone', 'use_as', 'is_billing_default')
     column_searchable_list = ('name', 'surname', 'cif_nif', 'city')
-    column_filters = ('city', 'postal_code')
-    form_columns = ('user_id', 'name', 'surname', 'cif_nif', 'address', 'postal_code', 'city', 'phone', 'use_as')
+    column_filters = ('city', 'postal_code', 'is_billing_default') 
+    form_columns = ('user_id', 'name', 'surname', 'cif_nif', 'address', 'postal_code', 'city', 'phone', 'use_as', 'is_billing_default')
+
 
 def init_admin(app):
     admin = Admin(app, name='Admin Panel', template_mode='bootstrap3')

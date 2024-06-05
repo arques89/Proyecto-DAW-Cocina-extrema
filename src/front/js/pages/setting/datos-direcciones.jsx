@@ -59,15 +59,15 @@ export const DatosDirecciones = () => {
   const otherAddresses = addresses.filter(address => !address.is_billing_default);
 
   return (
-    <div className="">
+    <div className="me-20">
       <div className="text-xl">
-        <h3 className="pb-3 text-shape_border_button bg-pink-600">
+        <h3 className="pb-3 text-shape_border_button">
           MIS DIRECCIONES
         </h3>
         <hr />
       </div>
       <div className="flex">
-        <div className="w-1/2 bg-red-300">
+        <div className="w-1/2">
           <p className="mb-3 font-thin">Dirección de Facturación</p>
           {defaultBillingAddress ? (
             <>
@@ -82,7 +82,7 @@ export const DatosDirecciones = () => {
             <p>No hay dirección de facturación predeterminada</p>
           )}
         </div>
-        <div className="w-1/2 bg-green-300">
+        <div className="w-1/2">
           <p className="mb-3 font-thin">Dirección de Envío</p>
           <p>Como dirección de facturación</p>
         </div>
@@ -91,7 +91,7 @@ export const DatosDirecciones = () => {
       {otherAddresses.length > 0 ? (
         otherAddresses.map((address, index) => (
           <div key={index} className="flex mt-4">
-            <div className="w-1/2 bg-red-300">
+            <div className="w-1/2">
               <p className="mb-3 font-thin">Otras Direcciones</p>
               <p>{address.name}</p>
               <p>{address.surname}</p>
@@ -100,23 +100,20 @@ export const DatosDirecciones = () => {
               <p>{address.postal_code} {address.city}</p>
               <p>{address.phone}</p>
             </div>
-            <div className="w-1/2 bg-green-300">
+            <div className="w-1/2">
               <span className="flex font-thin mb-3">Usar como</span>
-              <p>{address.use_as}</p>
-              <div className="">
-                <button
-                  onClick={() => handleSetDefault(address.id)}
-                  className="justify-end text-shape_red"
-                >
-                  Dirección de Facturación predeterminada
-                </button>
-                <button
-                  onClick={handleChange}
-                  className="justify-end text-shape_red"
-                >
-                  Editar
-                </button>
-              </div>
+              <button
+                onClick={() => handleSetDefault(address.id)}
+                className="justify-end text-shape_red"
+              >
+                Dirección de Facturación predeterminada
+              </button>
+              <button
+                onClick={handleChange}
+                className="justify-end text-shape_red"
+              >
+                Editar
+              </button>
             </div>
           </div>
         ))
@@ -125,7 +122,7 @@ export const DatosDirecciones = () => {
       )}
       {!change && (
         <button
-          className="mt-4 text-shape_border_button"
+          className="mt-4 text-shape_border_button rounded-full border p-2"
           onClick={handleChange}
         >
           Agregar Nueva Dirección
@@ -133,7 +130,7 @@ export const DatosDirecciones = () => {
       )}
       {change && (
         <div className="w-full">
-          <div className="border rounded-3xl w-full mt-4">
+          <div className="border rounded-3xl w-4/5 mt-4">
             <div className="w-full">
               <span className="border border-shape_border_button w-full text-center rounded-full pr-44 py-1.5 pl-6 inline-block">
                 AGREGAR DIRECCIÓN
