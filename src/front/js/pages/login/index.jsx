@@ -1,11 +1,13 @@
+// src/pages/Login.jsx
 import { useState, useContext } from "react";
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { Context } from "../../store/appContext"; // Importa el contexto
+import { Context } from "../../store/appContext";
 import { inputLogin } from "./mocks";
+import toast from "react-hot-toast";
 
-export const Login = ({ setOpen }) => { // Agrega setOpen como prop
-  const { actions } = useContext(Context); // Obtén las acciones del contexto
+export const Login = ({ setOpen }) => {
+  const { actions } = useContext(Context);
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -19,16 +21,23 @@ export const Login = ({ setOpen }) => { // Agrega setOpen como prop
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("Submitting login with:", { email, password });
 
-    // Verificar si los campos están vacíos
     if (!email || !password) {
-      console.error("Por favor, completa todos los campos");
+      toast.error("Por favor, completa todos los campos");
       return;
     }
 
-    await actions.login(email, password);
-    setOpen(false); // Cierra el canvas después de un inicio de sesión exitoso
-    navigate('/settings');
+    const response = await actions.login(email, password);
+
+    console.log("Login response:", response);
+
+    if (response.success) {
+      setOpen(false);
+      navigate('/settings');
+    } else {
+      toast.error(response.message);
+    }
   };
 
   const renderInputLogin = () => {
@@ -74,7 +83,7 @@ export const Login = ({ setOpen }) => { // Agrega setOpen como prop
 };
 
 Login.propTypes = {
-  setOpen: PropTypes.func,
+  setOpen: PropTypes.func
 };
 
 export default Login;

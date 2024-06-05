@@ -2,13 +2,10 @@
 import { inputRegister } from "./mocks";
 import { useContext, useState } from "react";
 import PropTypes from 'prop-types';
-import Icon from 'react-icons-kit';
-import { basic_eye } from 'react-icons-kit/linea/basic_eye';
-import { basic_eye_closed } from 'react-icons-kit/linea/basic_eye_closed';
 import { Context } from "../../store/appContext";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { ValidatePassword } from '../../components/validate_password';
-
+import { GoEye, GoEyeClosed } from "react-icons/go"; 
 export const Register = ({setOpen}) => {
   const { actions } = useContext(Context); // Obtén las acciones del contexto
 
@@ -85,7 +82,7 @@ export const Register = ({setOpen}) => {
                   className="absolute right-0 top-0 mt-0 mr-4"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  <Icon icon={showPassword ? basic_eye : basic_eye_closed} size={18} />
+                  {showPassword ? <GoEye size={18} className="mt-3.5" /> : <GoEyeClosed size={18} className="mt-3.5" />}
                 </button>
                 <ValidatePassword password={password} />
               </>
