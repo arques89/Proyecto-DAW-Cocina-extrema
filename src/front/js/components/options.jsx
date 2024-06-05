@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CheckIcon } from "@heroicons/react/24/solid";
-import PropTypes from 'prop-types'; // Importamos PropTypes
+import PropTypes from 'prop-types';
 import { Login } from "../pages/login";
 import { Register } from "../pages/register";
 import { ForgotPassword } from "../pages/forgot_password";
@@ -102,5 +102,5 @@ export const Options = ({ setOpen }) => {
 };
 
 Options.propTypes = {
-  setOpen: PropTypes.func.isRequired // PropTypes para setOpen como función
+  setOpen: PropTypes.func.isRequired
 };

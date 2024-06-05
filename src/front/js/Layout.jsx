@@ -1,19 +1,20 @@
-import { BrowserRouter, Route } from "react-router-dom";
-import { Routes } from "react-router-dom";
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { NavBar } from "./components/navbar";
 import { Footer } from "./components/footer";
 
-import Home from "./pages/home/home";
-
+import { Home } from "./pages/home/home";
+import { Login } from "./pages/login";
+import { Register } from "./pages/register";
+import { Settings } from "./pages/setting/index";
+import { ForgotPassword } from "./pages/forgot_password/index";
+import { Vlog } from "./pages/vlog";
+import { VlogDetails } from "./pages/vlog/vlog-details";
+import { Toaster } from "react-hot-toast";
 import "../css/layout.css";
 import "../css/media.css";
 import "../css/styles.css";
-// import { Chefs } from './pages/chefs';
-// import { upFile } from './pages/upFile/upFile';
-// import { Concursantes } from './pages/concursantes';
-
 import injectContext from "./store/appContext";
+
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { Settings } from "./pages/setting/index";
@@ -38,12 +39,15 @@ import { Cesta } from "./pages/carrito/cesta";
 import { Envio } from "./pages/carrito/envio";
 import { Pago } from "./pages/carrito/pago";
 // import { RenderInputLogin2 } from "./components/input";
+=======
+
 
 const Layout = () => {
   return (
     <BrowserRouter>
       <NavBar />
       <Routes>
+
         <Route path="/" Component={Home} />
         <Route path="/login" Component={Login} />
         <Route path="/register" Component={Register} />
@@ -73,7 +77,29 @@ const Layout = () => {
         {/* <Route path="/dashboard" Component={Dashboard} /> */}
         <Route path="/forgot" Component={ForgotPassword} />
         {/* <Route path="/form" Component={upFile} /> */}
+=======
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
+        <Route path="/vlog" element={<Vlog />} />
+        <Route path="/vlog/:videoId" element={<VlogDetails />} /> {/* Usa solo esta ruta */}
+
       </Routes>
+      <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                    toastOptions={{
+                      duration: 10000,
+                      style: {
+                        background: "#363636",
+                        color: "#fff",
+                        marginBottom: "0px",
+                        marginRight: "220px",
+                      },
+                    }}
+                  />
       <Footer />
     </BrowserRouter>
   );
