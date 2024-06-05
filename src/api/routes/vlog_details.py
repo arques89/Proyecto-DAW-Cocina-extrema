@@ -177,3 +177,66 @@ def remove_favorite(video_id):
     except Exception as e:
         print(f"Error removing favorite: {e}")
         return jsonify({"error": "Internal server error"}), 500
+@vlog_details_api.route('/api/videos/<int:video_id>/favorite', methods=['POST', 'DELETE'])
+@jwt_required()
+def manage_favorite(video_id):
+    try:
+        user_id = get_jwt_identity()
+        video = Video.query.get(video_id)
+        if not video:
+            return jsonify({"error": "Video not found"}), 404
+
+        if request.method == 'POST':
+            existing_favorite = Favorite.query.filter_by(user_id=user_id, video_id=video_id).first()
+            if existing_favorite:
+                return jsonify({"error": "Video already in favorites"}), 400
+
+            new_favorite = Favorite(user_id=user_id, video_id=video_id)
+            db.session.add(new_favorite)
+            db.session.commit()
+            return jsonify({"message": "Favorite added", "favorite": new_favorite.serialize()}), 201
+
+        elif request.method == 'DELETE':
+            favorite = Favorite.query.filter_by(user_id=user_id, video_id=video_id).first()
+            if not favorite:
+                return jsonify({"error": "Favorite not found"}), 404
+
+            db.session.delete(favorite)
+            db.session.commit()
+            return jsonify({"message": "Favorite removed"}), 200
+
+    except Exception as e:
+        print(f"Error managing favorite: {e}")
+        return jsonify({"error": "Internal server error"}), 500
+
+@vlog_details_api.route('/api/videos/<int:video_id>/like', methods=['POST', 'DELETE'])
+@jwt_required()
+def manage_like(video_id):
+    try:
+        user_id = get_jwt_identity()
+        video = Video.query.get(video_id)
+        if not video:
+            return jsonify({"error": "Video not found"}), 404
+
+        if request.method == 'POST':
+            existing_like = Like.query.filter_by(user_id=user_id, video_id=video_id).first()
+            if existing_like:
+                return jsonify({"error": "Video already liked"}), 400
+
+            new_like = Like(user_id=user_id, video_id=video_id)
+            db.session.add(new_like)
+            db.session.commit()
+            return jsonify({"message": "Like added", "like": new_like.serialize()}), 201
+
+        elif request.method == 'DELETE':
+            like = Like.query.filter_by(user_id=user_id, video_id=video_id).first()
+            if not like:
+                return jsonify({"error": "Like not found"}), 404
+
+            db.session.delete(like)
+            db.session.commit()
+            return jsonify({"message": "Like removed"}), 200
+
+    except Exception as e:
+        print(f"Error managing like: {e}")
+        return jsonify({"error": "Internal server error"}), 500
