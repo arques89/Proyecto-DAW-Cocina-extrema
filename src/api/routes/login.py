@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from models import db, User
+from models import db, User, Like, Favorite
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token
 from datetime import timedelta
@@ -23,6 +23,10 @@ def login_user():
 
     token = create_access_token(identity=user.id, expires_delta=timedelta(minutes=30))
 
+    # Obtener likes y favoritos del usuario
+    likes = Like.query.filter_by(user_id=user.id).all()
+    favorites = Favorite.query.filter_by(user_id=user.id).all()
+
     return jsonify({
         "token": token,
         "user": {
@@ -31,6 +35,8 @@ def login_user():
             "name": user.name,
             "surname": user.surname,
             "phone": user.phone,
-            "is_active": user.is_active
+            "is_active": user.is_active,
+            "likes": [like.video_id for like in likes],
+            "favorites": [favorite.video_id for favorite in favorites]
         }
     }), 200
