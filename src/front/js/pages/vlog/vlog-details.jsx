@@ -88,13 +88,13 @@ export const VlogDetails = () => {
         navigate("/vlog");
     };
 
-    const [visibleComments, setVisibleComments] = useState(5); // Estado para comentarios visibles
-    const [newComment, setNewComment] = useState(""); // Estado para el nuevo comentario
+    const [visibleComments, setVisibleComments] = useState(5); 
+    const [newComment, setNewComment] = useState(""); 
 
     const handleAddComment = () => {
         if (videoId && newComment) {
             actions.addCommentVlogDetails(videoId, newComment, store.user.id);
-            setNewComment(""); // Limpiar el textarea después de añadir el comentario
+            setNewComment(""); 
         }
     };
 
@@ -174,7 +174,8 @@ export const VlogDetails = () => {
                                 </div>
                             </div>
                             <div className="w-full text-sm p-4 mt-4">
-                                <hr className="h-1 bg-white" />
+                                <hr className="h-1 bg-white mb-2" />
+                                    <h2 className="text-2xl">Comentarios 0</h2>
                                 <div className="mt-6 ms-2 w-5/6 flex-grow">
                                     <CommentForm
                                         videoId={videoId}
@@ -184,7 +185,6 @@ export const VlogDetails = () => {
                                         handleKeyDown={handleKeyDown}
                                     />
 
-                                    <h2 className="text-2xl">Comentarios</h2>
                                     <div className="mt-4 overflow-auto">
                                         {store.comments
                                             ?.slice(0, visibleComments)

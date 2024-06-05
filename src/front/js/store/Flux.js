@@ -486,73 +486,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       //   FIN VLOGACTION
       //   INICIO VLOGDETAILACTION
-      getVideoVlogDetails: async (videoId) => {
-        try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}`
-          );
-          if (response.ok) {
-            const data = await response.json();
-            setStore({ videoDetails: data });
-          } else {
-            throw new Error("Error fetching video");
-          }
-        } catch (error) {
-          console.error("Error fetching video:", error);
-        }
-      },
 
-      getCommentsVlogDetails: async (videoId) => {
-        try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/comments`
-          );
-          if (!response.ok) throw new Error("Error fetching comments");
-          const data = await response.json();
-          setStore({ comments: data });
-        } catch (error) {
-          console.error("Error fetching comments:", error);
-        }
-      },
       getLikesVlogDetails: async (videoId) => {
+        const token = localStorage.getItem('token');
         try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/like`
-          ); // Verifica la ruta correcta
-
-          if (!response.ok) throw new Error("Error fetching like status");
-
-          const data = await response.json();
-          setStore({
-            videoDetails: {
-              ...getStore().videoDetails,
-              is_liked: data.is_liked,
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}/like`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
             },
           });
+          if (!response.ok) throw new Error('Error fetching like status');
+          const data = await response.json();
+          setStore({ videoDetails: {...getStore().videoDetails, is_liked: data.is_liked } }); 
         } catch (error) {
-          console.error("Error fetching like status:", error);
+          console.error('Error fetching like status:', error);
         }
       },
-
-      addCommentVlogDetails: async (videoId, text, userId) => {
-        try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/comments`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-              body: JSON.stringify({ text, user_id: userId }),
-            }
-          );
-          if (!response.ok) throw new Error("Error adding comment");
-          getActions().getCommentsVlogDetails(videoId); // Recargar comentarios después de agregar uno
-        } catch (error) {
-          console.error("Error adding comment:", error);
-        }
-      },
+    
 
       addFavoriteVlogDetails: async (videoId) => {
         const token = localStorage.getItem("token");
@@ -603,48 +555,81 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       addLikeVlogDetails: async (videoId) => {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem('token');
+        try {
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}/like`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+          if (!response.ok) throw new Error('Error adding like');
+          getActions().getLikesVlogDetails(videoId);
+        } catch (error) {
+          console.error('Error adding like:', error);
+        }
+      },
+      
 
+      removeLikeVlogDetails: async (videoId) => {
+        const token = localStorage.getItem('token');
+        try {
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}/like`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+          if (!response.ok) throw new Error('Error removing like');
+          getActions().getLikesVlogDetails(videoId);
+        } catch (error) {
+          console.error('Error removing like:', error);
+        }
+      },
+      getVideoVlogDetails: async (videoId) => {
+        try {
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}`);
+          if (response.ok) {
+            const data = await response.json();
+            setStore({ videoDetails: data });
+          } else {
+            throw new Error("Error fetching video");
+          }
+        } catch (error) {
+          console.error("Error fetching video:", error);
+        }
+      },
+
+      getCommentsVlogDetails: async (videoId) => {
+        try {
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}/comments`);
+          if (!response.ok) throw new Error("Error fetching comments");
+          const data = await response.json();
+          setStore({ comments: data });
+        } catch (error) {
+          console.error("Error fetching comments:", error);
+        }
+      },
+
+      addCommentVlogDetails: async (videoId, text, userId) => {
         try {
           const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/like`,
+            `${config.hostname}/api/videos/${videoId}/comments`,
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
               },
+              body: JSON.stringify({ text, user_id: userId }),
             }
           );
-
-          if (!response.ok) throw new Error("Error adding like");
-
-          getActions().getLikesVlogDetails(videoId);
+          if (!response.ok) throw new Error("Error adding comment");
+          getActions().getCommentsVlogDetails(videoId); // Recargar comentarios después de agregar uno
         } catch (error) {
-          console.error("Error adding like:", error);
-        }
-      },
-
-      removeLikeVlogDetails: async (videoId) => {
-        const token = localStorage.getItem("token");
-
-        try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/like`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          if (!response.ok) throw new Error("Error removing like");
-
-          getActions().getLikesVlogDetails(videoId);
-        } catch (error) {
-          console.error("Error removing like:", error);
+          console.error("Error adding comment:", error);
         }
       },
 
@@ -671,12 +656,72 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error deleting comment:", error);
         }
       },
-      //   FIN VLOGDETAILACTION
 
-      initializeApp: () => {
-        initializeStore();
-        resetInactivityTimer(); // Inicia el temporizador de inactividad
+
+
+
+      //   FIN VLOGDETAILACTION
+      //   INICIO ADDRESSDATA
+      getAddresses: async () => {
+        try {
+          const response = await fetch(`${config.hostname}/api/addresses`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+          });
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+          setStore({ addresses: data });
+        } catch (error) {
+          console.error("Error fetching addresses:", error);
+        }
       },
+      addAddress: async (address) => {
+        try {
+          const response = await fetch(`${config.hostname}/api/address`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify(address)
+          });
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error("Error adding address:", error);
+          throw error;
+        }
+      },
+      setDefaultBillingAddress: async (id) => {
+        try {
+          const response = await fetch(`${config.hostname}/api/addresses/${id}/default`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }
+          });
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error("Error setting default billing address:", error);
+          throw error;
+        }
+      },
+      //   FIN ADDRESSDATA
+
+
 
       // Use getActions to call a function within a function
       exampleFunction: () => {

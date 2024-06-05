@@ -27,12 +27,12 @@ export const Menu_navbar = ({ setOpen }) => {
           </a>
         </div>
         <div className="py-8 flex justify-end text-6xl">
-          <a href="#">
+          <a href="/">
             Programa
           </a>
         </div>
         <div className="py-8 flex justify-end text-6xl">
-          <a href="#">
+          <a href="/school">
             Escuela
           </a>
         </div>

@@ -30,6 +30,7 @@ def get_video_details(video_id):
         video_data = video.serialize()
         video_data["owner"] = {"name": user.name, "surname": user.surname}
         video_data["comments"] = [comment.serialize() for comment in video.comments]
+        video_data["comment_count"] = len(video.comments)
 
         # Verificar si hay token JWT y obtener user_id si existe
         auth_header = request.headers.get('Authorization')
@@ -177,6 +178,7 @@ def remove_favorite(video_id):
     except Exception as e:
         print(f"Error removing favorite: {e}")
         return jsonify({"error": "Internal server error"}), 500
+
 @vlog_details_api.route('/api/videos/<int:video_id>/favorite', methods=['POST', 'DELETE'])
 @jwt_required()
 def manage_favorite(video_id):

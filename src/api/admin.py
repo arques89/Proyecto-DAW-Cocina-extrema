@@ -1,6 +1,6 @@
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from models import db, User, Video, Comment, Like, Favorite, Category, VideoCategory, Portada
+from models import db, User, Video, Comment, Like, Favorite, Category, VideoCategory, Portada, Address
 
 admin = Admin(name='Admin Panel', template_mode='bootstrap3')
 
@@ -51,7 +51,13 @@ class PortadaModelView(ModelView):
     column_searchable_list = ('title', 'description')
     column_filters = ('timestamp',)
     form_columns = ('url', 'title', 'description')
-    
+
+class AddressModelView(ModelView):
+    column_list = ('id', 'user_id', 'name', 'surname', 'cif_nif', 'address', 'postal_code', 'city', 'phone', 'use_as')
+    column_searchable_list = ('name', 'surname', 'cif_nif', 'city')
+    column_filters = ('city', 'postal_code')
+    form_columns = ('user_id', 'name', 'surname', 'cif_nif', 'address', 'postal_code', 'city', 'phone', 'use_as')
+
 def init_admin(app):
     admin = Admin(app, name='Admin Panel', template_mode='bootstrap3')
 
@@ -64,5 +70,6 @@ def init_admin(app):
     admin.add_view(CategoryModelView(Category, db.session))
     admin.add_view(VideoCategoryModelView(VideoCategory, db.session))
     admin.add_view(PortadaModelView(Portada, db.session))
+    admin.add_view(AddressModelView(Address, db.session))  # Añadida la nueva vista para Address
 
     return admin

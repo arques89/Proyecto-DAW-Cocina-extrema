@@ -171,10 +171,10 @@ export const Settings = () => {
                       <a href="/">Programa</a>
                     </span>
                     <span className="hover:text-shape_red">
-                      <a href="/">Escuela</a>
+                      <a href="/school">Escuela</a>
                     </span>
                     <span className="hover:text-shape_red">
-                      <a href="/">Vlog</a>
+                      <a href="/vlog">Vlog</a>
                     </span>
                     <span className="hover:text-shape_red">
                       <a href="/">Tienda</a>
