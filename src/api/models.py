@@ -1,6 +1,9 @@
 from datetime import datetime
 from database import db
 
+from datetime import datetime
+from database import db
+
 class User(db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -16,6 +19,7 @@ class User(db.Model):
     comments = db.relationship('Comment', backref='user', lazy=True)
     likes = db.relationship('Like', backref='user', lazy=True)
     favorites = db.relationship('Favorite', backref='user', lazy=True)
+    addresses = db.relationship('Address', backref='user', lazy=True)  # Relación con Address
 
     def __repr__(self):
         return '<User %r>' % self.email
@@ -30,6 +34,36 @@ class User(db.Model):
             'is_active': self.is_active,
             'token': self.token,
             'is_admin': self.is_admin
+        }
+
+class Address(db.Model):
+    __tablename__ = 'address'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    name = db.Column(db.String(80), nullable=False)
+    surname = db.Column(db.String(80), nullable=False)
+    cif_nif = db.Column(db.String(50), nullable=False)
+    address = db.Column(db.String(200), nullable=False)
+    postal_code = db.Column(db.String(20), nullable=False)
+    city = db.Column(db.String(80), nullable=False)
+    phone = db.Column(db.String(20), nullable=False)
+    use_as = db.Column(db.String(100), nullable=False)  # Para "Usar como"
+
+    def __repr__(self):
+        return '<Address %r>' % self.id
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'name': self.name,
+            'surname': self.surname,
+            'cif_nif': self.cif_nif,
+            'address': self.address,
+            'postal_code': self.postal_code,
+            'city': self.city,
+            'phone': self.phone,
+            'use_as': self.use_as
         }
 
 class Video(db.Model):

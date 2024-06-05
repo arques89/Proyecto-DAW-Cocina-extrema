@@ -15,11 +15,6 @@ import "../css/media.css";
 import "../css/styles.css";
 import injectContext from "./store/appContext";
 
-import { Login } from "./pages/login";
-import { Register } from "./pages/register";
-import { Settings } from "./pages/setting/index";
-import { Prueba } from "./components/prueba";
-import { ForgotPassword } from './pages/forgot_password/index';
 import { School } from "./pages/school/school";
 import { Content } from "./pages/content/index";
 import { Introduction } from "./pages/content/introduction";
@@ -39,7 +34,7 @@ import { Cesta } from "./pages/carrito/cesta";
 import { Envio } from "./pages/carrito/envio";
 import { Pago } from "./pages/carrito/pago";
 // import { RenderInputLogin2 } from "./components/input";
-=======
+
 
 
 const Layout = () => {
@@ -52,7 +47,6 @@ const Layout = () => {
         <Route path="/login" Component={Login} />
         <Route path="/register" Component={Register} />
         <Route path="/settings" Component={Settings} />
-        <Route path="/prueba" Component={Prueba} />
         <Route path="/school" Component={School} />
         <Route path="/content" Component={Content} />
         <Route path="/contentintroduction" Component={Introduction} />
@@ -71,13 +65,8 @@ const Layout = () => {
         <Route path="/cesta" Component={Cesta} />
         <Route path="/envio" Component={Envio} />
         <Route path="/pago" Component={Pago} />
-        {/* <Route path="/p" Component={RenderInputLogin2} /> */}
-        {/* <Route path="/chefs" Component={Chefs} /> */}
-        {/* <Route path="/concursantes" Component={Concursantes} /> */}
-        {/* <Route path="/dashboard" Component={Dashboard} /> */}
         <Route path="/forgot" Component={ForgotPassword} />
-        {/* <Route path="/form" Component={upFile} /> */}
-=======
+
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
