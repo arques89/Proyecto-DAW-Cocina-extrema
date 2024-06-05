@@ -38,6 +38,7 @@ const loginActions = ({ getStore, getActions, setStore }) => {
           userPhone: userData.phone,
           is_active: userData.is_active,
         });
+        localStorage.setItem('token', token); 
 
         getActions().resetInactivityTimer();
         return { success: true };
@@ -57,6 +58,7 @@ const loginActions = ({ getStore, getActions, setStore }) => {
         userPhone: null,
         is_active: false,
       });
+      localStorage.removeItem('token');
 
       // Redirigir al usuario a la página de inicio de sesión
       window.location.href = '/';

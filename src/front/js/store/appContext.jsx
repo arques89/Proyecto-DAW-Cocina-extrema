@@ -1,7 +1,8 @@
 // src/store/appContext.jsx
 
 import React, { useState, useEffect } from "react";
-import getState from "./rootStore";
+// import getState from "./rootStore";
+import getState from "./Flux";
 
 // Don't change, here is where we initialize our context, by default it's just going to be null.
 export const Context = React.createContext(null);
@@ -39,16 +40,16 @@ const injectContext = PassedComponent => {
             window.addEventListener("mousemove", resetInactivity);
             window.addEventListener("keypress", resetInactivity);
             document.querySelectorAll("video").forEach(video => {
-                video.addEventListener("play", videoActivity);
-                video.addEventListener("pause", videoActivity);
+                // video.addEventListener("play", videoActivity);
+                // video.addEventListener("pause", videoActivity);
             });
 
             return () => {
                 window.removeEventListener("mousemove", resetInactivity);
                 window.removeEventListener("keypress", resetInactivity);
                 document.querySelectorAll("video").forEach(video => {
-                    video.removeEventListener("play", videoActivity);
-                    video.removeEventListener("pause", videoActivity);
+                    // video.removeEventListener("play", videoActivity);
+                    // video.removeEventListener("pause", videoActivity);
                 });
             };
         }, []);

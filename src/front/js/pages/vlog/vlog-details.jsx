@@ -1,35 +1,91 @@
 import { useEffect, useContext, useState } from "react";
 import { Context } from "../../store/appContext";
 import { Sponsor } from "../../components/sponsor";
-import Heart from "../../../icon/vlog-details/blanco_corazon.png";
-import HeartRed from "../../../icon/vlog-details/heart_true.png";
-import Send from "../../../icon/vlog-details/blanco_send.png";
-import Speech from "../../../icon/vlog-details/blanco_speech.png";
+import ILikeIt from "../../../icon/vlog-details/ilikeit.png";
+import ILikeItRed from "../../../icon/vlog-details/ilikeitred.png";
+import HeartRed from "../../../icon/vlog-details/redheart.png";
+import Heart from "../../../icon/vlog-details/whiteheart.png";
 import Equis from "../../../icon/vlog-details/x.png";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { CommentForm } from "../../components/commentForm";
+import { CommentCard } from "../../components/commentCard";
 
 export const VlogDetails = () => {
   const { store, actions } = useContext(Context);
-  const [newComment, setNewComment] = useState("");
-  const [visibleComments, setVisibleComments] = useState(5);
   const { videoId } = useParams();
   const video = store.videoDetails;
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     if (videoId) {
-      actions.getVideoVlogDetails(videoId);
-      actions.getCommentsVlogDetails(videoId);
-      actions.getFavoritesVlogDetails(videoId);
-      actions.getLikesVlogDetails(videoId);
-      setIsFavorite(store.favorites.includes(parseInt(videoId)));
+      setIsLoading(true);
+      Promise.all([
+        actions.getVideoVlogDetails(videoId),
+        actions.getCommentsVlogDetails(videoId),
+      ])
+        .then(() => {
+          setIsFavorite(store.videoDetails?.is_favorite || false);
+          setIsLiked(store.videoDetails?.is_liked || false);
+        })
+        .catch((error) =>
+          console.error("Error al obtener los detalles del vlog:", error)
+        )
+        .finally(() => setIsLoading(false));
     }
-  }, [videoId, store.favorites]);
+  }, [videoId]);
+
+  const handleFavoriteClick = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    const action = isFavorite
+      ? actions.removeFavoriteVlogDetails
+      : actions.addFavoriteVlogDetails;
+    action(videoId)
+      .then(() => {
+        setIsFavorite(!isFavorite);
+        actions.getVideoVlogDetails(videoId);
+      })
+      .catch((error) => console.error("Error al modificar favorito:", error));
+  };
+
+  const handleLikeClick = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    const action = video.is_liked
+      ? actions.removeLikeVlogDetails
+      : actions.addLikeVlogDetails;
+    action(videoId)
+      .then(() => {
+        setIsLiked(!video.is_liked);
+        actions.getVideoVlogDetails(videoId);
+      })
+      .catch((error) => console.error("Error al modificar like:", error));
+  };
+
+  const handleExitClick = () => {
+    navigate("/vlog");
+  };
+  const [visibleComments, setVisibleComments] = useState(5); // Estado para comentarios visibles
+  const [newComment, setNewComment] = useState(""); // Estado para el nuevo comentario
+
+  // ... (useEffect, handleFavoriteClick, handleLikeClick, handleExitClick como antes)
 
   const handleAddComment = () => {
     if (videoId && newComment) {
       actions.addCommentVlogDetails(videoId, newComment, store.user.id);
-      setNewComment("");
+      setNewComment(""); // Limpiar el textarea después de añadir el comentario
     }
   };
 
@@ -44,128 +100,112 @@ export const VlogDetails = () => {
     setVisibleComments(visibleComments + 5);
   };
 
-  const handleFavoriteClick = () => {
-    if (isFavorite) {
-      actions.removeFavoriteVlogDetails(videoId, store.user.id);
-    } else {
-      actions.addFavoriteVlogDetails(videoId, store.user.id);
-    }
-    setIsFavorite(!isFavorite);
-  };
-
-  const comments = store.comments || [];
-
   return (
     <>
-      <main className="flex flex-col min-h-screen text-white">
-        <div className="flex flex-wrap mb-60 flex-grow">
-          <div className="flex flex-col w-2/6 ps-28 flex-grow">
-            <div className="flex justify-center items-center">
-              {video && (
-                <video className="w-full h-auto" controls src={video.src} />
-              )}
-            </div>
-            <div className="flex space-x-10 mt-4">
-              <img
-                src={isFavorite ? HeartRed : Heart}
-                alt="Heart"
-                className="cursor-pointer w-12"
-                onClick={handleFavoriteClick}
-              />
-              <img
-                src={Send}
-                alt="Send"
-                className="cursor-pointer w-12"
-                onClick={() => actions.addFavoriteVlogDetails(videoId, store.user.id)}
-              />
-              <img src={Speech} alt="Speech" className="cursor-pointer w-12" />
-            </div>
-          </div>
-          <div className="flex flex-col w-4/6">
-            <div className="flex w-full">
-              <div className="w-1/2 text-sm p-4">
+      {isLoading ? (
+        <div>Cargando...</div>
+      ) : (
+        <main className="flex flex-col min-h-screen text-white">
+          <div className="flex flex-wrap mb-60 flex-grow">
+            <div className="flex flex-col w-2/6 ps-28 flex-grow">
+              <div className="flex justify-center items-center">
                 {video && (
-                  <>
-                    <h2 className="text-3xl mb-10">{video.title}</h2>
-                    <div className="whitespace-pre-wrap">
-                      {video.ingredients_part1}
-                    </div>
-                  </>
+                  <video className="w-full h-auto" controls src={video.src} />
                 )}
               </div>
-              <div className="w-1/2 text-sm p-4 flex flex-col">
-                <div className="flex justify-end">
+              <div className="flex space-x-10 mt-4">
+                {video && (
                   <img
-                    className="w-10 h-10 mb-10"
-                    src={Equis}
-                    alt="Salir"
+                    src={video.is_favorite ? HeartRed : Heart}
+                    alt="Heart"
+                    className="cursor-pointer w-12"
+                    onClick={handleFavoriteClick}
                   />
-                </div>
-                {video && (
-                  <>
-                    <div className="whitespace-pre-wrap">
-                      {video.ingredients_part2}
-                    </div>
-                  </>
                 )}
+                {video && (
+                  <img
+                    src={video.is_liked ? ILikeItRed : ILikeIt}
+                    alt="Like"
+                    className="cursor-pointer w-12"
+                    onClick={handleLikeClick}
+                  />
+                )}
+                <img
+                  src={Equis}
+                  alt="Salir"
+                  className="cursor-pointer w-12"
+                  onClick={handleExitClick}
+                />
               </div>
             </div>
-            <div className="w-full text-sm p-4 mt-4">
-              <hr className="h-1 bg-white " />
-              <div className="mt-6 ms-2 w-5/6 flex-grow">
-                <h2 className="text-2xl">{comments.length} Comentarios</h2>
-                <div className="mt-4 overflow-auto">
-                  {comments.slice(0, visibleComments).map((comment, index) => (
-                    <div
-                      key={index}
-                      className="flex items-start space-x-4 mt-4 mb-4 break-words"
-                    >
-                      <img
-                        src="../../img/img_home/bottle.webp"
-                        alt="User avatar"
-                        className="w-12 h-12 rounded-full"
-                      />
-                      <div>
-                        <p>
-                          <strong>
-                            {comment.user?.name ?? "Anónimo"}{" "}
-                            {comment.user?.surname ?? ""}
-                          </strong>
-                        </p>
-                        <p className="text-gray-400 text-sm">
-                          {new Date(comment.timestamp).toLocaleString()}
-                        </p>
-                        <p>{comment.text}</p>
+
+            <div className="flex flex-col w-4/6">
+              <div className="flex w-full">
+                <div className="w-1/2 text-sm p-4">
+                  {video && (
+                    <>
+                      <h2 className="text-3xl mb-10">{video.title}</h2>
+                      <div className="whitespace-pre-wrap">
+                        {video.ingredients_part1}
                       </div>
-                    </div>
-                  ))}
-                  {comments.length > visibleComments && (
-                    <button
-                      onClick={showMoreComments}
-                      className="mt-4 text-blue-500"
-                    >
-                      Mostrar más
-                    </button>
+                    </>
                   )}
                 </div>
-                <textarea
-                  value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  className="w-full ps-4 pt-2 bg-black text-white rounded-3xl h-20 border border-white break-words"
-                  placeholder="Añade un comentario ..."
-                />
-                <button
-                  onClick={handleAddComment}
-                  className="mt-2 text-blue-500"
-                >
-                  Comentar
-                </button>
+                <div className="w-1/2 text-sm p-4 flex flex-col">
+                  <div className="flex justify-end">
+                    <img className="w-10 h-10 mb-10" src={Equis} alt="Salir" />
+                  </div>
+                  {video && (
+                    <>
+                      <div className="whitespace-pre-wrap">
+                        {video.ingredients_part2}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="w-full text-sm p-4 mt-4">
+                <hr className="h-1 bg-white" />
+                <div className="mt-6 ms-2 w-5/6 flex-grow">
+                  <CommentForm
+                    videoId={videoId}
+                    newComment={newComment}
+                    setNewComment={setNewComment}
+                    handleAddComment={handleAddComment}
+                    handleKeyDown={handleKeyDown}
+                  />
+
+                  <h2 className="text-2xl">Comentarios</h2>
+                  <div className="mt-4 overflow-auto">
+                    {store.comments
+                      ?.slice(0, visibleComments)
+                      .map((comment, index) =>
+                        comment.user && comment.user.id ? ( // Conditional check within return
+                          <CommentCard
+                            key={index}
+                            comment={comment}
+                            currentUserId={store.user.id}
+                            onDelete={() =>
+                              actions.deleteCommentVlogDetails(comment.id)
+                            }
+                          />
+                        ) : null
+                      )}
+                    {store.comments.length > visibleComments && (
+                      <button
+                        onClick={showMoreComments}
+                        className="mt-4 text-blue-500"
+                      >
+                        Mostrar más
+                      </button>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </main>
+        </main>
+      )}
       <Sponsor />
     </>
   );

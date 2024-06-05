@@ -1,4 +1,4 @@
-import Portada from "../../img/img_home/portada_cocina.jpg";
+import Portada from "../../img/img_vlog/vlog.mp4";
 
 export const Slider = () => {
     return (
