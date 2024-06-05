@@ -68,6 +68,30 @@ class Address(db.Model):
             'is_billing_default': self.is_billing_default
         }
 
+class BankData(db.Model):
+    __tablename__ = 'bank_data'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    card_number = db.Column(db.String(20), nullable=False)
+    cardholder_name = db.Column(db.String(80), nullable=False)
+    expiry_date = db.Column(db.String(5), nullable=False)
+    cvv = db.Column(db.String(4), nullable=False)
+    is_default = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return '<BankData %r>' % self.id
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'card_number': self.card_number,
+            'cardholder_name': self.cardholder_name,
+            'expiry_date': self.expiry_date,
+            'cvv': self.cvv,
+            'is_default': self.is_default
+        }
+
 
 class Video(db.Model):
     __tablename__ = "video"

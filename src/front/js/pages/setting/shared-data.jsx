@@ -207,10 +207,6 @@ export const SharedData = () => {
             <div>{video.duration.toFixed(2)} sec</div>
           </div>
           <div className="mt-2 flex items-center space-x-4">
-            <button className="text-sm flex items-center space-x-0 border rounded-full xl:px-3.5 px-8">
-              <img src="src/front/icon/config/share/tocar.png" className="w-2" alt="Arrow" />
-              <span>Ver ahora</span>
-            </button>
             <button className="text-sm border rounded-full px-2 flex items-center space-x-2" onClick={() => handleOpenCommentsModal(video.id)}>
               <img src="src/front/icon/config/share/speech.png" className="w-4" alt="icon_speech" />
               <span>{video.comments_count} </span>

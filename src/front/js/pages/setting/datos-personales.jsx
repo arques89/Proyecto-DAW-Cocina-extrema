@@ -6,7 +6,7 @@ import { ValidatePassword } from "../../components/validate_password";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 
 export const DatosPersonales = () => {
-  const { store, actions } = useContext(Context);
+  const { actions } = useContext(Context);
   const [change, setChange] = useState(false);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -44,7 +44,7 @@ export const DatosPersonales = () => {
 
   return (
     <div>
-      <div className="text-xl">
+      <div className="text-xl me-20">
         <h3 className="pb-3 text-shape_border_button">DATOS PERSONALES</h3>
         <hr />
       </div>
