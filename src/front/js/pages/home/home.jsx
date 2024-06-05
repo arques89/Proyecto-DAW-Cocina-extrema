@@ -7,7 +7,7 @@ import Tienda from "../../../img/img_home/icons/tienda.png";
 import video1 from "../../../img/img_home/canal-cocina-portada-1100x619.jpg";
 import { Card } from "../../components/card/index";
 import { Sponsor } from "../../components/sponsor";
-import { Carousel } from "../../components/carousel/index";
+import { Carousel } from "../../components/carousel";
 
 export const Home = () => {
   return (
