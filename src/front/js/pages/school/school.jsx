@@ -68,7 +68,7 @@ export const School = () => {
           </div>
         </div>
       </div>
-      
+
       <section className="px-44">
         <div className="flex mt-16 w-full mb-24">
           <div className="w-1/2 text-white font-thin pr-4">
