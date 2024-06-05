@@ -1,14 +1,17 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import PropTypes from 'prop-types';
 import { Dialog, Transition } from "@headlessui/react";
 import { Options } from "./options";
 import { Menu_navbar } from "./menu_navbar";
-import { Toaster } from "react-hot-toast";
 import { ForgotPassword } from "../pages/forgot_password";
+import { UserOptions } from "./user_options";
+import { Context } from "../store/appContext";
 
 // Componente Canvas
 
 export function Canvas({ open, setOpen, content }) {
+  const { store } = useContext(Context); // Obtener el store del contexto
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog className="relative z-10" onClose={setOpen}>
@@ -40,7 +43,11 @@ export function Canvas({ open, setOpen, content }) {
                   <div className="flex h-full mt-24 flex-col overflow-y-scroll py-6 shadow-xl bg-shape_primary">
                     <div className="relative mt-6 flex-1">
                       {content === "iconUser" ? (
-                        <Options setOpen={setOpen} />
+                        store.token ? (
+                          <UserOptions setOpen={setOpen} />
+                        ) : (
+                          <Options setOpen={setOpen} />
+                        )
                       ) : content === "iconMenu" ? (
                         <Menu_navbar setOpen={setOpen} />
                       ) : content === "iconForgot" ? (
@@ -48,20 +55,6 @@ export function Canvas({ open, setOpen, content }) {
                       ) : null}
                     </div>
                   </div>
-                  <Toaster
-                    position="top-right"
-                    reverseOrder={false}
-                    toastOptions={{
-                      // Define default options
-                      duration: 10000,
-                      style: {
-                        background: "#363636",
-                        color: "#fff",
-                        marginBottom: "0px",
-                        marginRight: "220px",
-                      },
-                    }}
-                  />
                 </Dialog.Panel>
               </Transition.Child>
             </div>
@@ -71,8 +64,9 @@ export function Canvas({ open, setOpen, content }) {
     </Transition.Root>
   );
 }
+
 Canvas.propTypes = {
-  open: PropTypes.bool,
-  setOpen: PropTypes.func,
-  content: PropTypes.string,
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+  content: PropTypes.string.isRequired,
 };

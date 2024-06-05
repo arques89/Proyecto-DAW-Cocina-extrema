@@ -1,9 +1,14 @@
+// src/pages/Login.jsx
 import { useState, useContext } from "react";
-import { Context } from "../../store/appContext"; // Importa el contexto
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
+import { Context } from "../../store/appContext";
 import { inputLogin } from "./mocks";
+import toast from "react-hot-toast";
 
-export const Login = () => {
-  const { actions } = useContext(Context); // Obtén las acciones del contexto
+export const Login = ({ setOpen }) => {
+  const { actions } = useContext(Context);
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,14 +21,23 @@ export const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
-    // Verificar si los campos están vacíos
+    console.log("Submitting login with:", { email, password });
+
     if (!email || !password) {
-      console.error("Por favor, completa todos los campos");
+      toast.error("Por favor, completa todos los campos");
       return;
     }
 
-    await actions.login(email, password); // Llama a la acción de inicio de sesión
+    const response = await actions.login(email, password);
+
+    console.log("Login response:", response);
+
+    if (response.success) {
+      setOpen(false);
+      navigate('/settings');
+    } else {
+      toast.error(response.message);
+    }
   };
 
   const renderInputLogin = () => {
@@ -67,3 +81,9 @@ export const Login = () => {
     </form>
   );
 };
+
+Login.propTypes = {
+  setOpen: PropTypes.func
+};
+
+export default Login;

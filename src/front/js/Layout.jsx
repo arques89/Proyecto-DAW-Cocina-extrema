@@ -1,47 +1,47 @@
-import { BrowserRouter, Route } from "react-router-dom";
-import { Routes } from "react-router-dom";
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { NavBar } from "./components/navbar";
-// import { Footer } from "./components/footer";
+import { Footer } from "./components/footer";
 
-import Home from "./pages/home/home";
-
-import "../css/layout.css";
-import "../css/media.css";
-import "../css/styles.css";
-// import { Chefs } from './pages/chefs';
-// import { upFile } from './pages/upFile/upFile';
-// import { Concursantes } from './pages/concursantes';
-// import { Dashboard } from './pages/dashboard/index';
-
-import injectContext from "./store/appContext";
+import { Home } from "./pages/home/home";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
 import { Settings } from "./pages/setting/index";
-import { Prueba } from "./components/prueba";
-import { ForgotPassword } from './pages/forgot_password/index';
-import { P } from "./pages/setting/p";
-import { RenderInputLogin2 } from "./components/input";
+import { ForgotPassword } from "./pages/forgot_password/index";
+import { Vlog } from "./pages/vlog";
+import { VlogDetails } from "./pages/vlog/vlog-details";
+import { Toaster } from "react-hot-toast";
+import "../css/layout.css";
+import "../css/media.css";
+import "../css/styles.css";
+import injectContext from "./store/appContext";
 
 const Layout = () => {
   return (
     <BrowserRouter>
       <NavBar />
       <Routes>
-        <Route path="/" Component={Home} />
-        <Route path="/login" Component={Login} />
-        <Route path="/register" Component={Register} />
-        <Route path="/settings" Component={Settings} />
-        <Route path="/prueba" Component={Prueba} />
-        <Route path="/p" Component={P} />
-        <Route path="/p" Component={RenderInputLogin2} />
-        {/* <Route path="/chefs" Component={Chefs} /> */}
-        {/* <Route path="/concursantes" Component={Concursantes} /> */}
-        {/* <Route path="/dashboard" Component={Dashboard} /> */}
-        <Route path="/forgot" Component={ForgotPassword} />
-        {/* <Route path="/form" Component={upFile} /> */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
+        <Route path="/vlog" element={<Vlog />} />
+        <Route path="/vlog/:videoId" element={<VlogDetails />} /> {/* Usa solo esta ruta */}
       </Routes>
-      {/* <Footer /> */}
+      <Toaster
+                    position="top-right"
+                    reverseOrder={false}
+                    toastOptions={{
+                      duration: 10000,
+                      style: {
+                        background: "#363636",
+                        color: "#fff",
+                        marginBottom: "0px",
+                        marginRight: "220px",
+                      },
+                    }}
+                  />
+      <Footer />
     </BrowserRouter>
   );
 };

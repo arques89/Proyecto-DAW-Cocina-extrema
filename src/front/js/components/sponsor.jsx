@@ -9,7 +9,7 @@ export const Sponsor = () => {
     <section>
         <div
           id="slider"
-          className="mb-5 carousel slide-patrocinadores"
+          className=" carousel slide-patrocinadores"
           data-ride="carousel"
         >
           <h2 className="patrocinadores">Patrocinadores</h2>

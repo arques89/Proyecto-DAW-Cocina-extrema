@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CheckIcon } from "@heroicons/react/24/solid";
-import PropTypes from 'prop-types'; // Importamos PropTypes
+import PropTypes from 'prop-types';
 import { Login } from "../pages/login";
 import { Register } from "../pages/register";
 import { ForgotPassword } from "../pages/forgot_password";
@@ -20,7 +20,7 @@ export const Options = ({ setOpen }) => {
     if (selectedOption === "login") {
       return (
         <>
-          <Login />
+          <Login setOpen={setOpen} />
           <div className="w-full mt-14">
             <div className="flex mx-36 text-xl">
               <span className="flex justify-start w-full font-thin">
@@ -53,9 +53,9 @@ export const Options = ({ setOpen }) => {
         </>
       );
     } else if (selectedOption === "register") {
-      return <Register />;
+      return <Register setOpen={setOpen} />;
     } else if (selectedOption === "forgot") {
-      return <ForgotPassword />;
+      return <ForgotPassword setOpen={setOpen} />;
     }
   };
 
@@ -102,5 +102,5 @@ export const Options = ({ setOpen }) => {
 };
 
 Options.propTypes = {
-  setOpen: PropTypes.func.isRequired // PropTypes para setOpen como función
+  setOpen: PropTypes.func.isRequired
 };

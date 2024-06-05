@@ -34,18 +34,24 @@ export const DatosBancarios = () => {
                   {renderInputChangeCard()}
                   <div className="flex border-shape_border_button">
                     <label>
-                    Fecha de vencimiento *
-                      <input type="date" className="mt-2 mb-4 bg-shape_input w-1/2 rounded-full border-0 py-1.5 pl-4 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6" />
+                      Fecha de vencimiento *
+                      <input
+                        type="date"
+                        className="mt-2 mb-4 bg-shape_input w-1/2 rounded-full border-0 py-1.5 pl-4 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                      />
                     </label>
                     <label>
-                    CVV *
-                    <br />
-                      <input type="text" className="mt-2 mb-4 bg-shape_input w-1/2 rounded-full border-0 py-1.5 pl-4 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6" />
+                      CVV *
+                      <br />
+                      <input
+                        type="text"
+                        className="mt-2 mb-4 bg-shape_input w-1/2 rounded-full border-0 py-1.5 pl-4 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                      />
                     </label>
                   </div>
                 </div>
-                <div className="w-1/2 h-1/3 bg-green-300 flex justify-center pb-10 items-end">
-                  <img src="src/front/img/visa.png" width={50} alt="Visa" />
+                <div className="w-1/2 h-3/5 pt-10 flex flex-col justify-end pe-16 items-end">
+                  <img src="src/front/img/visa.png" width={70} alt="Visa" />
                 </div>
               </div>
             </div>
@@ -62,7 +68,7 @@ export const DatosBancarios = () => {
   };
 
   return (
-    <div>
+    <div className="pe-20">
       <div className="text-xl">
         <h3 className="pb-3 text-shape_border_button bg-pink-600">
           DATOS PERSONALES

@@ -1,6 +1,6 @@
 import { cardDetails } from "./mocks";
 
-export function Card() {
+export function Card() { // Cambio de nombre a la función CardHome a Card
   const renderCardDetails = () => {
     return cardDetails.map((item) => (
       <div key={item.id} className="max-w-sm overflow-hidden shadow-lg">

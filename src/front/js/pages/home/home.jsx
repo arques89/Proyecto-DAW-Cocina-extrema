@@ -1,4 +1,4 @@
-import { Slider } from "../../components/slider";
+import { Slider } from "../../components/home_slider";
 import { Video } from "../../components/video";
 import Plaqueta from "../../../img/img_home/icons/rojo_video.png";
 import Bandeja from "../../../img/img_home/icons/rojo_bandeja.png";
@@ -9,7 +9,7 @@ import { Card } from "../../components/card/index";
 import { Sponsor } from "../../components/sponsor";
 import { Carousel } from "../../components/carousel/index";
 
-const Home = () => {
+export const Home = () => {
   return (
     <main>
       <Slider />
@@ -97,7 +97,7 @@ const Home = () => {
       <section className="flex px-28 w-full mb-2">
         <div className="text-white font-thin">
           <p className="text-4xl">Inspirate</p>
-          <p className="text-sm my-8">
+          <p className="text-sm mt-8">
             Consejos de expertos sobre cómo aprovechar al máximo tus utensilios
             de cocina, recomendaciones de regalos perfectos y recetas
             exquisitas.
@@ -105,7 +105,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="flex  w-full mb-24 justify-center">
+      <section className="flex  w-full mb-20 justify-center">
         <Carousel />
       </section>
       <Sponsor />
@@ -114,4 +114,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+

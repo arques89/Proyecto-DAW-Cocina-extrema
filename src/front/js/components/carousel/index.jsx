@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
-import { Icon } from "react-icons-kit";
-import { arrow_left } from "react-icons-kit/ikons/arrow_left";
-import { arrow_right } from "react-icons-kit/ikons/arrow_right";
+import { useState, useEffect, useMemo } from "react";
+
+// Importa los archivos SVG de los iconos
+import ChevronRight from "../../../img/icons/flecha_derecha.svg";
+import ChevronLeft from "../../../img/icons/flecha_izquierda.svg";
 import { mocksCarousel } from "./mocks";
 
 export const Carousel = () => {
@@ -20,14 +21,12 @@ export const Carousel = () => {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextImage();
-    }, 3000); // Cambia la imagen cada 3 segundos
+    const intervalId = setInterval(nextImage, 3000);
 
-    return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
+    return () => clearInterval(intervalId);
   }, []);
 
-  const renderIndicators = () => {
+  const renderIndicators = useMemo(() => {
     return (
       <div className="flex justify-center mt-2">
         {mocksCarousel.map((_, index) => (
@@ -40,7 +39,7 @@ export const Carousel = () => {
         ))}
       </div>
     );
-  };
+  }, [currentIndex]);
 
   return (
     <div className="w-full bg-blue-gray-400 justify-center flex flex-col items-center my-4 mx-28">
@@ -60,7 +59,7 @@ export const Carousel = () => {
             <p className="text-sm text-white font-thin">
               {mocksCarousel[currentIndex].subtitle}
             </p>
-            <button className="border border-white rounded-full text-xs w-28 py-1 mt-8">
+            <button className="border border-white text-white rounded-full text-xs w-28 py-1 mt-8">
               SABER MAS
             </button>
             <div className="flex mt-12 items-center">
@@ -69,15 +68,16 @@ export const Carousel = () => {
                 className="flex items-center justify-center mr-4"
                 style={{ width: '40px', height: '40px' }}
               >
-                <Icon className="text-white opacity-50" icon={arrow_left} size={24} />
+                <img src={ChevronLeft} alt="Arrow Back" className="text-white opacity-50" />
               </button>
-              {renderIndicators()}
+              {renderIndicators}
               <button
                 onClick={nextImage}
-                className="flex items-center justify-center ml-4"
+                className="flex items-center justify-center ml-4 text-white opacity-50"
                 style={{ width: '40px', height: '40px' }}
+                size={24}
               >
-                <Icon className="text-white opacity-50" icon={arrow_right} size={24} />
+                <img src={ChevronRight} alt="Chevron Right" />
               </button>
             </div>
           </div>

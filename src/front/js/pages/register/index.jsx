@@ -1,19 +1,19 @@
+// src\front\js\pages\register\index.jsx
 import { inputRegister } from "./mocks";
 import { useContext, useState } from "react";
-import Icon from 'react-icons-kit';
-import { basic_eye } from 'react-icons-kit/linea/basic_eye';
-import { basic_eye_closed } from 'react-icons-kit/linea/basic_eye_closed';
+import PropTypes from 'prop-types';
 import { Context } from "../../store/appContext";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { ValidatePassword } from '../../components/validate_password';
-
-export const Register = () => {
+import { GoEye, GoEyeClosed } from "react-icons/go"; 
+export const Register = ({setOpen}) => {
   const { actions } = useContext(Context); // Obtén las acciones del contexto
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
+  const [surname, setSurname] = useState("")
+  const [phone, setPhone] = useState("");
   const [isChecked, setIsChecked] = useState(false); // Manejar el estado del checkbox
   const [showPassword, setShowPassword] = useState(false);
 
@@ -27,12 +27,13 @@ export const Register = () => {
     }
 
     // Verificar si los campos están vacíos
-    if (!name || !surname || !email || !password) {
+    if (!name || !surname || !email || !password || !phone) {
       console.error("Por favor, completa todos los campos");
       return;
     }
 
-    await actions.register(email, password, name, surname); // Llama a la acción de registro
+    await actions.register(email, password, name, surname, phone); // Llama a la acción de registro
+    setOpen(false); // Cierra el canvas después de un inicio de sesión exitoso
   };
 
   const handleChange = (event) => {
@@ -41,6 +42,7 @@ export const Register = () => {
     if (name === "password") setPassword(value);
     if (name === "name") setName(value);
     if (name === "surname") setSurname(value);
+    if (name === "phone") setPhone(value);
   };
 
   return (
@@ -57,7 +59,13 @@ export const Register = () => {
               className={item.className}
               type={item.type === 'password' && showPassword ? 'text' : item.type}
               name={item.name}
-              value={item.name === "email" ? email : item.name === "password" ? password : item.name === "name" ? name : surname}
+              value={
+                item.name === "email" ? email :
+                item.name === "password" ? password :
+                item.name === "name" ? name :
+                item.name === "surname" ? surname :
+                item.name === "phone" ? phone : ''
+              }
               onChange={(e) => {
                 handleChange(e);
                 if (item.name === "password") {
@@ -74,7 +82,7 @@ export const Register = () => {
                   className="absolute right-0 top-0 mt-0 mr-4"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  <Icon icon={showPassword ? basic_eye : basic_eye_closed} size={18} />
+                  {showPassword ? <GoEye size={18} className="mt-3.5" /> : <GoEyeClosed size={18} className="mt-3.5" />}
                 </button>
                 <ValidatePassword password={password} />
               </>
@@ -111,4 +119,7 @@ export const Register = () => {
       </div>
     </form>
   );
+};
+Register.propTypes = {
+  setOpen: PropTypes.func,
 };

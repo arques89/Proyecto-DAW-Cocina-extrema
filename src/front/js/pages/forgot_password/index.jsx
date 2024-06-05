@@ -1,19 +1,33 @@
 import { useState, useContext } from "react";
 import { Context } from "../../store/appContext";
 import { InputForgotPassword } from "./mocks";
+import PropTypes from 'prop-types';
+import toast from "react-hot-toast";
 
-export const ForgotPassword = () => {
+export const ForgotPassword = ({ setOpen }) => {
   const { actions } = useContext(Context);
   const [email, setEmail] = useState("");
+  const [confirmEmail, setConfirmEmail] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "email") setEmail(value);
+    if (name === "confirmEmail") setConfirmEmail(value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await actions.forgotPassword(email); // Llama a la acción de recuperación de contraseña
+    if (email !== confirmEmail) {
+      toast.error("Los correos electrónicos no coinciden");
+      return;
+    }
+    const response = await actions.forgotPassword(email);
+    if (response.success) {
+      toast.success("Correo enviado. Revisa tu bandeja de entrada.");
+      setOpen(false);
+    } else {
+      toast.error(response.message);
+    }
   };
 
   const renderInputForgotPassword = () => {
@@ -60,4 +74,8 @@ export const ForgotPassword = () => {
       </div>
     </form>
   );
+};
+
+ForgotPassword.propTypes = {
+  setOpen: PropTypes.func,
 };
