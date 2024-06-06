@@ -1,6 +1,6 @@
 import { cardDetails } from "./mocks";
 
-export function Card() { // Cambio de nombre a la función CardHome a Card
+export function Card() {
   const renderCardDetails = () => {
     return cardDetails.map((item) => (
       <div key={item.id} className="max-w-sm overflow-hidden shadow-lg">
@@ -17,9 +17,14 @@ export function Card() { // Cambio de nombre a la función CardHome a Card
           </h5>
         </div>
         <div className="pt-0 text-center rounded-full">
-          <button className="text-xs border border-white rounded-full w-40 py-1 font-thin bg-black text-white">
+          <a
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs border border-white rounded-full w-40 py-1 font-thin bg-black text-white inline-block"
+          >
             COMPRAR AHORA
-          </button>
+          </a>
         </div>
       </div>
     ));

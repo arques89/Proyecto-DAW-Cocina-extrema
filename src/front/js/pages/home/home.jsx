@@ -1,13 +1,12 @@
 import { Slider } from "../../components/home_slider";
-import { Video } from "../../components/video";
 import Plaqueta from "../../../img/img_home/icons/rojo_video.png";
 import Bandeja from "../../../img/img_home/icons/rojo_bandeja.png";
 import Escuela from "../../../img/img_home/icons/educacion.png";
 import Tienda from "../../../img/img_home/icons/tienda.png";
-import video1 from "../../../img/img_home/canal-cocina-portada-1100x619.jpg";
 import { Card } from "../../components/card/index";
 import { Sponsor } from "../../components/sponsor";
 import { Carousel } from "../../components/carousel";
+import { CarouselHome } from "../../components/carousel-home";
 
 export const Home = () => {
   return (
@@ -69,14 +68,10 @@ export const Home = () => {
           </div>
         </div>
 
-        <Video
-          className="flex px-28"
-          title="Una receta para chuparte los dedos"
-          season="Programa 10"
-          chapter="ÚLTIMO PROGRAMA"
-          go="Ver ahora"
-          image={video1}
-        />
+        <div className="flex w-full px-14 mb-20 justify-center">
+          <CarouselHome />
+        </div>
+
       </div>
 
       <section className="flex px-28 mt-24 w-full mb-24">
@@ -96,7 +91,7 @@ export const Home = () => {
       </section>
       <section className="flex px-28 w-full mb-2">
         <div className="text-white font-thin">
-          <p className="text-4xl">Inspirate</p>
+          <p className="text-4xl">Inspírate</p>
           <p className="text-sm mt-8">
             Consejos de expertos sobre cómo aprovechar al máximo tus utensilios
             de cocina, recomendaciones de regalos perfectos y recetas
