@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, Blueprint
 import cloudinary
 import cloudinary.uploader
-from models import db, Video, Comment, Favorite, Category
+from models import db, Video, Comment, Favorite, Category, Like
 from datetime import datetime
 
 from flask import Blueprint
@@ -63,6 +63,12 @@ def delete_video(video_id):
     video = Video.query.get(video_id)
     if not video:
         return jsonify({"error": "Video not found"}), 404
+
+    # Delete related likes, comments, and favorites
+    Comment.query.filter_by(video_id=video_id).delete()
+    Favorite.query.filter_by(video_id=video_id).delete()
+    Like.query.filter_by(video_id=video_id).delete()
+    
     db.session.delete(video)
     db.session.commit()
     return jsonify({"message": "Video deleted"}), 200
@@ -71,3 +77,33 @@ def delete_video(video_id):
 def get_categories():
     categories = Category.query.all()
     return jsonify([category.serialize() for category in categories])
+
+@shared_data_api.route('/api/videos/<int:video_id>/comments', methods=['GET'])
+def get_video_comments(video_id):
+    video = Video.query.get(video_id)
+    if not video:
+        return jsonify({"error": "Video not found"}), 404
+    comments = Comment.query.filter_by(video_id=video_id).all()
+    return jsonify([comment.serialize() for comment in comments])
+
+@shared_data_api.route('/api/videos/<int:video_id>', methods=['PUT'])
+def update_video(video_id):
+    data = request.form
+    video = Video.query.get(video_id)
+    
+    if not video:
+        return jsonify({"error": "Video not found"}), 404
+
+    video.title = data['title']
+    video.description = data['description']
+    video.ingredients_part1 = data['ingredientsPart1']
+    video.ingredients_part2 = data['ingredientsPart2']
+    video.duration = data['duration']
+    
+    if 'videoFile' in request.files:
+        video_file = request.files['videoFile']
+        upload_result = cloudinary.uploader.upload(video_file, resource_type="video")
+        video.src = upload_result['secure_url']
+
+    db.session.commit()
+    return jsonify(video.serialize()), 200

@@ -106,7 +106,7 @@ class Video(db.Model):
     title = db.Column(db.String(100), nullable=False)
     ingredients_part1 = db.Column(db.Text, nullable=False)
     ingredients_part2 = db.Column(db.Text, nullable=False)
-    duration = db.Column(db.Float, nullable=False)  # Nueva columna para la duración
+    duration = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
         return '<Video %r>' % self.description
@@ -123,7 +123,10 @@ class Video(db.Model):
             'ingredients_part2': self.ingredients_part2,
             'duration': self.duration,
             'likes': len(self.likes),
-            'comments': len(self.comments)
+            'comments': len(self.comments),
+            'favorites': len(self.favorites),
+            'user_name': self.user.name,
+            'user_surname': self.user.surname
         }
 
 

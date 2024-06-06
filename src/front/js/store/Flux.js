@@ -427,7 +427,50 @@ const getState = ({ getStore, getActions, setStore }) => {
           return null;
         }
       },
-
+      updateRecipeSharedData: async (videoId, recipeData) => {
+        const store = getStore();
+        if (!store.token) {
+          console.error("User not authenticated");
+          return;
+        }
+      
+        try {
+          const formData = new FormData();
+          formData.append("title", recipeData.title);
+          formData.append("description", recipeData.description);
+          formData.append("ingredientsPart1", recipeData.ingredientsPart1);
+          formData.append("ingredientsPart2", recipeData.ingredientsPart2);
+          formData.append("duration", recipeData.duration);
+          if (recipeData.videoFile) {
+            formData.append("videoFile", recipeData.videoFile);
+          }
+      
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${store.token}`,
+            },
+            body: formData,
+          });
+      
+          if (response.ok) {
+            const updatedVideo = await response.json();
+            setStore({
+              videos: store.videos.map((video) =>
+                video.id === videoId ? updatedVideo : video
+              ),
+            });
+            return updatedVideo;
+          } else {
+            const errorData = await response.json();
+            console.error("Error updating recipe:", errorData);
+            return null;
+          }
+        } catch (error) {
+          console.error("Error updating recipe:", error);
+          return null;
+        }
+      },
       deleteVideoSharedData: async (videoId) => {
         const store = getStore();
         if (!store.token) {

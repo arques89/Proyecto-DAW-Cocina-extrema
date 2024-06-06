@@ -14,6 +14,7 @@ def get_video_details(video_id):
         return _build_cors_preflight_response()
 
     try:
+        
         video = Video.query.options(
             db.joinedload(Video.comments),
             db.joinedload(Video.favorites),

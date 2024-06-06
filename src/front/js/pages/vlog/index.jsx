@@ -12,7 +12,7 @@ export const Vlog = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log('Vlog component mounted, fetching videos...');
+
     actions.getVideosVlog().then(() => setIsLoading(false));
   }, []);
 

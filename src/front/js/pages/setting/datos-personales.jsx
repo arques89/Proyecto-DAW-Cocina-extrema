@@ -65,7 +65,7 @@ export const DatosPersonales = () => {
               <div>
                 <label
                   htmlFor="new-password"
-                  className="text-xl text-shape_border_button mt-2"
+                  className="text-lg text-shape_border_button mt-2"
                 >
                   Nueva Contraseña
                 </label>
@@ -91,7 +91,7 @@ export const DatosPersonales = () => {
               <ValidatePassword password={password} />
               <button
                 type="submit"
-                className="hover:bg-shape_red w-full text-2xl text-white rounded-full bg-shape_border_button mb-4 mt-10"
+                className="hover:bg-shape_red w-full text-lg text-white rounded-full bg-shape_border_button mb-4 mt-10"
               >
                 ACTUALIZAR CONTRASEÑA
               </button>
