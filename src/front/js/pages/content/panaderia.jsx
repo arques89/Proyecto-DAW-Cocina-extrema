@@ -3,6 +3,8 @@ import Bolleria from "../../../img/img_content/icons/aves.png";
 import PanesHeader from "../../../img/img_content/headers/panes-header.jpg";
 import { Sponsor } from "../../components/sponsor";
 import { Slider2 } from "../../components/slider2";
+import VideoPlayer from "../../components/video-player";
+import { videosPanaderia } from "../../components/video-player/mocks";
 
 export const Panaderia = () => {
   return (
@@ -25,19 +27,22 @@ export const Panaderia = () => {
       <div className="mb-16 mt-16 flex justify-between w-full text-white px-32">
         {/* <!-- Primera columna de imagen --> */}
         <div className="text-center w-1/2 h-70 flex flex-col items-center justify-center">
-          <a href="/">
-            <img src={Panes} className="mb-4 max-h-24" alt="aves" />
-          </a>
+          <img src={Panes} className="mb-4 max-h-24" alt="aves" />
+
           <p className="mb-2 text-2xl">PANES</p>
         </div>
 
         {/* <!-- Segunda columna de imagen --> */}
         <div className="text-center w-1/2 h-70 flex flex-col items-center justify-center">
-          <a href="/">
-            <img src={Bolleria} className="mb-4 max-h-24" alt="huevos" />
-          </a>
+          <img src={Bolleria} className="mb-4 max-h-24" alt="huevos" />
+
           <p className="mb-2 text-2xl">BOLLERIA</p>
         </div>
+      </div>
+      <div className="mb-14">
+        {videosPanaderia.map((video) => (
+          <VideoPlayer key={video.id} title={video.title} subtitle={video.subtitle} videoUrl={video.videoUrl} />
+        ))}
       </div>
       <Sponsor />
     </main>

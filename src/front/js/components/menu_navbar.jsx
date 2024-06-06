@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import facebook from "../../img/facebook.png";
 import instagram from "../../img/instagram.png";
 import linkedin from "../../img/linkedin.png";
 import youtube from "../../img/youtube.png";
 
 export const Menu_navbar = ({ setOpen }) => {
-
   const handleOptionClick = (option) => {
     if (option === "close") {
       setOpen(false); // Cerrar el canvas cuando se hace clic en "X"
@@ -16,33 +15,36 @@ export const Menu_navbar = ({ setOpen }) => {
     <div className="flex w-full h-full me-36 justify-end">
       <div className="w-full block pe-36">
         <div className="pb-8 flex text-5xl mt-0 justify-end">
-          <a className='hover:text-shape_red' href="#" onClick={() => handleOptionClick("close")}>
-            
+          <a
+            className="hover:text-shape_red"
+            href="#"
+            onClick={() => handleOptionClick("close")}
+          >
             x
           </a>
         </div>
         <div className="py-8 flex justify-end text-6xl">
-          <a className='hover:text-shape_red' href="/">
+          <a className="hover:text-shape_red" href="/">
             Home
           </a>
         </div>
         <div className="py-8 flex justify-end text-6xl">
-          <a className='hover:text-shape_red' href="/">
+          <a className="hover:text-shape_red" href="/programa">
             Programa
           </a>
         </div>
         <div className="py-8 flex justify-end text-6xl">
-          <a className='hover:text-shape_red' href="/school">
+          <a className="hover:text-shape_red" href="/school">
             Escuela
           </a>
         </div>
         <div className="py-8 flex justify-end text-6xl">
-          <a className='hover:text-shape_red' href="vlog">
+          <a className="hover:text-shape_red" href="/vlog">
             Vlogs
           </a>
         </div>
         <div className="py-8 flex justify-end text-6xl">
-          <a className='hover:text-shape_red' href="#">
+          <a className="hover:text-shape_red" href="#">
             Tienda
           </a>
         </div>
@@ -89,5 +91,5 @@ export const Menu_navbar = ({ setOpen }) => {
   );
 };
 Menu_navbar.propTypes = {
-  setOpen: PropTypes.func.isRequired // PropTypes para setOpen como función
+  setOpen: PropTypes.func.isRequired, // PropTypes para setOpen como función
 };

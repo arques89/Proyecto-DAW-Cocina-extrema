@@ -12,8 +12,14 @@ import { Slider2 } from "../../components/slider2";
 import SubscriptionPlans from "../../components/subscriptionPlans";
 import { CarouselSchool } from "../../components/carouselSchool";
 import ChefsSchool from "../../components/chefs-school";
+import { useNavigate } from 'react-router-dom';
 
 export const School = () => {
+  const navigate = useNavigate();
+
+  const handleMatriculateClick = () => {
+    navigate('/carrito');
+  };
   return (
     <main>
       <div className="relative">
@@ -28,7 +34,7 @@ export const School = () => {
             Dirigida por Fernando Cruz
           </p>
           <div className="mt-4 flex justify-center w-full space-x-5">
-            <button className="bg-white text-black py-2 px-4 rounded-full text-xs flex-1 text-center">
+            <button className="bg-white text-black py-2 px-4 rounded-full text-xs flex-1 text-center" onClick={handleMatriculateClick}>
               MATRICÚLATE
             </button>
             <button className="bg-white text-black py-2 px-4 rounded-full text-xs flex-1 text-center">
@@ -42,27 +48,27 @@ export const School = () => {
         <div className="mb-16 mt-16 flex justify-between w-full text-white px-32">
           {/* <!-- Primera columna de imagen --> */}
           <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
-            <a href="/">
+            
               <img src={Tiempo} className="mb-4 max-h-24" alt="Video" />
-            </a>
+            
             <p className="mb-2 text-2xl">ACCESO ILIMITADO</p>
             <p className="text-font_icon text-sm">Al contenido del curso</p>
           </div>
 
           {/* <!-- Segunda columna de imagen --> */}
           <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
-            <a href="/">
+            
               <img src={Bandeja} className="mb-4 max-h-24" alt="Bandeja" />
-            </a>
+            
             <p className="mb-2 text-2xl">+ 300 RECETAS</p>
             <p className="text-font_icon text-sm">Para aprender</p>
           </div>
 
           {/* <!-- Tercera columna de imagen --> */}
           <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
-            <a href="/">
+            
               <img src={Sombrero} className="mb-4 max-h-24" alt="Sombrero" />
-            </a>
+            
             <p className="mb-2 text-2xl">LOS MEJORES CHEF</p>
             <p className="text-font_icon text-sm">Y concursantes</p>
           </div>
@@ -176,7 +182,7 @@ export const School = () => {
             ¡A qué esperas! ¡Completa todas las lecciones!
           </p>
           <div className="mt-4">
-            <button className="bg-white text-black py-2 px-4 rounded-full mr-4 text-xs">
+            <button className="bg-white text-black py-2 px-4 rounded-full mr-4 text-xs" onClick={handleMatriculateClick}>
               MATRICÚLATE
             </button>
           </div>
