@@ -18,7 +18,7 @@ export const Home = () => {
         <div className="mb-12 flex justify-between w-full text-white px-32">
           {/* <!-- Primera columna de imagen --> */}
           <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
-            <a href="/">
+            <a href="/programa">
               <img src={Plaqueta} className="mb-12 max-h-20" alt="Video" />
             </a>
             <p className="mb-6 text-2xl">PROGRAMA</p>
@@ -29,7 +29,7 @@ export const Home = () => {
 
           {/* <!-- Segunda columna de imagen --> */}
           <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
-            <a href="/">
+            <a href="/school">
               <img
                 src={Escuela}
                 className="img-fluid mb-8 max-h-24"
@@ -42,7 +42,7 @@ export const Home = () => {
 
           {/* <!-- Tercera columna de imagen --> */}
           <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
-            <a href="/">
+            <a href="/vlog">
               <img
                 src={Bandeja}
                 className="img-fluid mb-12 max-h-20"

@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import ChevronRight from "../../../img/icons/flecha_derecha.svg";
 import ChevronLeft from "../../../img/icons/flecha_izquierda.svg";
 import { carouselSchool } from "./mocks";
+import { useNavigate } from 'react-router-dom';
 
 export const CarouselSchool = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,8 +22,17 @@ export const CarouselSchool = () => {
   useEffect(() => {
     const intervalId = setInterval(nextImage, 3000);
 
+   
+
     return () => clearInterval(intervalId);
   }, []);
+
+  const navigate = useNavigate();
+
+  const handleVerContenido = () => {
+    const url = carouselSchool[currentIndex].url;
+    navigate(url);
+  };
 
   const renderIndicators = useMemo(() => {
     return (
@@ -54,7 +64,7 @@ export const CarouselSchool = () => {
           <p className="text-sm text-white font-thin text-center">
             {carouselSchool[currentIndex].subtitle}
           </p>
-          <button className="mt-4 border text-white py-2 px-4 rounded-full text-xs">
+          <button className="mt-4 border text-white py-2 px-4 rounded-full text-xs" onClick={handleVerContenido}>
             VER CONTENIDO
           </button>
           <div className="flex mt-12 items-center justify-center w-full">

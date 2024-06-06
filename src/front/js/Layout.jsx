@@ -33,6 +33,7 @@ import { Carrito } from "./pages/carrito/index";
 import { Cesta } from "./pages/carrito/cesta";
 import { Envio } from "./pages/carrito/envio";
 import { Pago } from "./pages/carrito/pago";
+import { Programa } from "./pages/programa/programa";
 // import { RenderInputLogin2 } from "./components/input";
 
 
@@ -66,6 +67,7 @@ const Layout = () => {
         <Route path="/envio" Component={Envio} />
         <Route path="/pago" Component={Pago} />
         <Route path="/forgot" Component={ForgotPassword} />
+        <Route path="/programa" Component={Programa} />
 
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

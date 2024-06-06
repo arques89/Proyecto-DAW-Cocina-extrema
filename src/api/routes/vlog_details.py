@@ -138,6 +138,7 @@ def get_comments(video_id):
     comments_data = [comment.serialize() for comment in comments]
     return jsonify(comments_data), 200
 
+
 @vlog_details_api.route('/api/videos/<int:video_id>/favorite', methods=['POST', 'OPTIONS'])
 @cross_origin(supports_credentials=True)
 @jwt_required() 

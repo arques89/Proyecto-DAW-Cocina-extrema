@@ -28,9 +28,8 @@ export const Content = () => {
         <div className="mb-16 mt-16 flex justify-between w-full text-white px-32">
           {/* <!-- Primera columna de imagen --> */}
           <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
-            <a href="/">
-              <img src={Tecnicas} className="mb-4 max-h-24" alt="Video" />
-            </a>
+            <img src={Tecnicas} className="mb-4 max-h-24" alt="Video" />
+
             <p className="mb-2 text-2xl">TÉCNICAS AVANZADAS</p>
             <p className="text-font_icon text-sm">
               Métodos de cocina sofisticados y vanguardistas
@@ -39,9 +38,8 @@ export const Content = () => {
 
           {/* <!-- Segunda columna de imagen --> */}
           <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
-            <a href="/">
-              <img src={Creatividad} className="mb-4 max-h-24" alt="Bandeja" />
-            </a>
+            <img src={Creatividad} className="mb-4 max-h-24" alt="Bandeja" />
+
             <p className="mb-2 text-2xl">CREATIVIDAD</p>
             <p className="text-font_icon text-sm">
               Capacidad de innovación en cada plato
@@ -50,9 +48,8 @@ export const Content = () => {
 
           {/* <!-- Tercera columna de imagen --> */}
           <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
-            <a href="/">
-              <img src={Practica} className="mb-4 max-h-24" alt="Sombrero" />
-            </a>
+            <img src={Practica} className="mb-4 max-h-24" alt="Sombrero" />
+
             <p className="mb-2 text-2xl">PRÁCTICA</p>
             <p className="text-font_icon text-sm">
               Trabaja en condiciones reales de presión
