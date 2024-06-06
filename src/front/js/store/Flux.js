@@ -427,7 +427,50 @@ const getState = ({ getStore, getActions, setStore }) => {
           return null;
         }
       },
-
+      updateRecipeSharedData: async (videoId, recipeData) => {
+        const store = getStore();
+        if (!store.token) {
+          console.error("User not authenticated");
+          return;
+        }
+      
+        try {
+          const formData = new FormData();
+          formData.append("title", recipeData.title);
+          formData.append("description", recipeData.description);
+          formData.append("ingredientsPart1", recipeData.ingredientsPart1);
+          formData.append("ingredientsPart2", recipeData.ingredientsPart2);
+          formData.append("duration", recipeData.duration);
+          if (recipeData.videoFile) {
+            formData.append("videoFile", recipeData.videoFile);
+          }
+      
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${store.token}`,
+            },
+            body: formData,
+          });
+      
+          if (response.ok) {
+            const updatedVideo = await response.json();
+            setStore({
+              videos: store.videos.map((video) =>
+                video.id === videoId ? updatedVideo : video
+              ),
+            });
+            return updatedVideo;
+          } else {
+            const errorData = await response.json();
+            console.error("Error updating recipe:", errorData);
+            return null;
+          }
+        } catch (error) {
+          console.error("Error updating recipe:", error);
+          return null;
+        }
+      },
       deleteVideoSharedData: async (videoId) => {
         const store = getStore();
         if (!store.token) {
@@ -719,7 +762,145 @@ const getState = ({ getStore, getActions, setStore }) => {
           throw error;
         }
       },
+      updateAddress: async (id, address) => {
+        try {
+            const response = await fetch(`${config.hostname}/api/addresses/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify(address)
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error updating address:", error);
+            throw error;
+        }
+    },
+      deleteAddress: async (id) => {
+        try {
+            const response = await fetch(`${config.hostname}/api/addresses/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error deleting address:", error);
+            throw error;
+        }
+    },
       //   FIN ADDRESSDATA
+      //   INICIO BANKDATA
+      getBankData: async () => {
+        try {
+            const response = await fetch(`${config.hostname}/api/bankdata`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            setStore({ bankData: data });
+        } catch (error) {
+            console.error("Error fetching bank data:", error);
+        }
+    },
+    addBankData: async (bankData) => {
+        try {
+            const response = await fetch(`${config.hostname}/api/bankdata`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify(bankData)
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error adding bank data:", error);
+            throw error;
+        }
+    },
+    setDefaultBankData: async (id) => {
+        try {
+            const response = await fetch(`${config.hostname}/api/bankdata/${id}/default`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error setting default bank data:", error);
+            throw error;
+        }
+    },
+    updateBankData: async (id, bankData) => {
+        try {
+            const response = await fetch(`${config.hostname}/api/bankdata/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify(bankData)
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error updating bank data:", error);
+            throw error;
+        }
+    },
+    deleteBankData: async (id) => {
+        try {
+            const response = await fetch(`${config.hostname}/api/bankdata/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error deleting bank data:", error);
+            throw error;
+        }
+    },
+    
+      //   FIN BANKDATA
 
 
 

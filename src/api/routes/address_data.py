@@ -1,10 +1,8 @@
 from flask import Blueprint, request, jsonify
 from models import db, User, Address
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from flask_cors import CORS
 
 address_api = Blueprint('address_api', __name__)
-CORS(address_api)  # Habilitar CORS para el blueprint específico
 
 @address_api.route('/api/addresses', methods=['GET'])
 @jwt_required()
@@ -56,3 +54,37 @@ def set_default_billing_address(address_id):
     except Exception as e:
         print(f"Error setting default billing address: {e}")
         return jsonify({"error": "Internal server error"}), 500
+
+@address_api.route('/api/addresses/<int:address_id>', methods=['PUT'])
+@jwt_required()
+def update_address(address_id):
+    user_id = get_jwt_identity()
+    data = request.get_json()
+
+    address = Address.query.filter_by(id=address_id, user_id=user_id).first()
+    if not address:
+        return jsonify({"error": "Address not found"}), 404
+
+    address.name = data.get('name', address.name)
+    address.surname = data.get('surname', address.surname)
+    address.cif_nif = data.get('cif_nif', address.cif_nif)
+    address.address = data.get('address', address.address)
+    address.postal_code = data.get('postal_code', address.postal_code)
+    address.city = data.get('city', address.city)
+    address.phone = data.get('phone', address.phone)
+    address.use_as = data.get('use_as', address.use_as)
+
+    db.session.commit()
+    return jsonify(address.serialize()), 200
+
+@address_api.route('/api/addresses/<int:address_id>', methods=['DELETE'])
+@jwt_required()
+def delete_address(address_id):
+    user_id = get_jwt_identity()
+    address = Address.query.filter_by(id=address_id, user_id=user_id).first()
+    if not address:
+        return jsonify({"error": "Address not found"}), 404
+
+    db.session.delete(address)
+    db.session.commit()
+    return jsonify({"message": "Address deleted"}), 200
