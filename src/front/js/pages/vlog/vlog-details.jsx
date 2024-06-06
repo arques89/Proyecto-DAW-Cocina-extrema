@@ -46,6 +46,7 @@ export const VlogDetails = ({ setOpen }) => {
     }
   }, [videoId, actions.getVideoVlogDetails, actions.getCommentsVlogDetails]);
   
+
   const handleFavoriteClick = () => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -107,8 +108,8 @@ export const VlogDetails = ({ setOpen }) => {
   const handleAddComment = () => {
     if (videoId && newComment) {
       actions.addCommentVlogDetails(videoId, newComment, store.user.id)
-        .then(() => {
-          actions.getCommentsVlogDetails(videoId).then(commentsData => setComments(commentsData || [])); // Actualizar store.comments después de añadir el comentario
+        .then((updatedComments) => {
+          setComments(updatedComments || []); // Actualizar comentarios después de añadir el comentario
           setNewComment(""); 
         })
         .catch(error => console.error("Error adding comment:", error));
@@ -216,15 +217,15 @@ export const VlogDetails = ({ setOpen }) => {
                             key={index}
                             comment={comment}
                             currentUserId={store.user.id}
-                            onDelete={() => actions.deleteCommentVlogDetails(comment.id, videoId).then(() => {
-                              actions.getCommentsVlogDetails(videoId).then(commentsData => setComments(commentsData || [])); // Actualizar store.comments después de eliminar el comentario
+                            onDelete={() => actions.deleteCommentVlogDetails(comment.id, videoId).then((updatedComments) => {
+                              setComments(updatedComments || []); // Actualizar comentarios después de eliminar el comentario
                             })}
                           />
                         ) : null // No renderizar nada si no hay user o id
                       ))}
                     {comments.length > visibleComments && ( // Mostrar botón si hay más comentarios
                       <button
-                        onClick={() => setVisibleComments(visibleComments + 5)} // Mostrar 5 más al hacer clic
+                        onClick={showMoreComments} // Mostrar 5 más al hacer clic
                         className="mt-4 text-blue-500"
                       >
                         Ver más comentarios

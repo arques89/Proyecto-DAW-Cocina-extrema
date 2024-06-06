@@ -34,7 +34,7 @@ export const Login = ({ setOpen }) => {
 
     if (response.success) {
       setOpen(false);
-      navigate('/settings');
+      navigate('/');
     } else {
       toast.error(response.message);
     }
