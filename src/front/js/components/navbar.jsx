@@ -32,7 +32,7 @@ export const NavBar = ({ isLoggedIn }) => {
   return (
     <div className="flex w-full h-24 bg-shape_primary">
       <div className="flex w-1/4 items-center ps-20">
-        <img className="h-14 w-14" src={logo} alt="Logo Cocina Extrema" />
+        <a href="/"><img className="h-14 w-14" src={logo} alt="Logo Cocina Extrema"  /></a>
       </div>
       <div className="w-2/4">
         <span className="flex justify-center items-center h-full text-4xl sedgwick-ave-display-regular">

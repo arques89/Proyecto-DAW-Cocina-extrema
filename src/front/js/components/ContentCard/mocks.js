@@ -6,6 +6,7 @@ export const contentList = [
     description:
       "Conoce el menaje indispensable y los electrodomésticos básicos, los distintos cuchillos y cómo hacer los principales cortes.",
     contentsAvailable: 8,
+    url: "/contentintroduction"
   },
   {
     id: "2",
@@ -14,6 +15,7 @@ export const contentList = [
     description:
       "Descubre las bondades de una carne tan sana como la de ave. Domina el huevo y trabaja ese manjar tan especial: el foie-gras.",
     contentsAvailable: 9,
+    url: "/aves"
   },
   {
     id: "3",
@@ -22,6 +24,7 @@ export const contentList = [
     description:
       "Te acercamos la riqueza de este mundo en un completo recorrido que incluye carnes rojas, blancas, de cerdo, de caza y casquería.",
     contentsAvailable: 10,
+    url: "/carnes"
   },
   {
     id: "4",
@@ -30,6 +33,7 @@ export const contentList = [
     description:
       "Sumérgete en las recetas más frescas de pescados blancos, pescados azules, y de mariscos, tanto moluscos como crustáceos.",
     contentsAvailable: 14,
+    url: "/pescados"
   },
   {
     id: "5",
@@ -38,6 +42,7 @@ export const contentList = [
     description:
       "Profundiza y cocina con imaginación las verduras, hortalizas, setas, hongos, hierbas y especias, que más se utilizan en la cocina.",
     contentsAvailable: 33,
+    url: "/verduras"
   },
   {
     id: "6",
@@ -46,6 +51,7 @@ export const contentList = [
     description:
       "Entra en el mundo de los quesos y los lácteos: las variedades, sus cortes, o cómo se hace mantequilla y yogurt.",
     contentsAvailable: 6,
+    url: "/lacteos"
   },
   {
     id: "7",
@@ -54,6 +60,7 @@ export const contentList = [
     description:
       "Aprende a trabajar la pasta fresca, y a hacer arroces secos, caldosos o risottos. Y haz de tu cocina una pequeña panadería.",
     contentsAvailable: 19,
+    url: "/pastas"
   },
   {
     id: "8",
@@ -61,6 +68,7 @@ export const contentList = [
     title: "PANADERÍA Y BOLLERÍA",
     description: "Aprende a hacer deliciosos panes y bollos artesanales.",
     contentsAvailable: 6,
+    url: "/panaderia"
   },
   {
     id: "9",
@@ -69,6 +77,7 @@ export const contentList = [
     description:
       "Un completo recorrido sobre “lo dulce” destinado a los más golosos que no dejarán de salivar desde el primer momento.",
     contentsAvailable: 10,
+    url: "/reposteria"
   },
   {
     id: "10",
@@ -77,6 +86,7 @@ export const contentList = [
     description:
       "Aprende desde las sopas frías más refrescantes, hasta los más sustanciosos potajes para el frío más riguroso del invierno.",
     contentsAvailable: 8,
+    url: "/sopas"
   },
   {
     id: "11",
@@ -84,6 +94,7 @@ export const contentList = [
     title: "COCINA TRADICIONAL",
     description: "Conoce España y su diversidad cultural desde el paladar.",
     contentsAvailable: 14,
+    url: "/tradicional"
   },
   {
     id: "12",
@@ -92,5 +103,6 @@ export const contentList = [
     description:
       "¿Quieres dar un paso más en la cocina para sorprender a tu familia o amigos?",
     contentsAvailable: 13,
+    url: "/vanguardia"
   },
 ];

@@ -3,6 +3,8 @@ import Aves from "../../../img/img_content/icons/aves.png";
 import AvesHeader from "../../../img/img_content/headers/aves-header.jpg";
 import { Sponsor } from "../../components/sponsor";
 import { Slider2 } from "../../components/slider2";
+import VideoPlayer from "../../components/video-player";
+import { videosAves } from "../../components/video-player/mocks";
 
 export const AvesHuevos = () => {
   return (
@@ -21,27 +23,26 @@ export const AvesHuevos = () => {
         </div>
       </div>
       {/* <!-- Contenido principal --> */}
-        <div className="mb-16 mt-16 flex justify-between w-full text-white px-32">
-          {/* <!-- Primera columna de imagen --> */}
-          <div className="text-center w-1/2 h-70 flex flex-col items-center justify-center">
-            <a href="/">
-              <img src={Aves} className="mb-4 max-h-24" alt="aves" />
-            </a>
-            <p className="mb-2 text-2xl">
-            AVES
-            </p>
-          </div>
+      <div className="mb-16 mt-16 flex justify-between w-full text-white px-32">
+        {/* <!-- Primera columna de imagen --> */}
+        <div className="text-center w-1/2 h-70 flex flex-col items-center justify-center">
+          <img src={Aves} className="mb-4 max-h-24" alt="aves" />
 
-          {/* <!-- Segunda columna de imagen --> */}
-          <div className="text-center w-1/2 h-70 flex flex-col items-center justify-center">
-            <a href="/">
-              <img src={Huevos} className="mb-4 max-h-24" alt="huevos" />
-            </a>
-            <p className="mb-2 text-2xl">
-            HUEVOS
-            </p>
-          </div>
-</div>
+          <p className="mb-2 text-2xl">AVES</p>
+        </div>
+
+        {/* <!-- Segunda columna de imagen --> */}
+        <div className="text-center w-1/2 h-70 flex flex-col items-center justify-center">
+          <img src={Huevos} className="mb-4 max-h-24" alt="huevos" />
+
+          <p className="mb-2 text-2xl">HUEVOS</p>
+        </div>
+      </div>
+      <div className="mb-14">
+        {videosAves.map((video) => (
+          <VideoPlayer key={video.id} title={video.title} subtitle={video.subtitle} videoUrl={video.videoUrl} />
+        ))}
+      </div>
       <Sponsor />
     </main>
   );

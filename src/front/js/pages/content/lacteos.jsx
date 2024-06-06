@@ -3,6 +3,8 @@ import Lact from "../../../img/img_content/icons/vegetales.png";
 import LacteosHeader from "../../../img/img_content/headers/lacteos-header.jpg";
 import { Sponsor } from "../../components/sponsor";
 import { Slider2 } from "../../components/slider2";
+import { videosLacteos } from "../../components/video-player/mocks";
+import VideoPlayer from "../../components/video-player";
 
 export const Lacteos = () => {
   return (
@@ -26,19 +28,22 @@ export const Lacteos = () => {
       <div className="mb-16 mt-16 flex justify-between w-full text-white px-32">
         {/* <!-- Primera columna de imagen --> */}
         <div className="text-center w-1/2 h-70 flex flex-col items-center justify-center">
-          <a href="/">
-            <img src={Quesos} className="mb-4 max-h-24" alt="aves" />
-          </a>
+          <img src={Quesos} className="mb-4 max-h-24" alt="aves" />
+
           <p className="mb-2 text-2xl">QUESOS</p>
         </div>
 
         {/* <!-- Segunda columna de imagen --> */}
         <div className="text-center w-1/2 h-70 flex flex-col items-center justify-center">
-          <a href="/">
-            <img src={Lact} className="mb-4 max-h-24" alt="huevos" />
-          </a>
+          <img src={Lact} className="mb-4 max-h-24" alt="huevos" />
+
           <p className="mb-2 text-2xl">LÁCTEOS</p>
         </div>
+      </div>
+      <div className="mb-14">
+        {videosLacteos.map((video) => (
+          <VideoPlayer key={video.id} title={video.title} subtitle={video.subtitle} videoUrl={video.videoUrl} />
+        ))}
       </div>
       <Sponsor />
     </main>

@@ -5,6 +5,8 @@ import Especias from "../../../img/img_content/icons/vegetales.png";
 import VerdurasHeader from "../../../img/img_content/headers/verduras-header.jpg";
 import { Sponsor } from "../../components/sponsor";
 import { Slider2 } from "../../components/slider2";
+import { videosVerduras } from "../../components/video-player/mocks";
+import VideoPlayer from "../../components/video-player";
 
 export const Verduras = () => {
   return (
@@ -26,35 +28,36 @@ export const Verduras = () => {
         <div className="mb-16 mt-16 flex justify-between w-full text-white px-32">
           {/* <!-- Primera columna de imagen --> */}
           <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
-            <a href="/">
-              <img src={Vegetales} className="mb-4 max-h-24" alt="Video" />
-            </a>
+            <img src={Vegetales} className="mb-4 max-h-24" alt="Video" />
+
             <p className="mb-2 text-2xl">VERDURAS</p>
           </div>
 
           {/* <!-- Segunda columna de imagen --> */}
           <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
-            <a href="/">
-              <img src={Setas} className="mb-4 max-h-24" alt="Bandeja" />
-            </a>
+            <img src={Setas} className="mb-4 max-h-24" alt="Bandeja" />
+
             <p className="mb-2 text-2xl">SETAS Y HONGOS</p>
           </div>
 
           {/* <!-- Tercera columna de imagen --> */}
           <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
-            <a href="/">
-              <img src={Frutas} className="mb-4 max-h-24" alt="Sombrero" />
-            </a>
+            <img src={Frutas} className="mb-4 max-h-24" alt="Sombrero" />
+
             <p className="mb-2 text-2xl">FRUTAS</p>
           </div>
           {/* <!-- Cuarta columna de imagen --> */}
           <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
-            <a href="/">
-              <img src={Especias} className="mb-4 max-h-24" alt="Sombrero" />
-            </a>
+            <img src={Especias} className="mb-4 max-h-24" alt="Sombrero" />
+
             <p className="mb-2 text-2xl">ESPECIAS</p>
           </div>
         </div>
+      </div>
+      <div className="mb-14">
+        {videosVerduras.map((video) => (
+          <VideoPlayer key={video.id} title={video.title} subtitle={video.subtitle} videoUrl={video.videoUrl} />
+        ))}
       </div>
       <Sponsor />
     </main>

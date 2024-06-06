@@ -27,7 +27,7 @@ export const Menu_navbar = ({ setOpen }) => {
           </a>
         </div>
         <div className="py-8 flex justify-end text-6xl">
-          <a href="/">
+          <a href="/programa">
             Programa
           </a>
         </div>
@@ -37,7 +37,7 @@ export const Menu_navbar = ({ setOpen }) => {
           </a>
         </div>
         <div className="py-8 flex justify-end text-6xl">
-          <a href="vlog">
+          <a href="/vlog">
             Vlogs
           </a>
         </div>

@@ -2,6 +2,8 @@ import Vegetales from "../../../img/img_content/icons/vegetales.png";
 import VanguardiaHeader from "../../../img/img_content/headers/vanguardia-header.jpg";
 import { Sponsor } from "../../components/sponsor";
 import { Slider2 } from "../../components/slider2";
+import { videosVanguardia } from "../../components/video-player/mocks";
+import VideoPlayer from "../../components/video-player";
 
 export const Vanguardia = () => {
   return (
@@ -29,12 +31,16 @@ export const Vanguardia = () => {
         <div className="mb-16 mt-16 flex justify-center w-full text-white px-32">
           {/* <!-- Primera columna de imagen --> */}
           <div className="text-center h-70 flex flex-col items-center justify-center">
-            <a href="/">
-              <img src={Vegetales} className="mb-4 max-h-24" alt="Video" />
-            </a>
-            <p className="mb-2 text-2xl">COCINA TRADICIONAL</p>
+            <img src={Vegetales} className="mb-4 max-h-24" alt="Video" />
+
+            <p className="mb-2 text-2xl">COCINA DE VANGUARDIA</p>
           </div>
         </div>
+      </div>
+      <div className="mb-14">
+        {videosVanguardia.map((video) => (
+          <VideoPlayer key={video.id} title={video.title} subtitle={video.subtitle} videoUrl={video.videoUrl} />
+        ))}
       </div>
       <Sponsor />
     </main>
