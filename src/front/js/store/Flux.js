@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import config from "../../config";
 
 const getState = ({ getStore, getActions, setStore }) => {
@@ -83,7 +84,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           const userLikes = Array.isArray(userData.likes) ? userData.likes : [];
           const userFavorites = Array.isArray(userData.favorites) ? userData.favorites : [];
-
+          toast.success("Has iniciado sesión, bienvenido")
           setStore({
             token,
             userId: userData.id,
@@ -111,6 +112,49 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       resetInactivityTimer,
+      register: async (email, password, name, surname, phone) => {
+        try {
+          const response = await fetch(`${config.hostname}/register`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password, name, surname, phone }),
+          });
+          if (!response.ok) {
+            const responseData = await response.json();
+            const notify = () => toast.error(`${responseData.error}`);
+            throw new Error(notify());
+          }
+          return (
+            toast.success(
+              "Registro satisfactorio, por favor revise su bandeja de entrada"
+            ),
+            201
+          );
+        } catch (error) {
+          return; // Retorna temprano en caso de error
+        }
+      },
+      forgotPassword: async (email) => {
+        try {
+          const response = await fetch(`${config.hostname}/forgot_password`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email }),
+          });
+          const responseData = await response.json();
+          if (!response.ok) {
+            toast.error(responseData.error, { position: "top-right" });
+            return { success: false, message: responseData.error };
+          }
+          toast.success(responseData.message, { position: "top-right" });
+          return { success: true, message: responseData.message };
+        } catch (error) {
+          toast.error("Error al enviar la solicitud", { position: "top-right" });
+          return { success: false, message: "Error al enviar la solicitud" };
+        }
+      },
       logout: () => {
         setStore({
           token: null,
@@ -501,10 +545,22 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      getComments: (videoId) => {
-        const store = getStore();
-        const video = store.videos.find((video) => video.id === videoId);
-        return video ? video.comments : [];
+      getComments: async (videoId) => {
+        try {
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}/comments`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${getStore().token}`,
+            },
+          });
+          if (!response.ok) throw new Error("Error fetching comments");
+          const data = await response.json();
+          return data; // Devolver los datos de los comentarios
+        } catch (error) {
+          console.error("Error fetching comments:", error);
+          return [];
+        }
       },
       //   FIN SHAREDDATAACTION
 
@@ -647,15 +703,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getCommentsVlogDetails: async (videoId) => {
         try {
-          const response = await fetch(`${config.hostname}/api/videos/${videoId}/comments`);
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}/comments`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
           if (!response.ok) throw new Error("Error fetching comments");
           const data = await response.json();
-          setStore({ comments: data });
+          return data; // Devolver los datos de los comentarios
         } catch (error) {
           console.error("Error fetching comments:", error);
+          return [];
         }
       },
-
+      
       addCommentVlogDetails: async (videoId, text, userId) => {
         try {
           const response = await fetch(
@@ -670,15 +733,16 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           );
           if (!response.ok) throw new Error("Error adding comment");
-          getActions().getCommentsVlogDetails(videoId); // Recargar comentarios después de agregar uno
+          return await getActions().getCommentsVlogDetails(videoId); // Recargar comentarios después de agregar uno y devolver los comentarios actualizados
         } catch (error) {
           console.error("Error adding comment:", error);
+          return [];
         }
       },
-
+      
       deleteCommentVlogDetails: async (commentId, videoId) => {
         const token = localStorage.getItem("token");
-
+      
         try {
           const response = await fetch(
             `${config.hostname}/api/videos/${videoId}/comments/${commentId}`,
@@ -690,15 +754,17 @@ const getState = ({ getStore, getActions, setStore }) => {
               },
             }
           );
-
+      
           if (!response.ok) throw new Error("Error deleting comment");
-
+      
           // Actualizar el estado de la aplicación (volver a cargar comentarios)
-          getActions().getCommentsVlogDetails(videoId);
+          return await getActions().getCommentsVlogDetails(videoId);
         } catch (error) {
           console.error("Error deleting comment:", error);
+          return [];
         }
       },
+      
 
 
 
