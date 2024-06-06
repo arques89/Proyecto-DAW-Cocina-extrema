@@ -1,6 +1,4 @@
 import { useState, useEffect, useMemo } from "react";
-
-// Importa los archivos SVG de los iconos
 import ChevronRight from "../../../img/icons/flecha_derecha.svg";
 import ChevronLeft from "../../../img/icons/flecha_izquierda.svg";
 import { mocksCarousel } from "./mocks";
@@ -59,9 +57,14 @@ export const Carousel = () => {
             <p className="text-sm text-white font-thin">
               {mocksCarousel[currentIndex].subtitle}
             </p>
-            <button className="border border-white text-white rounded-full text-xs w-28 py-1 mt-8">
+            <a
+              href={mocksCarousel[currentIndex].url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border border-white text-white rounded-full text-xs w-28 py-1 mt-8 text-center"
+            >
               SABER MAS
-            </button>
+            </a>
             <div className="flex mt-12 items-center">
               <button
                 onClick={prevImage}
