@@ -5,16 +5,24 @@ import IlikeIt from "../../../icon/vlog/ilikeit.png";
 import Speech from "../../../icon/vlog/blanco_speech.png";
 import Heart from "../../../icon/vlog/blanco_corazon.png";
 import PropTypes from "prop-types";
+import toast from "react-hot-toast";
 
 export const CardVideo = ({ videos = [] }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const navigate = useNavigate();
 
+ 
+
   const handleMouseEnter = (index) => setHoveredIndex(index);
   const handleMouseLeave = () => setHoveredIndex(null);
 
   const handlePlayClick = (id) => {
-    navigate(`/vlog/${id}`);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error('Inicia sesión para poder ver el video');
+      return navigate("/");
+    }else
+      return navigate(`/vlog/${id}`);
   };
 
   const renderRows = () => {
@@ -33,6 +41,7 @@ export const CardVideo = ({ videos = [] }) => {
               user_name = 'Anónimo',
               user_surname = '',
             } = video;
+
             return (
               <div
                 key={id}

@@ -6,7 +6,7 @@ import { ValidatePassword } from "../../components/validate_password";
 import { GoEye, GoEyeClosed } from "react-icons/go";
 
 export const DatosPersonales = () => {
-  const { store, actions } = useContext(Context);
+  const { actions } = useContext(Context);
   const [change, setChange] = useState(false);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -44,7 +44,7 @@ export const DatosPersonales = () => {
 
   return (
     <div>
-      <div className="text-xl">
+      <div className="text-xl me-20">
         <h3 className="pb-3 text-shape_border_button">DATOS PERSONALES</h3>
         <hr />
       </div>
@@ -65,7 +65,7 @@ export const DatosPersonales = () => {
               <div>
                 <label
                   htmlFor="new-password"
-                  className="text-xl text-shape_border_button mt-2"
+                  className="text-lg text-shape_border_button mt-2"
                 >
                   Nueva Contraseña
                 </label>
@@ -91,7 +91,7 @@ export const DatosPersonales = () => {
               <ValidatePassword password={password} />
               <button
                 type="submit"
-                className="hover:bg-shape_red w-full text-2xl text-white rounded-full bg-shape_border_button mb-4 mt-10"
+                className="hover:bg-shape_red w-full text-lg text-white rounded-full bg-shape_border_button mb-4 mt-10"
               >
                 ACTUALIZAR CONTRASEÑA
               </button>

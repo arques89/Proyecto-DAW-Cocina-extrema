@@ -16,33 +16,33 @@ export const Menu_navbar = ({ setOpen }) => {
     <div className="flex w-full h-full me-36 justify-end">
       <div className="w-full block pe-36">
         <div className="pb-8 flex text-5xl mt-0 justify-end">
-          <a href="#" onClick={() => handleOptionClick("close")}>
+          <a className='hover:text-shape_red' href="#" onClick={() => handleOptionClick("close")}>
             
             x
           </a>
         </div>
         <div className="py-8 flex justify-end text-6xl">
-          <a href="/">
+          <a className='hover:text-shape_red' href="/">
             Home
           </a>
         </div>
         <div className="py-8 flex justify-end text-6xl">
-          <a href="/">
+          <a className='hover:text-shape_red' href="/">
             Programa
           </a>
         </div>
         <div className="py-8 flex justify-end text-6xl">
-          <a href="/school">
+          <a className='hover:text-shape_red' href="/school">
             Escuela
           </a>
         </div>
         <div className="py-8 flex justify-end text-6xl">
-          <a href="vlog">
+          <a className='hover:text-shape_red' href="vlog">
             Vlogs
           </a>
         </div>
         <div className="py-8 flex justify-end text-6xl">
-          <a href="#">
+          <a className='hover:text-shape_red' href="#">
             Tienda
           </a>
         </div>

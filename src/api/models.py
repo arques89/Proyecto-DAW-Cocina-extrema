@@ -48,6 +48,7 @@ class Address(db.Model):
     city = db.Column(db.String(80), nullable=False)
     phone = db.Column(db.String(20), nullable=False)
     use_as = db.Column(db.String(100), nullable=False)  # Para "Usar como"
+    is_billing_default = db.Column(db.Boolean(), default=False)  # Campo para la dirección de facturación predeterminada
 
     def __repr__(self):
         return '<Address %r>' % self.id
@@ -63,8 +64,34 @@ class Address(db.Model):
             'postal_code': self.postal_code,
             'city': self.city,
             'phone': self.phone,
-            'use_as': self.use_as
+            'use_as': self.use_as,
+            'is_billing_default': self.is_billing_default
         }
+
+class BankData(db.Model):
+    __tablename__ = 'bank_data'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    card_number = db.Column(db.String(20), nullable=False)
+    cardholder_name = db.Column(db.String(80), nullable=False)
+    expiry_date = db.Column(db.String(5), nullable=False)
+    cvv = db.Column(db.String(4), nullable=False)
+    is_default = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return '<BankData %r>' % self.id
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'card_number': self.card_number,
+            'cardholder_name': self.cardholder_name,
+            'expiry_date': self.expiry_date,
+            'cvv': self.cvv,
+            'is_default': self.is_default
+        }
+
 
 class Video(db.Model):
     __tablename__ = "video"
@@ -79,7 +106,7 @@ class Video(db.Model):
     title = db.Column(db.String(100), nullable=False)
     ingredients_part1 = db.Column(db.Text, nullable=False)
     ingredients_part2 = db.Column(db.Text, nullable=False)
-    duration = db.Column(db.Float, nullable=False)  # Nueva columna para la duración
+    duration = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
         return '<Video %r>' % self.description
@@ -96,7 +123,10 @@ class Video(db.Model):
             'ingredients_part2': self.ingredients_part2,
             'duration': self.duration,
             'likes': len(self.likes),
-            'comments': len(self.comments)
+            'comments': len(self.comments),
+            'favorites': len(self.favorites),
+            'user_name': self.user.name,
+            'user_surname': self.user.surname
         }
 
 
