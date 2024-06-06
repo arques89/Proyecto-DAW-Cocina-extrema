@@ -43,10 +43,10 @@ export const RenderInputDatosPersonales = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="text-2xl">
+      <div className="">
         <div className="w-full">
           <div className="flex justify-start">
-            <label htmlFor="name" className="text-xl text-shape_border_button mt-2">Nombre</label>
+            <label htmlFor="name" className="text-lg text-shape_border_button mt-2">Nombre</label>
           </div>
           <div className="mt-3 relative">
             <input
@@ -61,10 +61,10 @@ export const RenderInputDatosPersonales = ({ onSubmit }) => {
           </div>
         </div>
       </div>
-      <div className="text-2xl">
+      <div>
         <div className="w-full">
           <div className="flex justify-start">
-            <label htmlFor="surname" className="text-xl text-shape_border_button mt-2">Apellido</label>
+            <label htmlFor="surname" className="text-lg text-shape_border_button mt-2">Apellido</label>
           </div>
           <div className="mt-3 relative">
             <input
@@ -79,10 +79,10 @@ export const RenderInputDatosPersonales = ({ onSubmit }) => {
           </div>
         </div>
       </div>
-      <div className="text-2xl">
+      <div>
         <div className="w-full">
           <div className="flex justify-start">
-            <label htmlFor="email" className="text-xl text-shape_border_button mt-2">Correo</label>
+            <label htmlFor="email" className="text-lg text-shape_border_button mt-2">Correo</label>
           </div>
           <div className="mt-3 relative">
             <input
@@ -97,10 +97,10 @@ export const RenderInputDatosPersonales = ({ onSubmit }) => {
           </div>
         </div>
       </div>
-      <div className="text-2xl">
+      <div>
         <div className="w-full">
           <div className="flex justify-start">
-            <label htmlFor="phone" className="text-xl text-shape_border_button mt-2">Teléfono</label>
+            <label htmlFor="phone" className="text-lg text-shape_border_button mt-2">Teléfono</label>
           </div>
           <div className="mt-3 relative">
             <input
@@ -115,7 +115,7 @@ export const RenderInputDatosPersonales = ({ onSubmit }) => {
           </div>
         </div>
       </div>
-      <button type="submit" className="mt-10 hover:bg-shape_red w-full text-2xl text-white rounded-full bg-shape_border_button mb-4">GUARDAR CAMBIOS</button>
+      <button type="submit" className="mt-10 hover:bg-shape_red w-full text-lg text-white rounded-full bg-shape_border_button mb-4">GUARDAR CAMBIOS</button>
     </form>
   );
 };

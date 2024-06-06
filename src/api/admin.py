@@ -1,6 +1,6 @@
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
-from models import db, User, Video, Comment, Like, Favorite, Category, VideoCategory, Portada, Address
+from models import db, User, Video, Comment, Like, Favorite, Category, VideoCategory, Portada, Address, BankData
 
 admin = Admin(name='Admin Panel', template_mode='bootstrap3')
 
@@ -53,10 +53,17 @@ class PortadaModelView(ModelView):
     form_columns = ('url', 'title', 'description')
 
 class AddressModelView(ModelView):
-    column_list = ('id', 'user_id', 'name', 'surname', 'cif_nif', 'address', 'postal_code', 'city', 'phone', 'use_as')
+    column_list = ('id', 'user_id', 'name', 'surname', 'cif_nif', 'address', 'postal_code', 'city', 'phone', 'use_as', 'is_billing_default')
     column_searchable_list = ('name', 'surname', 'cif_nif', 'city')
-    column_filters = ('city', 'postal_code')
-    form_columns = ('user_id', 'name', 'surname', 'cif_nif', 'address', 'postal_code', 'city', 'phone', 'use_as')
+    column_filters = ('city', 'postal_code', 'is_billing_default') 
+    form_columns = ('user_id', 'name', 'surname', 'cif_nif', 'address', 'postal_code', 'city', 'phone', 'use_as', 'is_billing_default')
+
+
+class BankDataModelView(ModelView):
+    column_list = ('id', 'user_id', 'card_number', 'cardholder_name', 'expiry_date', 'cvv', 'is_default')
+    column_searchable_list = ('card_number', 'cardholder_name')
+    column_filters = ('expiry_date', 'is_default')
+    form_columns = ('user_id', 'card_number', 'cardholder_name', 'expiry_date', 'cvv', 'is_default')
 
 def init_admin(app):
     admin = Admin(app, name='Admin Panel', template_mode='bootstrap3')
@@ -71,5 +78,6 @@ def init_admin(app):
     admin.add_view(VideoCategoryModelView(VideoCategory, db.session))
     admin.add_view(PortadaModelView(Portada, db.session))
     admin.add_view(AddressModelView(Address, db.session))  # Añadida la nueva vista para Address
+    admin.add_view(BankDataModelView(BankData, db.session))  # Añadida la nueva vista para BankData
 
     return admin
