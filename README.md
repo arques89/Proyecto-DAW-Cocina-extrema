@@ -23,6 +23,7 @@ despues:
 yarn install
 
 yarn dev (levantar el proyecto front-end)
+
 ------------------------------------------------------
 Back-end:
 ------------------------------------------------------
