@@ -6,9 +6,55 @@ Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-sm 14px  = 20px en xd
+
+Abrir dos terminales una para front-end y otra back-end
+
+------------------------------------------------------
+Front-end:
+------------------------------------------------------
+raiz del proyecto:
+
+Verificar que Vite este instalado:
+vite –version
+Si no lo esta:
+npm install -g vite
+
+despues:
+yarn install
+
+yarn dev (levantar el proyecto front-end)
+------------------------------------------------------
+Back-end:
+------------------------------------------------------
+Tener instalado en el equipo:
+
+Python 3.12.3 (página oficial de Python)
+Python interprete (descargar del store de windows Python 3.12)
+
+Acceder a la raiz del back-end desde raiz del proyecto: cd src/api/
+
+Instalar pipenv:
+
+pip install pipenv
+
+crear el entorno de python:
+
+pipenv shell
+
+Instalar dependencias usadas en el proyecto (pipfile) dentro del entorno:
+
+pipenv install
+
+Usar flask para levantar el proyecto back-end:
+
+flask run
+
+
+
+
+<!-- sm 14px  = 20px en xd
 2xl 24px  = 40px en xd
-margen laterales  de px-32
+margen laterales  de px-32 -->
 
 <!-- $ pip list
 Package            Version

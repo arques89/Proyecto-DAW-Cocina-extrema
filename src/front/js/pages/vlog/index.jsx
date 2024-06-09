@@ -12,8 +12,11 @@ export const Vlog = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-
-    actions.getVideosVlog().then(() => setIsLoading(false));
+    actions.getVideosVlog().then((data) => {
+      // Almacena los datos en el local storage
+      localStorage.setItem('videos', JSON.stringify(data));
+      setIsLoading(false);
+    });
   }, []);
 
   return (
