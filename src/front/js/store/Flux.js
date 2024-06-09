@@ -383,28 +383,29 @@ const getState = ({ getStore, getActions, setStore }) => {
       getVideosSharedData: async () => {
         const store = getStore();
         if (!store.token) {
-          console.error("User not authenticated");
-          return;
+            console.error("User not authenticated");
+            return;
         }
-
+    
         try {
-          const response = await fetch(`${config.hostname}/api/videos`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${store.token}`,
-            },
-          });
-          if (response.ok) {
-            const data = await response.json();
-            setStore({ videos: data });
-          } else {
-            console.error("Error fetching videos:", response.statusText);
-          }
+            const response = await fetch(`${config.hostname}/api/sharedvideos`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${store.token}`, // Asegúrate de enviar el token
+                },
+            });
+    
+            if (response.ok) {
+                const data = await response.json();
+                setStore({ videos: data });
+            } else {
+                console.error("Error fetching videos:", response.statusText);
+            }
         } catch (error) {
-          console.error("Error fetching videos:", error);
+            console.error("Error fetching videos:", error);
         }
-      },
+    },
 
       getCategoriesSharedData: async () => {
         const store = getStore();
@@ -432,53 +433,52 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      saveRecipeSharedData: async (recipeData) => {
+      saveRecipeSharedData : async (recipeData) => {
         const store = getStore();
         if (!store.token) {
-          console.error("User not authenticated");
-          return;
+            console.error("User not authenticated");
+            return;
         }
-
+    
         try {
-          const formData = new FormData();
-          formData.append("title", recipeData.title);
-          formData.append("description", recipeData.description);
-          formData.append("videoFile", recipeData.videoFile);
-          formData.append("ingredientsPart1", recipeData.ingredientsPart1);
-          formData.append("ingredientsPart2", recipeData.ingredientsPart2);
-          formData.append("duration", recipeData.duration);
-          formData.append("user_id", store.userId);
-
-          const response = await fetch(`${config.hostname}/api/videos`, {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${store.token}`,
-            },
-            body: formData,
-          });
-
-          if (response.ok) {
-            const newVideo = await response.json();
-            setStore({ videos: [...store.videos, newVideo] });
-            return newVideo;
-          } else {
-            const errorData = await response.json();
-            console.error("Error saving recipe:", errorData);
-            return null;
-          }
+            const formData = new FormData();
+            formData.append("title", recipeData.title);
+            formData.append("description", recipeData.description);
+            formData.append("videoFile", recipeData.videoFile);
+            formData.append("ingredientsPart1", recipeData.ingredientsPart1);
+            formData.append("ingredientsPart2", recipeData.ingredientsPart2);
+            formData.append("duration", recipeData.duration);
+    
+            const response = await fetch(`${config.hostname}/api/videos`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${store.token}`,
+                },
+                body: formData,
+            });
+    
+            if (response.ok) {
+                const newVideo = await response.json();
+                setStore({ videos: [...store.videos, newVideo] });
+                return newVideo;
+            } else {
+                const errorData = await response.json();
+                console.error("Error saving recipe:", errorData);
+                return null;
+            }
         } catch (error) {
-          console.error("Error saving recipe:", error);
-          return null;
+            console.error("Error saving recipe:", error);
+            return null;
         }
-      },
-      updateRecipeSharedData: async (videoId, recipeData) => {
-        const store = getStore();
-        if (!store.token) {
+    },
+    updateRecipeSharedData : async (videoId, recipeData) => {
+      const store = getStore();
+      if (!store.token) {
           console.error("User not authenticated");
           return;
-        }
-      
-        try {
+      }
+  
+      try {
           const formData = new FormData();
           formData.append("title", recipeData.title);
           formData.append("description", recipeData.description);
@@ -486,64 +486,64 @@ const getState = ({ getStore, getActions, setStore }) => {
           formData.append("ingredientsPart2", recipeData.ingredientsPart2);
           formData.append("duration", recipeData.duration);
           if (recipeData.videoFile) {
-            formData.append("videoFile", recipeData.videoFile);
+              formData.append("videoFile", recipeData.videoFile);
           }
-      
+  
           const response = await fetch(`${config.hostname}/api/videos/${videoId}`, {
-            method: "PUT",
-            headers: {
-              Authorization: `Bearer ${store.token}`,
-            },
-            body: formData,
+              method: "PUT",
+              headers: {
+                  Authorization: `Bearer ${store.token}`,
+              },
+              body: formData,
           });
-      
+  
           if (response.ok) {
-            const updatedVideo = await response.json();
-            setStore({
-              videos: store.videos.map((video) =>
-                video.id === videoId ? updatedVideo : video
-              ),
-            });
-            return updatedVideo;
+              const updatedVideo = await response.json();
+              setStore({
+                  videos: store.videos.map((video) =>
+                      video.id === videoId ? updatedVideo : video
+                  ),
+              });
+              return updatedVideo;
           } else {
-            const errorData = await response.json();
-            console.error("Error updating recipe:", errorData);
-            return null;
+              const errorData = await response.json();
+              console.error("Error updating recipe:", errorData);
+              return null;
           }
-        } catch (error) {
+      } catch (error) {
           console.error("Error updating recipe:", error);
           return null;
-        }
-      },
-      deleteVideoSharedData: async (videoId) => {
-        const store = getStore();
-        if (!store.token) {
-          console.error("User not authenticated");
-          return;
-        }
+      }
+  },
+  deleteVideoSharedData : async (videoId) => {
+    const store = getStore();
+    if (!store.token) {
+        console.error("User not authenticated");
+        return;
+    }
 
-        try {
-          const response = await fetch(
+    try {
+        const response = await fetch(
             `${config.hostname}/api/videos/${videoId}`,
             {
-              method: "DELETE",
-              headers: {
-                Authorization: `Bearer ${store.token}`,
-              },
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${store.token}`,
+                },
             }
-          );
+        );
 
-          if (response.ok) {
+        if (response.ok) {
             setStore({
-              videos: store.videos.filter((video) => video.id !== videoId),
+                videos: store.videos.filter((video) => video.id !== videoId),
             });
-          } else {
+        } else {
             console.error("Error deleting video:", response.statusText);
-          }
-        } catch (error) {
-          console.error("Error deleting video:", error);
         }
-      },
+    } catch (error) {
+        console.error("Error deleting video:", error);
+    }
+},
 
       getComments: async (videoId) => {
         try {
@@ -565,23 +565,36 @@ const getState = ({ getStore, getActions, setStore }) => {
       //   FIN SHAREDDATAACTION
 
       //   INICIO VLOGACTION
-      getVideosVlog: async () => {
+      getVideosVlog : async () => {
         try {
-          const response = await fetch(`${config.hostname}/api/videos`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          if (!response.ok) {
-            throw new Error("Error fetching videos");
-          }
-          const data = await response.json();
-          setStore({ videos: data });
+            const response = await fetch(`${config.hostname}/api/vlogvideos`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+    
+            if (!response.ok) {
+                throw new Error("Error fetching videos");
+            }
+    
+            const data = await response.json();
+    
+            // Imprimir todos los videos recibidos
+            console.log("Todos los videos:", data);
+    
+            // Iterar sobre cada video e imprimir su información de usuario
+            data.forEach(video => {
+                console.log(`Video ID: ${video.id}, Usuario: ${video.user?.name || 'Anónimo'} ${video.user?.surname || ''}`);
+            });
+    
+            setStore({ videos: data });
         } catch (error) {
-          console.error("Error fetching videos:", error);
+            console.error("Error fetching videos:", error);
         }
-      },
+    },
+    
+      
 
       //   FIN VLOGACTION
       //   INICIO VLOGDETAILACTION
@@ -607,52 +620,67 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       addFavoriteVlogDetails: async (videoId) => {
         const token = localStorage.getItem("token");
-
+    
         try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/favorite`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          if (!response.ok) throw new Error("Error adding favorite");
-
-          // Actualizar el estado local y en el store
-          getActions().getVideoVlogDetails(videoId);
+            const response = await fetch(
+                `${config.hostname}/api/videos/${videoId}/favorite`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+    
+            if (!response.ok) throw new Error("Error adding favorite");
+    
+            // Actualizar el estado local y en el store
+            const getActions = getActions();
+            getActions().getVideoVlogDetails(videoId);
+    
+            // Actualizar favoritos en el estado global
+            const store = getStore();
+            setStore({
+                favorites: [...store.favorites, videoId]
+            });
+    
         } catch (error) {
-          console.error("Error adding favorite:", error);
+            console.error("Error adding favorite:", error);
         }
-      },
-
-      removeFavoriteVlogDetails: async (videoId) => {
+    },
+    
+    removeFavoriteVlogDetails: async (videoId) => {
         const token = localStorage.getItem("token");
-
+    
         try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/favorite`,
-            {
-              method: "DELETE",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          if (!response.ok) throw new Error("Error removing favorite");
-
-          // Actualizar el estado local y en el store
-          getActions().getVideoVlogDetails(videoId);
+            const response = await fetch(
+                `${config.hostname}/api/videos/${videoId}/favorite`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+    
+            if (!response.ok) throw new Error("Error removing favorite");
+    
+            // Actualizar el estado local y en el store
+            const getActions = getActions();
+            getActions().getVideoVlogDetails(videoId);
+    
+            // Actualizar favoritos en el estado global
+            const store = getStore();
+            setStore({
+                favorites: store.favorites.filter(favId => favId !== videoId)
+            });
+    
         } catch (error) {
-          console.error("Error removing favorite:", error);
+            console.error("Error removing favorite:", error);
         }
-      },
-
+    },
       addLikeVlogDetails: async (videoId) => {
         const token = localStorage.getItem('token');
         try {
@@ -719,26 +747,31 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       
-      addCommentVlogDetails: async (videoId, text, userId) => {
+      addCommentVlogDetails: async (videoId, text) => {
+        const token = localStorage.getItem("token");
         try {
-          const response = await fetch(
-            `${config.hostname}/api/videos/${videoId}/comments`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-              },
-              body: JSON.stringify({ text, user_id: userId }),
-            }
-          );
-          if (!response.ok) throw new Error("Error adding comment");
-          return await getActions().getCommentsVlogDetails(videoId); // Recargar comentarios después de agregar uno y devolver los comentarios actualizados
+          const response = await fetch(`${config.hostname}/api/videos/${videoId}/comments`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify({ text })
+          });
+      
+          if (!response.ok) {
+            throw new Error("Error adding comment");
+          }
+      
+          // Aquí estamos seguros de que response.json es una función
+          const data = await response.json();
+          return data;
         } catch (error) {
           console.error("Error adding comment:", error);
-          return [];
+          throw error;
         }
       },
+      
       
       deleteCommentVlogDetails: async (commentId, videoId) => {
         const token = localStorage.getItem("token");

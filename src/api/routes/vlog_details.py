@@ -113,7 +113,12 @@ def add_comment(video_id):
     db.session.add(new_comment)
     db.session.commit()
 
+    # Refrescar para obtener las relaciones
+    db.session.refresh(new_comment)
+
     return jsonify({"message": "Comment added", "comment": new_comment.serialize()}), 201
+
+
 
 @vlog_details_api.route('/api/videos/<int:video_id>/comments/<int:comment_id>', methods=['DELETE'])
 @jwt_required()
