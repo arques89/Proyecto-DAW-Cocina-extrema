@@ -8,13 +8,9 @@ from functools import wraps
 # Crear el Blueprint
 vlog_details_api = Blueprint('vlog_details_api', __name__)
 
-@vlog_details_api.route('/api/videos/<int:video_id>', methods=['GET', 'OPTIONS'])
+@vlog_details_api.route('/api/videos/<int:video_id>', methods=['GET'])
 def get_video_details(video_id):
-    if request.method == 'OPTIONS':
-        return _build_cors_preflight_response()
-
     try:
-        
         video = Video.query.options(
             db.joinedload(Video.comments),
             db.joinedload(Video.favorites),
@@ -33,7 +29,6 @@ def get_video_details(video_id):
         video_data["comments"] = [comment.serialize() for comment in video.comments]
         video_data["comment_count"] = len(video.comments)
 
-        # Verificar si hay token JWT y obtener user_id si existe
         auth_header = request.headers.get('Authorization')
         if auth_header:
             try:
@@ -116,7 +111,15 @@ def add_comment(video_id):
     # Refrescar para obtener las relaciones
     db.session.refresh(new_comment)
 
-    return jsonify({"message": "Comment added", "comment": new_comment.serialize()}), 201
+    user = User.query.get(user_id)
+    comment_data = new_comment.serialize()
+    if user:
+        comment_data["user"] = {"name": user.name, "surname": user.surname}
+    else:
+        comment_data["user"] = {"name": "Anónimo", "surname": ""}
+
+    return jsonify({"message": "Comment added", "comment": comment_data}), 201
+
 
 
 
@@ -137,11 +140,21 @@ def delete_comment(video_id, comment_id):
 
     return jsonify({"message": "Comment deleted"}), 200
 
+
 @vlog_details_api.route('/api/videos/<int:video_id>/comments', methods=['GET'])
 def get_comments(video_id):
     comments = Comment.query.filter_by(video_id=video_id).all()
-    comments_data = [comment.serialize() for comment in comments]
+    comments_data = []
+    for comment in comments:
+        user = User.query.get(comment.user_id)
+        comment_data = comment.serialize()
+        if user:
+            comment_data["user"] = {"name": user.name, "surname": user.surname}
+        else:
+            comment_data["user"] = {"name": "Anónimo", "surname": ""}
+        comments_data.append(comment_data)
     return jsonify(comments_data), 200
+
 
 
 @vlog_details_api.route('/api/videos/<int:video_id>/favorite', methods=['POST', 'OPTIONS'])
@@ -221,31 +234,26 @@ def manage_favorite(video_id):
 @vlog_details_api.route('/api/videos/<int:video_id>/like', methods=['POST', 'DELETE'])
 @jwt_required()
 def manage_like(video_id):
-    try:
-        user_id = get_jwt_identity()
-        video = Video.query.get(video_id)
-        if not video:
-            return jsonify({"error": "Video not found"}), 404
+    user_id = get_jwt_identity()
+    video = Video.query.get(video_id)
+    if not video:
+        return jsonify({"error": "Video not found"}), 404
 
-        if request.method == 'POST':
-            existing_like = Like.query.filter_by(user_id=user_id, video_id=video_id).first()
-            if existing_like:
-                return jsonify({"error": "Video already liked"}), 400
+    if request.method == 'POST':
+        existing_like = Like.query.filter_by(user_id=user_id, video_id=video_id).first()
+        if existing_like:
+            return jsonify({"error": "Video already liked"}), 400
 
-            new_like = Like(user_id=user_id, video_id=video_id)
-            db.session.add(new_like)
-            db.session.commit()
-            return jsonify({"message": "Like added", "like": new_like.serialize()}), 201
+        new_like = Like(user_id=user_id, video_id=video_id)
+        db.session.add(new_like)
+        db.session.commit()
+        return jsonify({"message": "Like added", "like": new_like.serialize()}), 201
 
-        elif request.method == 'DELETE':
-            like = Like.query.filter_by(user_id=user_id, video_id=video_id).first()
-            if not like:
-                return jsonify({"error": "Like not found"}), 404
+    elif request.method == 'DELETE':
+        like = Like.query.filter_by(user_id=user_id, video_id=video_id).first()
+        if not like:
+            return jsonify({"error": "Like not found"}), 404
 
-            db.session.delete(like)
-            db.session.commit()
-            return jsonify({"message": "Like removed"}), 200
-
-    except Exception as e:
-        print(f"Error managing like: {e}")
-        return jsonify({"error": "Internal server error"}), 500
+        db.session.delete(like)
+        db.session.commit()
+        return jsonify({"message": "Like removed"}), 200
