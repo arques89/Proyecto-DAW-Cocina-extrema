@@ -44,7 +44,7 @@ export const VlogDetails = ({ setOpen }) => {
         })
         .finally(() => setIsLoading(false));
     }
-  }, [videoId, actions.getVideoVlogDetails, actions.getCommentsVlogDetails]);
+  }, [videoId]);
 
   const handleFavoriteClick = () => {
     const token = localStorage.getItem("token");
@@ -68,7 +68,6 @@ export const VlogDetails = ({ setOpen }) => {
             ];
         localStorage.setItem("userFavorites", JSON.stringify(updatedFavorites));
         setIsFavorite(!isFavorite);
-        actions.getVideoVlogDetails(videoId);
       })
       .catch((error) => console.error("Error al modificar favorito:", error));
   };
@@ -95,7 +94,6 @@ export const VlogDetails = ({ setOpen }) => {
             ];
         localStorage.setItem("userLikes", JSON.stringify(updatedLikes));
         setIsLiked(!isLiked);
-        actions.getVideoVlogDetails(videoId);
       })
       .catch((error) => console.error("Error al modificar like:", error));
   };
@@ -123,7 +121,6 @@ export const VlogDetails = ({ setOpen }) => {
       console.error("videoId or newComment is missing");
     }
   };
-  
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
@@ -189,7 +186,9 @@ export const VlogDetails = ({ setOpen }) => {
                 </div>
                 <div className="w-1/2 text-sm p-4 flex flex-col">
                   <div className="flex justify-end">
-                    <img className="w-10 h-10 mb-10" src={Equis} alt="Salir" />
+                    <button>
+                    <img className="w-10 h-10 mb-10" src={Equis} alt="Salir" onClick={handleExitClick} />
+                    </button>
                   </div>
                   {video && (
                     <>
@@ -215,33 +214,23 @@ export const VlogDetails = ({ setOpen }) => {
                     handleKeyDown={handleKeyDown}
                   />
 
-                  <div className="mt-4 space-y-4 border p-4 rounded-lg">
-                    {" "}
-                    {/* Espacio entre comentarios */}
-                    {comments
-                      .slice(0, visibleComments)
-                      .map((comment, index) => (
-            
-                        comment.user_id ? ( // Verificación corregida
+                  <div className="mt-4 space-y-4">
+                    {comments.slice(0, visibleComments).map((comment, index) => (
+                      comment.user_id ? (
+                        <div key={index} className="border p-4 rounded-lg"> {/* Borde alrededor del comentario */}
                           <CommentCard
-                            key={index}
                             comment={comment}
-                            currentUserId={parseInt(localStorage.getItem("userId"))} // Obtener userId del localStorage
-                            onDelete={() =>
-                              actions.deleteCommentVlogDetails(comment.id, videoId).then(
-                                (updatedComments) => {
-                                  
-                                  setComments(updatedComments || []); // Actualizar comentarios después de eliminar el comentario
-                                }
-                              )
+                            currentUserId={parseInt(localStorage.getItem("userId"))}
+                            onDelete={() => 
+                              actions.deleteCommentVlogDetails(comment.id, videoId).then((updatedComments) => {
+                                setComments(updatedComments || []);
+                              })
                             }
                           />
-                        ) : (
-                      
-                          null // No renderizar nada si no hay user_id
-                        )
-                      ))}
-                    {comments.length > visibleComments && ( // Mostrar botón si hay más comentarios
+                        </div>
+                      ) : null
+                    ))}
+                    {comments.length > visibleComments && (
                       <button onClick={showMoreComments} className="mt-4 text-blue-500">
                         Ver más comentarios
                       </button>
