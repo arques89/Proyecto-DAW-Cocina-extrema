@@ -36,6 +36,26 @@ class User(db.Model):
             'is_admin': self.is_admin
         }
 
+class Comment(db.Model):
+    __tablename__ = "comment"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    text = db.Column(db.String(1000), nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    video_id = db.Column(db.Integer, db.ForeignKey('video.id'), nullable=False)
+
+    def __repr__(self):
+        return '<Comment %r>' % self.text
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'text': self.text,
+            'timestamp': self.timestamp,
+            'user_id': self.user_id,
+            'video_id': self.video_id
+        }
+
 class Address(db.Model):
     __tablename__ = 'address'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -112,6 +132,8 @@ class Video(db.Model):
         return '<Video %r>' % self.description
 
     def serialize(self):
+        db.session.add(self) #Añade la instancia actual de Video a la sesión
+        db.session.refresh(self) #Actualiza el estado de la instancia desde la base de datos, esto forzara a que la relación de video.user se cargue
         return {
             'id': self.id,
             'src': self.src,
@@ -125,30 +147,12 @@ class Video(db.Model):
             'likes': len(self.likes),
             'comments': len(self.comments),
             'favorites': len(self.favorites),
-            'user_name': self.user.name,
-            'user_surname': self.user.surname
+            'user': {
+                'name': self.user.name if self.user else 'Anónimo', #Accede al nombre del usuario si existe
+                'surname': self.user.surname if self.user else ''  #Accede al apellido del usuario si existe
+            } if self.user else None 
         }
 
-
-class Comment(db.Model):
-    __tablename__ = "comment"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    text = db.Column(db.String(1000), nullable=False)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    video_id = db.Column(db.Integer, db.ForeignKey('video.id'), nullable=False)
-
-    def __repr__(self):
-        return '<Comment %r>' % self.text
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'text': self.text,
-            'timestamp': self.timestamp,
-            'user_id': self.user_id,
-            'video_id': self.video_id
-        }
 
 class Like(db.Model):
     __tablename__ = "like"

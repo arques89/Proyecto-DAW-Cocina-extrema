@@ -64,7 +64,7 @@ A pesar de haber mostrado buena mano para la cocina, la actriz catalana se vio o
   <div className="flex flex-wrap items-stretch my-4 px-32">
     <div className="w-1/2 p-4 text-white">
         <p className="mt-36">Pablo Motos</p>
-      <p className="text-2xl mb-6 mt-8"><em>Me encanta el pitiminí, en la vida y en los platos</em>Me encanta el pitiminí, en la vida y en los platos</p>
+      <p className="text-2xl mb-6 mt-8"><em>Me encanta el pitiminí, en la vida y en los platos</em></p>
       <p className="text-sm">El concursante Pablo Motos se enfrenta al reto de preparar un plato delicioso y refinado para una ocasión especial. Después de las dos horas de trabajo, Pablo presenta su plato con una sonrisa pícara. <em>Me encanta el pitiminí, en la vida y en los platos</em>, exclama. </p>
     </div>
     <div className="w-1/2">

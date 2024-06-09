@@ -1,17 +1,16 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Play from "../../../icon/vlog/play.png";
-import IlikeIt from "../../../icon/vlog/ilikeit.png";
-import Speech from "../../../icon/vlog/blanco_speech.png";
-import Heart from "../../../icon/vlog/blanco_corazon.png";
-import PropTypes from "prop-types";
-import toast from "react-hot-toast";
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Play from '../../../icon/vlog/play.png';
+import IlikeIt from '../../../icon/vlog/ilikeit.png';
+import Speech from '../../../icon/vlog/blanco_speech.png';
+import Heart from '../../../icon/vlog/blanco_corazon.png';
+import toast from 'react-hot-toast';
+import config from '../../../config';
 
 export const CardVideo = ({ videos = [] }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const navigate = useNavigate();
-
- 
 
   const handleMouseEnter = (index) => setHoveredIndex(index);
   const handleMouseLeave = () => setHoveredIndex(null);
@@ -21,8 +20,9 @@ export const CardVideo = ({ videos = [] }) => {
     if (!token) {
       toast.error('Inicia sesión para poder ver el video');
       return navigate("/");
-    }else
+    } else {
       return navigate(`/vlog/${id}`);
+    }
   };
 
   const renderRows = () => {
@@ -38,9 +38,10 @@ export const CardVideo = ({ videos = [] }) => {
               likes_count = 0,
               comments_count = 0,
               favorites_count = 0,
-              user_name = 'Anónimo',
-              user_surname = '',
+              user,
             } = video;
+
+            const userName = user ? `${user.name} ${user.surname}` : 'Anónimo';
 
             return (
               <div
@@ -69,7 +70,7 @@ export const CardVideo = ({ videos = [] }) => {
                     </div>
                   </div>
                   <div className="text-sm self-end mt-2">
-                    {user_name} {user_surname}
+                    {userName} 
                   </div>
                 </div>
               </div>
@@ -97,8 +98,10 @@ CardVideo.propTypes = {
       comments_count: PropTypes.number.isRequired,
       likes_count: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
-      user_name: PropTypes.string,
-      user_surname: PropTypes.string,
+      user: PropTypes.shape({
+        name: PropTypes.string,
+        surname: PropTypes.string,
+      }),
     })
   ).isRequired,
 };

@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify, Blueprint
 import cloudinary
 import cloudinary.uploader
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from models import db, Video, Comment, Favorite, Category, Like
 from datetime import datetime
 
-from flask import Blueprint
 shared_data_api = Blueprint('shared_data_api', __name__)
+
 # Cloudinary Configuration
 cloudinary.config(
     cloud_name="dztgp8g6w",
@@ -13,9 +14,11 @@ cloudinary.config(
     api_secret="a5xb9RBMOpovJEOOranrRYLWAYw"
 )
 
-@shared_data_api.route('/api/videos', methods=['GET'])
+@shared_data_api.route('/api/sharedvideos', methods=['GET'])
+@jwt_required()
 def get_videos():
-    videos = Video.query.all()
+    current_user_id = get_jwt_identity()
+    videos = Video.query.filter_by(user_id=current_user_id).all()
     videos_data = [
         {
             'id': video.id,
@@ -34,7 +37,9 @@ def get_videos():
     return jsonify(videos_data)
 
 @shared_data_api.route('/api/videos', methods=['POST'])
+@jwt_required()
 def add_video():
+    current_user_id = get_jwt_identity()
     data = request.form
     video_file = request.files.get('videoFile')
 
@@ -48,7 +53,7 @@ def add_video():
         src=video_url,
         description=data['description'],
         title=data['title'],
-        user_id=data['user_id'],
+        user_id=current_user_id,
         duration=data['duration'],
         ingredients_part1=data['ingredientsPart1'],
         ingredients_part2=data['ingredientsPart2'],
@@ -59,10 +64,12 @@ def add_video():
     return jsonify(new_video.serialize()), 201
 
 @shared_data_api.route('/api/videos/<int:video_id>', methods=['DELETE'])
+@jwt_required()
 def delete_video(video_id):
-    video = Video.query.get(video_id)
+    current_user_id = get_jwt_identity()
+    video = Video.query.filter_by(id=video_id, user_id=current_user_id).first()
     if not video:
-        return jsonify({"error": "Video not found"}), 404
+        return jsonify({"error": "Video not found or not authorized"}), 404
 
     # Delete related likes, comments, and favorites
     Comment.query.filter_by(video_id=video_id).delete()
@@ -87,12 +94,14 @@ def get_video_comments(video_id):
     return jsonify([comment.serialize() for comment in comments])
 
 @shared_data_api.route('/api/videos/<int:video_id>', methods=['PUT'])
+@jwt_required()
 def update_video(video_id):
+    current_user_id = get_jwt_identity()
     data = request.form
-    video = Video.query.get(video_id)
+    video = Video.query.filter_by(id=video_id, user_id=current_user_id).first()
     
     if not video:
-        return jsonify({"error": "Video not found"}), 404
+        return jsonify({"error": "Video not found or not authorized"}), 404
 
     video.title = data['title']
     video.description = data['description']
