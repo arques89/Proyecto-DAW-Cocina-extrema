@@ -35,6 +35,8 @@ export const VlogDetails = ({ setOpen }) => {
         actions.getCommentsVlogDetails(videoId),
       ])
         .then(([videoDetails, commentsData]) => {
+          console.log("Video details:", videoDetails); // Debugging line
+          console.log("Comments data:", commentsData); // Debugging line
           setIsFavorite(userFavorites.includes(parseInt(videoId)));
           setIsLiked(userLikes.includes(parseInt(videoId)));
           setComments(commentsData || []); // Asegurar que commentsData es un array
@@ -186,8 +188,11 @@ export const VlogDetails = ({ setOpen }) => {
                 </div>
                 <div className="w-1/2 text-sm p-4 flex flex-col">
                   <div className="flex justify-end">
+                    {video && video.owner && (
+                      <p className="text-lg font-semibold">{`${video.owner.name} ${video.owner.surname}`}</p> // Añadir el nombre del creador de la receta
+                    )}
                     <button>
-                    <img className="w-10 h-10 mb-10" src={Equis} alt="Salir" onClick={handleExitClick} />
+                      <img className="w-10 h-10 mb-10" src={Equis} alt="Salir" onClick={handleExitClick} />
                     </button>
                   </div>
                   {video && (
@@ -216,8 +221,9 @@ export const VlogDetails = ({ setOpen }) => {
 
                   <div className="mt-4 space-y-4">
                     {comments.slice(0, visibleComments).map((comment, index) => (
-                      comment.user_id ? (
+                      comment.user ? (
                         <div key={index} className="border p-4 rounded-lg"> {/* Borde alrededor del comentario */}
+                          <p className="text-md font-semibold">{`${comment.user.name} ${comment.user.surname}`}</p> {/* Añadir el nombre del creador del comentario */}
                           <CommentCard
                             comment={comment}
                             currentUserId={parseInt(localStorage.getItem("userId"))}
@@ -228,7 +234,20 @@ export const VlogDetails = ({ setOpen }) => {
                             }
                           />
                         </div>
-                      ) : null
+                      ) : (
+                        <div key={index} className="border p-4 rounded-lg"> {/* Borde alrededor del comentario */}
+                          <p className="text-md font-semibold">Anónimo</p> {/* Comentario sin usuario */}
+                          <CommentCard
+                            comment={comment}
+                            currentUserId={parseInt(localStorage.getItem("userId"))}
+                            onDelete={() => 
+                              actions.deleteCommentVlogDetails(comment.id, videoId).then((updatedComments) => {
+                                setComments(updatedComments || []);
+                              })
+                            }
+                          />
+                        </div>
+                      )
                     ))}
                     {comments.length > visibleComments && (
                       <button onClick={showMoreComments} className="mt-4 text-blue-500">

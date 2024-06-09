@@ -111,7 +111,15 @@ def add_comment(video_id):
     # Refrescar para obtener las relaciones
     db.session.refresh(new_comment)
 
-    return jsonify({"message": "Comment added", "comment": new_comment.serialize()}), 201
+    user = User.query.get(user_id)
+    comment_data = new_comment.serialize()
+    if user:
+        comment_data["user"] = {"name": user.name, "surname": user.surname}
+    else:
+        comment_data["user"] = {"name": "Anónimo", "surname": ""}
+
+    return jsonify({"message": "Comment added", "comment": comment_data}), 201
+
 
 
 
@@ -132,11 +140,21 @@ def delete_comment(video_id, comment_id):
 
     return jsonify({"message": "Comment deleted"}), 200
 
+
 @vlog_details_api.route('/api/videos/<int:video_id>/comments', methods=['GET'])
 def get_comments(video_id):
     comments = Comment.query.filter_by(video_id=video_id).all()
-    comments_data = [comment.serialize() for comment in comments]
+    comments_data = []
+    for comment in comments:
+        user = User.query.get(comment.user_id)
+        comment_data = comment.serialize()
+        if user:
+            comment_data["user"] = {"name": user.name, "surname": user.surname}
+        else:
+            comment_data["user"] = {"name": "Anónimo", "surname": ""}
+        comments_data.append(comment_data)
     return jsonify(comments_data), 200
+
 
 
 @vlog_details_api.route('/api/videos/<int:video_id>/favorite', methods=['POST', 'OPTIONS'])
