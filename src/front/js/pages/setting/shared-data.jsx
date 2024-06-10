@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import Modal from "react-modal";
 import { Context } from "../../store/appContext";
 import ClipLoader from "react-spinners/ClipLoader";
-import { change } from "./mocks";
+import { inputSharedData } from "./mocks";
 import EditIcon from "../../../icon/config/share/edit.png";
 
 export const SharedData = () => {
@@ -123,10 +123,10 @@ export const SharedData = () => {
         }
     };
 
-    const renderInput = () => {
+    const renderInputSharedData = () => {
         return (
             <div className="flex space-x-4">
-                {change.map((item) => (
+                {inputSharedData.map((item) => (
                     <div key={item.id} className="flex-1 border-shape_border_button">
                         <label>
                             {item.name}
@@ -206,7 +206,7 @@ export const SharedData = () => {
                                     />
                                 </label>
                                 <br />
-                                {renderInput()}
+                                {renderInputSharedData()}
                             </div>
                         </div>
                     </div>

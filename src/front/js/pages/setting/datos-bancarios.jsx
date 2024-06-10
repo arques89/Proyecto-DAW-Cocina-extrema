@@ -21,7 +21,26 @@ export const DatosBancarios = () => {
   };
 
   const handleInputChange = (e) => {
-    setNewCard({ ...newCard, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    // Validación para fecha de vencimiento
+    if (name === "expiry_date") {
+      const formattedValue = value.replace(/[^0-9/]/g, "");
+      if (formattedValue.length <= 5) {
+        setNewCard({ ...newCard, [name]: formattedValue });
+      }
+    } 
+    // Validación para CVV
+    else if (name === "cvv") {
+      const formattedValue = value.replace(/[^0-9]/g, "");
+      if (formattedValue.length <= 3) {
+        setNewCard({ ...newCard, [name]: formattedValue });
+      }
+    } 
+    // Validación para otros campos
+    else {
+      setNewCard({ ...newCard, [name]: value });
+    }
   };
 
   const handleSaveCard = () => {
@@ -180,6 +199,7 @@ export const DatosBancarios = () => {
                     name="expiry_date"
                     value={newCard.expiry_date}
                     onChange={handleInputChange}
+                    placeholder="MM/YY"
                     className="block mt-2 mb-4 w-full rounded-full py-2 px-4 bg-shape_input border"
                   />
                 </label>
@@ -190,6 +210,7 @@ export const DatosBancarios = () => {
                     name="cvv"
                     value={newCard.cvv}
                     onChange={handleInputChange}
+                    placeholder="CVV"
                     className="block mt-2 mb-4 w-full rounded-full py-2 px-4 bg-shape_input border"
                   />
                 </label>
