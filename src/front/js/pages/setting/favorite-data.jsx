@@ -2,11 +2,9 @@
 import { useState, useContext, useEffect } from "react";
 import Modal from "react-modal";
 import { Context } from "../../store/appContext";
-import ClipLoader from "react-spinners/ClipLoader";
 
 export const FavoriteData = () => {
   const { store, actions } = useContext(Context);
-  const [loading, setLoading] = useState(false);
   const [commentsModalIsOpen, setCommentsModalIsOpen] = useState(false);
   const [comments, setComments] = useState([]);
 

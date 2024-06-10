@@ -7,7 +7,7 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 import { ValidatePassword } from '../../components/validate_password';
 import { GoEye, GoEyeClosed } from "react-icons/go"; 
 export const Register = ({setOpen}) => {
-  const { actions } = useContext(Context); // Obtén las acciones del contexto
+  const { actions } = useContext(Context);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,8 +32,8 @@ export const Register = ({setOpen}) => {
       return;
     }
 
-    await actions.register(email, password, name, surname, phone); // Llama a la acción de registro
-    setOpen(false); // Cierra el canvas después de un inicio de sesión exitoso
+    await actions.register(email, password, name, surname, phone); // Se llama a la acción de registro
+    setOpen(false); // Cierra el canvas después de un registro exitoso
   };
 
   const handleChange = (event) => {

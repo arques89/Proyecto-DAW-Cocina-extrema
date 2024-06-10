@@ -1,6 +1,5 @@
 // src\front\js\pages\register\mocks.js
 
-// Array de configuración de inputs con los placeholders del localStorage
 export const inputRegister = [
   {
     id: 1,

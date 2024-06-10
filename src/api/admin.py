@@ -68,7 +68,7 @@ class BankDataModelView(ModelView):
 def init_admin(app):
     admin = Admin(app, name='Admin Panel', template_mode='bootstrap3')
 
-    # Add model views
+    # Se añaden las vistal de los models (tablas)
     admin.add_view(UserModelView(User, db.session))
     admin.add_view(VideoModelView(Video, db.session))
     admin.add_view(CommentModelView(Comment, db.session))
@@ -77,7 +77,7 @@ def init_admin(app):
     admin.add_view(CategoryModelView(Category, db.session))
     admin.add_view(VideoCategoryModelView(VideoCategory, db.session))
     admin.add_view(PortadaModelView(Portada, db.session))
-    admin.add_view(AddressModelView(Address, db.session))  # Añadida la nueva vista para Address
-    admin.add_view(BankDataModelView(BankData, db.session))  # Añadida la nueva vista para BankData
+    admin.add_view(AddressModelView(Address, db.session))
+    admin.add_view(BankDataModelView(BankData, db.session))
 
     return admin
