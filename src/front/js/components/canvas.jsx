@@ -1,10 +1,9 @@
 import { Fragment, useContext } from "react";
 import PropTypes from 'prop-types';
 import { Dialog, Transition } from "@headlessui/react";
-import { Options } from "./options";
 import { Menu_navbar } from "./menu_navbar";
 import { ForgotPassword } from "../pages/forgot_password";
-import { UserOptions } from "./user_options";
+import { Options } from "./options.jsx"
 import { Context } from "../store/appContext";
 
 // Componente Canvas
@@ -43,11 +42,7 @@ export function Canvas({ open, setOpen, content }) {
                   <div className="flex h-full mt-24 flex-col overflow-y-scroll py-6 shadow-xl bg-shape_primary">
                     <div className="relative mt-6 flex-1">
                       {content === "iconUser" ? (
-                        store.token ? (
-                          <UserOptions setOpen={setOpen} />
-                        ) : (
-                          <Options setOpen={setOpen} />
-                        )
+                        <Options setOpen={setOpen} />
                       ) : content === "iconMenu" ? (
                         <Menu_navbar setOpen={setOpen} />
                       ) : content === "iconForgot" ? (

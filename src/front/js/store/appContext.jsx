@@ -18,7 +18,7 @@ const injectContext = PassedComponent => {
         );
 
         useEffect(() => {
-            state.actions.initializeApp(); // Initialize the app and check token
+            state.actions.initializeApp(); // Inicializa la app y checkea el token
 
             const resetInactivity = () => {
                 state.actions.resetInactivityTimer();

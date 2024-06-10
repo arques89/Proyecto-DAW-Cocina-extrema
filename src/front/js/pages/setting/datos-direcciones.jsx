@@ -176,7 +176,7 @@ export const DatosDirecciones = () => {
       )}
       {!change && (
         <button
-          className="mt-4 text-shape_border_button rounded-full border p-2 bg-shape_border_button text-white hover:bg-shape_red"
+          className="mt-4 rounded-full border p-2 bg-shape_border_button text-white hover:bg-shape_red"
           onClick={() => handleChange()}
         >
           Agregar Nueva Dirección

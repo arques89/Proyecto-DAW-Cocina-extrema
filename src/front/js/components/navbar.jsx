@@ -16,7 +16,7 @@ export const NavBar = ({ isLoggedIn }) => {
   // Función para manejar el clic en el icono de usuario
   const handleUserIconClick = () => {
     if (store.token) {
-      navigate("/settings"); // Redirige a la página de configuración si está autenticado
+      navigate("/settings"); // Redirige a la página de configuración si está autenticado al pulsar en el icono de User
     } else {
       setIsCanvasOpen(true);
       setContent("iconUser"); // Abre el canvas con las opciones de login, register y forgot si no está autenticado

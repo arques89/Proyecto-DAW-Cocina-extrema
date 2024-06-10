@@ -5,19 +5,26 @@ import { Footer } from "./components/footer";
 import { Home } from "./pages/home/home";
 import { Login } from "./pages/login";
 import { Register } from "./pages/register";
-import { Settings } from "./pages/setting/index";
 import { ForgotPassword } from "./pages/forgot_password/index";
+
+import { Settings } from "./pages/setting/index";
+
 import { Vlog } from "./pages/vlog";
 import { VlogDetails } from "./pages/vlog/vlog-details";
+
 import { Toaster } from "react-hot-toast";
-import "../css/layout.css";
-import "../css/media.css";
-import "../css/styles.css";
 import injectContext from "./store/appContext";
 
 import { School } from "./pages/school/school";
+import { Programa } from "./pages/programa/programa";
 import { Content } from "./pages/content/index";
 import { Introduction } from "./pages/content/introduction";
+
+import { Carrito } from "./pages/carrito/index";
+import { Envio } from "./pages/carrito/envio";
+import { Pago } from "./pages/carrito/pago";
+
+import { Cesta } from "./pages/carrito/cesta";
 import { AvesHuevos } from "./pages/content/aves";
 import { Carnes } from "./pages/content/carnes";
 import { Pescados } from "./pages/content/pescados";
@@ -29,13 +36,10 @@ import { Reposteria } from "./pages/content/reposteria";
 import { Sopas } from "./pages/content/sopas";
 import { Tradicional } from "./pages/content/tradicional";
 import { Vanguardia } from "./pages/content/vanguardia";
-import { Carrito } from "./pages/carrito/index";
-import { Cesta } from "./pages/carrito/cesta";
-import { Envio } from "./pages/carrito/envio";
-import { Pago } from "./pages/carrito/pago";
-import { Programa } from "./pages/programa/programa";
-// import { RenderInputLogin2 } from "./components/input";
 
+import "../css/styles.css";
+import "../css/layout.css";
+import "../css/media.css";
 
 
 const Layout = () => {
@@ -43,54 +47,49 @@ const Layout = () => {
     <BrowserRouter>
       <NavBar />
       <Routes>
-
-        <Route path="/" Component={Home} />
-        <Route path="/login" Component={Login} />
-        <Route path="/register" Component={Register} />
-        <Route path="/settings" Component={Settings} />
-        <Route path="/school" Component={School} />
-        <Route path="/content" Component={Content} />
-        <Route path="/contentintroduction" Component={Introduction} />
-        <Route path="/aves" Component={AvesHuevos} />
-        <Route path="/carnes" Component={Carnes} />
-        <Route path="/pescados" Component={Pescados} />
-        <Route path="/verduras" Component={Verduras} />
-        <Route path="/lacteos" Component={Lacteos} />
-        <Route path="/pastas" Component={Pastas} />
-        <Route path="/panaderia" Component={Panaderia} />
-        <Route path="/reposteria" Component={Reposteria} />
-        <Route path="/sopas" Component={Sopas} />
-        <Route path="/tradicional" Component={Tradicional} />
-        <Route path="/vanguardia" Component={Vanguardia} />
-        <Route path="/carrito" Component={Carrito} />
-        <Route path="/cesta" Component={Cesta} />
-        <Route path="/envio" Component={Envio} />
-        <Route path="/pago" Component={Pago} />
-        <Route path="/forgot" Component={ForgotPassword} />
-        <Route path="/programa" Component={Programa} />
-
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/settings" element={<Settings />} />
         <Route path="/forgot" element={<ForgotPassword />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/vlog" element={<Vlog />} />
-        <Route path="/vlog/:videoId" element={<VlogDetails />} /> {/* Usa solo esta ruta */}
+        <Route path="/vlog/:videoId" element={<VlogDetails />} />
 
+        <Route path="/school" element={<School />} />
+        <Route path="/content" element={<Content />} />
+        <Route path="/programa" element={<Programa />} />
+        <Route path="/contentintroduction" element={<Introduction />} />
+        
+        <Route path="/aves" element={<AvesHuevos />} />
+        <Route path="/carnes" element={<Carnes />} />
+        <Route path="/pescados" element={<Pescados />} />
+        <Route path="/verduras" element={<Verduras />} />
+        <Route path="/lacteos" element={<Lacteos />} />
+        <Route path="/pastas" element={<Pastas />} />
+        <Route path="/panaderia" element={<Panaderia />} />
+        <Route path="/reposteria" element={<Reposteria />} />
+        <Route path="/sopas" element={<Sopas />} />
+        <Route path="/tradicional" element={<Tradicional />} />
+        <Route path="/vanguardia" element={<Vanguardia />} />
+        
+        <Route path="/carrito" element={<Carrito />} />
+        <Route path="/cesta" element={<Cesta />} />
+        <Route path="/envio" element={<Envio />} />
+        <Route path="/pago" element={<Pago />} />
       </Routes>
       <Toaster
-                    position="top-right"
-                    reverseOrder={false}
-                    toastOptions={{
-                      duration: 10000,
-                      style: {
-                        background: "#363636",
-                        color: "#fff",
-                        marginBottom: "0px",
-                        marginRight: "220px",
-                      },
-                    }}
-                  />
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 10000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+            marginBottom: "0px",
+            marginRight: "220px",
+          },
+        }}
+      />
       <Footer />
     </BrowserRouter>
   );
