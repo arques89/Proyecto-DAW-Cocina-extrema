@@ -227,33 +227,17 @@ export const VlogDetails = ({ setOpen }) => {
 
                   <div className="mt-4 space-y-4">
                     {comments.slice(0, visibleComments).map((comment, index) => (
-                      comment.user ? (
-                        <div key={index} className="border p-4 rounded-lg">
-                          <p className="text-md font-semibold">{`${comment.user.name} ${comment.user.surname}`}</p>
-                          <CommentCard
-                            comment={comment}
-                            currentUserId={parseInt(localStorage.getItem("userId"))}
-                            onDelete={() => 
-                              actions.deleteCommentVlogDetails(comment.id, videoId).then((updatedComments) => {
-                                setComments(updatedComments || []);
-                              })
-                            }
-                          />
-                        </div>
-                      ) : (
-                        <div key={index} className="border p-4 rounded-lg">
-                          <p className="text-md font-semibold">Anónimo</p>
-                          <CommentCard
-                            comment={comment}
-                            currentUserId={parseInt(localStorage.getItem("userId"))}
-                            onDelete={() => 
-                              actions.deleteCommentVlogDetails(comment.id, videoId).then((updatedComments) => {
-                                setComments(updatedComments || []);
-                              })
-                            }
-                          />
-                        </div>
-                      )
+                      <div key={index} className="border p-4 rounded-lg">
+                        <CommentCard
+                          comment={comment}
+                          currentUserId={parseInt(localStorage.getItem("userId"))}
+                          onDelete={() => 
+                            actions.deleteCommentVlogDetails(comment.id, videoId).then((updatedComments) => {
+                              setComments(updatedComments || []);
+                            })
+                          }
+                        />
+                      </div>
                     ))}
                     {comments.length > visibleComments && (
                       <button onClick={showMoreComments} className="mt-4 text-blue-500">
