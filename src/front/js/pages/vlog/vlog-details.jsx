@@ -35,11 +35,9 @@ export const VlogDetails = ({ setOpen }) => {
         actions.getCommentsVlogDetails(videoId),
       ])
         .then(([videoDetails, commentsData]) => {
-          console.log("Video details:", videoDetails); // Debugging line
-          console.log("Comments data:", commentsData); // Debugging line
           setIsFavorite(userFavorites.includes(parseInt(videoId)));
           setIsLiked(userLikes.includes(parseInt(videoId)));
-          setComments(commentsData || []); // Asegurar que commentsData es un array
+          setComments(commentsData || []);
         })
         .catch((error) => {
           console.error("Error al obtener los detalles del vlog:", error);
@@ -111,7 +109,7 @@ export const VlogDetails = ({ setOpen }) => {
         actions.addCommentVlogDetails(videoId, newComment)
           .then(data => {
             const newComment = data.comment;
-            setComments([newComment, ...comments]); // Agregar el nuevo comentario al principio del array
+            setComments([newComment, ...comments]);
             setNewComment("");
           })
           .catch(error => console.error("Error adding comment:", error));
@@ -189,7 +187,7 @@ export const VlogDetails = ({ setOpen }) => {
                 <div className="w-1/2 text-sm p-4 flex flex-col">
                   <div className="flex justify-end">
                     {video && video.owner && (
-                      <p className="text-lg font-semibold">{`${video.owner.name} ${video.owner.surname}`}</p> // Añadir el nombre del creador de la receta
+                      <p className="text-xl me-4 mt-1 font-semibold">{`${video.owner.name} ${video.owner.surname}`}</p>
                     )}
                     <button>
                       <img className="w-10 h-10 mb-10" src={Equis} alt="Salir" onClick={handleExitClick} />
@@ -206,6 +204,14 @@ export const VlogDetails = ({ setOpen }) => {
               </div>
               <div className="w-full text-sm p-4 mt-4">
                 <hr className="h-1 bg-white mb-2" />
+                {/* Añadir aquí la descripción */}
+                {video && video.description && (
+                  <div className="text-center text-white my-8 mx-36">
+                    <p className="text-lg">Peparación</p>
+                    <p>{video.description}</p>
+                  </div>
+                )}
+                <hr className="h-1 bg-white mb-2" />
                 <h2 className="text-2xl">
                   Comentarios ({comments.length})
                 </h2>
@@ -221,33 +227,17 @@ export const VlogDetails = ({ setOpen }) => {
 
                   <div className="mt-4 space-y-4">
                     {comments.slice(0, visibleComments).map((comment, index) => (
-                      comment.user ? (
-                        <div key={index} className="border p-4 rounded-lg"> {/* Borde alrededor del comentario */}
-                          <p className="text-md font-semibold">{`${comment.user.name} ${comment.user.surname}`}</p> {/* Añadir el nombre del creador del comentario */}
-                          <CommentCard
-                            comment={comment}
-                            currentUserId={parseInt(localStorage.getItem("userId"))}
-                            onDelete={() => 
-                              actions.deleteCommentVlogDetails(comment.id, videoId).then((updatedComments) => {
-                                setComments(updatedComments || []);
-                              })
-                            }
-                          />
-                        </div>
-                      ) : (
-                        <div key={index} className="border p-4 rounded-lg"> {/* Borde alrededor del comentario */}
-                          <p className="text-md font-semibold">Anónimo</p> {/* Comentario sin usuario */}
-                          <CommentCard
-                            comment={comment}
-                            currentUserId={parseInt(localStorage.getItem("userId"))}
-                            onDelete={() => 
-                              actions.deleteCommentVlogDetails(comment.id, videoId).then((updatedComments) => {
-                                setComments(updatedComments || []);
-                              })
-                            }
-                          />
-                        </div>
-                      )
+                      <div key={index} className="border p-4 rounded-lg">
+                        <CommentCard
+                          comment={comment}
+                          currentUserId={parseInt(localStorage.getItem("userId"))}
+                          onDelete={() => 
+                            actions.deleteCommentVlogDetails(comment.id, videoId).then((updatedComments) => {
+                              setComments(updatedComments || []);
+                            })
+                          }
+                        />
+                      </div>
                     ))}
                     {comments.length > visibleComments && (
                       <button onClick={showMoreComments} className="mt-4 text-blue-500">

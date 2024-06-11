@@ -24,9 +24,9 @@ def get_videos():
             'ingredients_part1': video.ingredients_part1,
             'ingredients_part2': video.ingredients_part2,
             'duration': video.duration,
-            'likes_count': len(video.likes),  # Cambiado a likes_count
-            'comments_count': len(video.comments),  # Cambiado a comments_count
-            'favorites_count': len(video.favorites),  # Cambiado a favorites_count
+            'likes_count': len(video.likes),
+            'comments_count': len(video.comments),
+            'favorites_count': len(video.favorites),
             'user': user_data
         }
         videos_data.append(video_data)

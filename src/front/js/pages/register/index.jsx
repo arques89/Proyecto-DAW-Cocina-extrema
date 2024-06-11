@@ -1,4 +1,3 @@
-// src\front\js\pages\register\index.jsx
 import { inputRegister } from "./mocks";
 import { useContext, useState } from "react";
 import PropTypes from 'prop-types';
@@ -6,7 +5,9 @@ import { Context } from "../../store/appContext";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { ValidatePassword } from '../../components/validate_password';
 import { GoEye, GoEyeClosed } from "react-icons/go"; 
-export const Register = ({setOpen}) => {
+import toast from "react-hot-toast";
+
+export const Register = ({ setOpen }) => {
   const { actions } = useContext(Context);
 
   const [email, setEmail] = useState("");
@@ -14,26 +15,25 @@ export const Register = ({setOpen}) => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("")
   const [phone, setPhone] = useState("");
-  const [isChecked, setIsChecked] = useState(false); // Manejar el estado del checkbox
+  const [isChecked, setIsChecked] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Verificar si el formulario es válido antes de enviar la solicitud
-    if (!event.target.checkValidity()) {
-      console.error("El formulario es inválido");
+    if (!isPasswordValid) {
+      toast.error("La contraseña introducida no es segura");
       return;
     }
 
-    // Verificar si los campos están vacíos
     if (!name || !surname || !email || !password || !phone) {
-      console.error("Por favor, completa todos los campos");
+      toast.error("Por favor, completa todos los campos");
       return;
     }
 
-    await actions.register(email, password, name, surname, phone); // Se llama a la acción de registro
-    setOpen(false); // Cierra el canvas después de un registro exitoso
+    await actions.register(email, password, name, surname, phone);
+    setOpen(false);
   };
 
   const handleChange = (event) => {
@@ -84,7 +84,7 @@ export const Register = ({setOpen}) => {
                 >
                   {showPassword ? <GoEye size={18} className="mt-3.5" /> : <GoEyeClosed size={18} className="mt-3.5" />}
                 </button>
-                <ValidatePassword password={password} />
+                <ValidatePassword password={password} setValidationStatus={setIsPasswordValid} />
               </>
             )}
           </div>
@@ -120,6 +120,7 @@ export const Register = ({setOpen}) => {
     </form>
   );
 };
+
 Register.propTypes = {
   setOpen: PropTypes.func,
 };

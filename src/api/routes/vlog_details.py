@@ -4,7 +4,6 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, decode_token
 from flask_cors import CORS, cross_origin
 from functools import wraps
 
-
 # Crear el Blueprint
 vlog_details_api = Blueprint('vlog_details_api', __name__)
 
@@ -111,17 +110,9 @@ def add_comment(video_id):
     # Refrescar para obtener las relaciones
     db.session.refresh(new_comment)
 
-    user = User.query.get(user_id)
     comment_data = new_comment.serialize()
-    if user:
-        comment_data["user"] = {"name": user.name, "surname": user.surname}
-    else:
-        comment_data["user"] = {"name": "Anónimo", "surname": ""}
 
     return jsonify({"message": "Comment added", "comment": comment_data}), 201
-
-
-
 
 @vlog_details_api.route('/api/videos/<int:video_id>/comments/<int:comment_id>', methods=['DELETE'])
 @jwt_required()
@@ -140,22 +131,11 @@ def delete_comment(video_id, comment_id):
 
     return jsonify({"message": "Comment deleted"}), 200
 
-
 @vlog_details_api.route('/api/videos/<int:video_id>/comments', methods=['GET'])
 def get_comments(video_id):
     comments = Comment.query.filter_by(video_id=video_id).all()
-    comments_data = []
-    for comment in comments:
-        user = User.query.get(comment.user_id)
-        comment_data = comment.serialize()
-        if user:
-            comment_data["user"] = {"name": user.name, "surname": user.surname}
-        else:
-            comment_data["user"] = {"name": "Anónimo", "surname": ""}
-        comments_data.append(comment_data)
+    comments_data = [comment.serialize() for comment in comments]
     return jsonify(comments_data), 200
-
-
 
 @vlog_details_api.route('/api/videos/<int:video_id>/favorite', methods=['POST', 'OPTIONS'])
 @cross_origin(supports_credentials=True)

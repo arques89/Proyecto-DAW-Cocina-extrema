@@ -1,15 +1,16 @@
-// src/pages/DatosPersonales.jsx
 import { useContext, useState, useEffect } from "react";
 import { RenderInputDatosPersonales } from "../../components/input";
 import { Context } from "../../store/appContext";
 import { ValidatePassword } from "../../components/validate_password";
 import { GoEye, GoEyeClosed } from "react-icons/go";
+import toast from "react-hot-toast";
 
 export const DatosPersonales = () => {
   const { actions } = useContext(Context);
   const [change, setChange] = useState(false);
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,11 +35,16 @@ export const DatosPersonales = () => {
 
   const handlePasswordSubmit = async (event) => {
     event.preventDefault();
+    if (!isPasswordValid) {
+      toast.error("La contraseña introducida no es segura");
+      return;
+    }
     try {
       await actions.updatePassword(password);
-      console.log("Contraseña actualizada exitosamente");
+      toast.success("Contraseña actualizada exitosamente");
     } catch (error) {
       console.error("Error al actualizar la contraseña:", error);
+      toast.error("Error al actualizar la contraseña");
     }
   };
 
@@ -88,7 +94,7 @@ export const DatosPersonales = () => {
                   </button>
                 </div>
               </div>
-              <ValidatePassword password={password} />
+              <ValidatePassword password={password} setValidationStatus={setIsPasswordValid} />
               <button
                 type="submit"
                 className="hover:bg-shape_red w-full text-lg text-white rounded-full bg-shape_border_button mb-4 mt-10"
