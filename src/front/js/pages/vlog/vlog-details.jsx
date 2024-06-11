@@ -187,7 +187,7 @@ export const VlogDetails = ({ setOpen }) => {
                 <div className="w-1/2 text-sm p-4 flex flex-col">
                   <div className="flex justify-end">
                     {video && video.owner && (
-                      <p className="text-lg font-semibold">{`${video.owner.name} ${video.owner.surname}`}</p>
+                      <p className="text-xl me-4 mt-1 font-semibold">{`${video.owner.name} ${video.owner.surname}`}</p>
                     )}
                     <button>
                       <img className="w-10 h-10 mb-10" src={Equis} alt="Salir" onClick={handleExitClick} />
