@@ -79,7 +79,7 @@ export const Settings = () => {
                   <h3 className="text-shape_red">
                     {userName} {userSurname}
                   </h3>
-                  <hr className="mt-3 w-1/2" />
+                  <hr className="mt-8 w-1/2" />
                 </div>
               </div>
             </div>
@@ -87,7 +87,7 @@ export const Settings = () => {
           <section className="flex">
             <div className="w-3/5">
               <div className="mt-6 font-thin">
-                <ul className="mt-6">
+                <ul className="mt-10">
                   <Link>
                     <li className="font-bold mb-2">MIS DATOS</li>
                   </Link>
@@ -107,19 +107,7 @@ export const Settings = () => {
                     </a>
                   </li>
                 </ul>
-                <ul className="mt-6">
-                  <li className="mb-2 font-bold">MIS PEDIDOS</li>
-                  <li className="mb-2 hover:text-shape_red">
-                    <a onClick={() => handlechange("pedidos")} href="#">
-                      Ver mis pedidos
-                    </a>
-                  </li>
-                  <li className="mb-2 hover:text-shape_red">Devoluciones</li>
-                  <li className="mb-2 hover:text-shape_red">
-                    Mi lista de deseos
-                  </li>
-                </ul>
-                <ul className="mt-6">
+                <ul className="mt-10">
                   <li className="font-bold mb-2">MI CONTENIDO</li>
                   <li className="mb-2 hover:text-shape_red">
                     <a onClick={() => handlechange("shared")} href="#">
@@ -130,7 +118,7 @@ export const Settings = () => {
                   <li className="mb-2 hover:text-shape_red">Mis favoritos</li>
                     </a>
                 </ul>
-                <ul className="mt-6">
+                <ul className="mt-10">
                   <li className="font-bold mb-2">¿NECESITAS AYUDA?</li>
                     <a onClick={() => handlechange("contact")} href="#">
                   <li className="hover:text-shape_red">Contactanos</li>
@@ -168,7 +156,7 @@ export const Settings = () => {
                       <a href="/">Home</a>
                     </span>
                     <span className="hover:text-shape_red">
-                      <a href="/">Programa</a>
+                      <a href="/programa">Programa</a>
                     </span>
                     <span className="hover:text-shape_red">
                       <a href="/school">Escuela</a>
@@ -176,16 +164,11 @@ export const Settings = () => {
                     <span className="hover:text-shape_red">
                       <a href="/vlog">Vlog</a>
                     </span>
-                    <span className="hover:text-shape_red">
-                      <a href="/">Tienda</a>
-                    </span>
                   </div>
                 </div>
               </div>
             </section>
           </div>
-
-          {/* Renderizado condicional basado en selectOption */}
           {renderContent()}
         </div>
       </div>

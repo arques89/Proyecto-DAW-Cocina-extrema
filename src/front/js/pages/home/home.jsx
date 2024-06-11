@@ -51,21 +51,6 @@ export const Home = () => {
             <p className="mb-6 text-2xl">VLOG</p>
             <p className="text-font_icon text-sm">Comparte tus recetas</p>
           </div>
-
-          {/* <!-- Cuarta columna de imagen --> */}
-          <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
-            <a href="/">
-              <img
-                src={Tienda}
-                className="img-fluid mb-12 max-h-20"
-                alt="Tienda"
-              />
-            </a>
-            <p className="mb-6 text-2xl">TIENDA</p>
-            <p className="text-font_icon text-sm">
-              Nuestra selección de artículos
-            </p>
-          </div>
         </div>
 
         <div className="flex w-full px-14 mb-20 justify-center">

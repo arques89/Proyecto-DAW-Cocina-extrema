@@ -204,6 +204,14 @@ export const VlogDetails = ({ setOpen }) => {
               </div>
               <div className="w-full text-sm p-4 mt-4">
                 <hr className="h-1 bg-white mb-2" />
+                {/* Añadir aquí la descripción */}
+                {video && video.description && (
+                  <div className="text-center text-white my-8 mx-36">
+                    <p className="text-lg">Peparación</p>
+                    <p>{video.description}</p>
+                  </div>
+                )}
+                <hr className="h-1 bg-white mb-2" />
                 <h2 className="text-2xl">
                   Comentarios ({comments.length})
                 </h2>

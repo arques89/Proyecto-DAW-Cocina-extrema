@@ -33,6 +33,15 @@ export const SharedData = () => {
     const handleAddRecipe = () => {
         setAddRecipe(!addRecipe);
         setEditRecipe(null);
+        setRecipeData({
+            title: '',
+            description: '',
+            category: '',
+            videoFile: null,
+            ingredientsPart1: '',
+            ingredientsPart2: '',
+            duration: 0
+        });
     };
 
     const handleInputChange = (e) => {
@@ -93,7 +102,7 @@ export const SharedData = () => {
         }
     };
 
-    const handleEditVideo = (video) => {
+    const handleEditVideo = async (video) => {
         setEditRecipe(video);
         setRecipeData({
             title: video.title,
@@ -105,6 +114,13 @@ export const SharedData = () => {
             duration: video.duration
         });
         setAddRecipe(true);
+
+        try {
+            const comments = await actions.getComments(video.id);
+            setComments(comments || []);
+        } catch (error) {
+            console.error("Error loading comments:", error);
+        }
     };
 
     const handleDeleteVideo = (videoId) => {
@@ -155,7 +171,7 @@ export const SharedData = () => {
                             <span className="border border-shape_border_button w-full ps-12 rounded-full pr-44 py-1.5 pl-6 inline-block">
                                 {editRecipe ? "EDITAR RECETA" : "COMPARTIR NUEVA RECETA"}
                             </span>
-                            <div className="block ms-12 mt-4">
+                            <div className="block mt-4">
                                 <label>
                                     Titulo de la receta
                                     <br />
@@ -168,14 +184,22 @@ export const SharedData = () => {
                                     />
                                 </label>
                                 <br />
-                                <label>
+                                <label className="w-3/4">
                                     Descripción
                                     <br />
                                     <textarea
                                         name="description"
-                                        className="mt-2 mb-4 bg-shape_input w-full rounded border-0 py-1.5 pl-4 pr-44 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                                        className="mt-2 mb-4 bg-shape_input w-full h-96 rounded border-0 py-1.5 pl-0 pr-0 text-gray-900 sm:text-sm sm:leading-6 placeholder:text-gray-500"
                                         onChange={handleInputChange}
-                                        value={recipeData.description}
+                                        value={recipeData.description} // Asegurarse de que este valor se inicializa
+                                        placeholder={
+                                        `1. Para empezar a preparar nuestra pizza casera, empezamos por cortarla cebolla en juliana fina y entonces haremos un sofrito en una sartén, hasta que la cebolla se dore ligeramente. Apagar el fuego, salpimentar y reservar.
+                                        \n 2. Para preparar la masa para la pizza amasa todos los ingredientes y cocina ligeramente para hacer la prepizza.
+                                        \n 3. Agregar la salsa de tomate, las cebollas rehogadas, el atún desmenuzado y espolvorear con la mozzarella. Condimentar con el orégano y si quieres añade unas cuantas aceitunas negras para decorar.
+                                        \n 4. Cocina nuevamente la pizza en el horno durante unos 10 minutos hasta que veas que los bordes están dorados y el queso derretido.
+                                        \n 5. Disfruta de la pizza de atún y ¡buen provecho! este tipo de pizza son perfectas para la hora de la cena y para compartir en familia. Esperamos que la disfrutes así que no olvides dejar tus comentarios.
+                                        `
+                                        }
                                     />
                                 </label>
                                 <br />

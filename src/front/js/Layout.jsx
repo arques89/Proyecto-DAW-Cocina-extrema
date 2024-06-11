@@ -20,11 +20,6 @@ import { Programa } from "./pages/programa/programa";
 import { Content } from "./pages/content/index";
 import { Introduction } from "./pages/content/introduction";
 
-import { Carrito } from "./pages/carrito/index";
-import { Envio } from "./pages/carrito/envio";
-import { Pago } from "./pages/carrito/pago";
-
-import { Cesta } from "./pages/carrito/cesta";
 import { AvesHuevos } from "./pages/content/aves";
 import { Carnes } from "./pages/content/carnes";
 import { Pescados } from "./pages/content/pescados";
@@ -71,11 +66,7 @@ const Layout = () => {
         <Route path="/sopas" element={<Sopas />} />
         <Route path="/tradicional" element={<Tradicional />} />
         <Route path="/vanguardia" element={<Vanguardia />} />
-        
-        <Route path="/carrito" element={<Carrito />} />
-        <Route path="/cesta" element={<Cesta />} />
-        <Route path="/envio" element={<Envio />} />
-        <Route path="/pago" element={<Pago />} />
+
       </Routes>
       <Toaster
         position="top-right"

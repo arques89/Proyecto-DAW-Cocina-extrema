@@ -11,10 +11,10 @@ class UserModelView(ModelView):
     form_columns = ('name', 'surname', 'email', 'phone', 'password', 'is_active', 'is_admin', 'token')
 
 class VideoModelView(ModelView):
-    column_list = ('id', 'user_id', 'src', 'created_at', 'title', 'ingredients_part1', 'ingredients_part2', 'duration', 'likes', 'comments')
-    column_searchable_list = ('title',)
+    column_list = ('id', 'user_id', 'src', 'description', 'created_at', 'title', 'ingredients_part1', 'ingredients_part2', 'duration', 'likes', 'comments')
+    column_searchable_list = ('title', 'description')
     column_filters = ('created_at', 'user_id')
-    form_columns = ('src', 'user_id', 'title', 'ingredients_part1', 'ingredients_part2', 'duration')
+    form_columns = ('src', 'user_id', 'description', 'title', 'ingredients_part1', 'ingredients_part2', 'duration')
 
 class CommentModelView(ModelView):
     column_list = ('id', 'text', 'timestamp', 'user_id', 'video_id')
@@ -58,7 +58,6 @@ class AddressModelView(ModelView):
     column_filters = ('city', 'postal_code', 'is_billing_default') 
     form_columns = ('user_id', 'name', 'surname', 'cif_nif', 'address', 'postal_code', 'city', 'phone', 'use_as', 'is_billing_default')
 
-
 class BankDataModelView(ModelView):
     column_list = ('id', 'user_id', 'card_number', 'cardholder_name', 'expiry_date', 'cvv', 'is_default')
     column_searchable_list = ('card_number', 'cardholder_name')
@@ -68,7 +67,7 @@ class BankDataModelView(ModelView):
 def init_admin(app):
     admin = Admin(app, name='Admin Panel', template_mode='bootstrap3')
 
-    # Se añaden las vistal de los models (tablas)
+    # Se añaden las vistas de los models (tablas)
     admin.add_view(UserModelView(User, db.session))
     admin.add_view(VideoModelView(Video, db.session))
     admin.add_view(CommentModelView(Comment, db.session))

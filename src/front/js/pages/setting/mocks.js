@@ -74,7 +74,7 @@ export const inputSharedData = [
       id: 2,
       name: "Ingredientes para 2",
       type: "textarea",
-      className:'mt-2 mb-4 bg-shape_input w-96 h-72 rounded-xl border-0 py-1.5 pl-4 text-black placeholder:text-gray-500 sm:text-sm sm:leading-6 mr-48',
+      className:'mt-2 mb-4 bg-shape_input w-84 h-72 rounded-xl border-0 py-1.5 pl-0 text-black placeholder:text-gray-500 sm:text-sm sm:leading-6 mr-48',
       placeholder: `Para la cubierta:
         150 centímetros cúbicos de Salsa de tomate
         150 gramos de Queso mozzarella
