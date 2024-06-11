@@ -13,14 +13,23 @@ export const FavoriteData = () => {
   }, []);
 
   const handleOpenCommentsModal = async (videoId) => {
-    const comments = await actions.getComments(videoId);
-    setComments(comments || []);
-    setCommentsModalIsOpen(true);
+    try {
+      const comments = await actions.getComments(videoId);
+      setComments(comments || []);
+      setCommentsModalIsOpen(true);
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
   };
 
-  const handleDeleteFavorite = (videoId) => {
+  const handleDeleteFavorite = async (videoId) => {
     if (window.confirm("¿Estás seguro de que quieres eliminar este video de tus favoritos?")) {
-      actions.deleteFavorite(videoId);
+      try {
+        await actions.deleteFavorite(videoId);
+        actions.getFavorites(); // Refrescar la lista de favoritos después de la eliminación
+      } catch (error) {
+        console.error("Error deleting favorite:", error);
+      }
     }
   };
 
@@ -30,15 +39,11 @@ export const FavoriteData = () => {
         <video controls className="w-full h-96 object-cover rounded" src={video.src}></video>
         <div>
           <div className="mt-4 text-3xl font-thin">{video.title}</div>
-          <div className="flex w-3/6 justify-between my-3 pe-9 text-sm">
+          <div className="flex w-4/6 justify-between my-3 pe-9 text-sm">
             <div>{new Date(video.created_at).toLocaleDateString()}</div>
             <div>{video.duration.toFixed(2)} sec</div>
           </div>
           <div className="mt-2 flex items-center space-x-4">
-            <button className="text-sm flex items-center space-x-0 border rounded-full xl:px-3.5 px-8">
-              <img src="src/front/icon/config/share/tocar.png" className="w-2" alt="Arrow" />
-              <span>Ver ahora</span>
-            </button>
             <button className="text-sm border rounded-full px-2 flex items-center space-x-2" onClick={() => handleOpenCommentsModal(video.id)}>
               <img src="src/front/icon/config/share/speech.png" className="w-4" alt="icon_speech" />
               <span>{video.comments_count} </span>

@@ -228,7 +228,7 @@ export const SharedData = () => {
                 <video controls className="w-full h-96 object-cover rounded" src={video.src}></video>
                 <div>
                     <div className="mt-4 text-3xl font-thin">{video.title}</div>
-                    <div className="flex w-3/6 justify-between my-3 pe-9 text-sm">
+                    <div className="flex w-4/6 justify-between my-3 pe-9 text-sm">
                         <div>{new Date(video.created_at).toLocaleDateString()}</div>
                         <div>{video.duration.toFixed(2)} sec</div>
                     </div>

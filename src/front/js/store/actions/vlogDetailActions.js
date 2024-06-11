@@ -7,6 +7,14 @@ const vlogDetailActions = (getStore, getActions, setStore) => ({
       if (response.ok) {
         const data = await response.json();
         setStore({ videoDetails: data });
+
+        // Actualizar estado de favoritos y likes
+        const userFavorites = JSON.parse(localStorage.getItem("userFavorites")) || [];
+        const userLikes = JSON.parse(localStorage.getItem("userLikes")) || [];
+        setStore({
+          isFavorite: userFavorites.includes(videoId),
+          isLiked: userLikes.includes(videoId),
+        });
       } else {
         throw new Error("Error fetching video");
       }
@@ -35,58 +43,45 @@ const vlogDetailActions = (getStore, getActions, setStore) => ({
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(
-        `${config.hostname}/api/videos/${videoId}/favorite`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${config.hostname}/api/videos/${videoId}/favorite`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (!response.ok) throw new Error("Error adding favorite");
 
-      // Actualizar el estado local y en el store
-      getActions().getVideoVlogDetails(videoId);
+      getActions().getFavorites(); // Actualizar la lista de favoritos globalmente
 
-      // Actualizar favoritos en el estado global
-      const store = getStore();
-      setStore({
-        favorites: [...store.favorites, videoId]
-      });
-
+      const updatedFavorites = [...getStore().favorites, videoId];
+      setStore({ favorites: updatedFavorites });
+      localStorage.setItem("userFavorites", JSON.stringify(updatedFavorites));
     } catch (error) {
       console.error("Error adding favorite:", error);
     }
   },
+
   removeFavoriteVlogDetails: async (videoId) => {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(
-        `${config.hostname}/api/videos/${videoId}/favorite`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${config.hostname}/api/videos/${videoId}/favorite`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (!response.ok) throw new Error("Error removing favorite");
 
-      // Actualizar el estado local y en el store
-      getActions().getVideoVlogDetails(videoId);
+      getActions().getFavorites(); // Actualizar la lista de favoritos globalmente
 
-      // Actualizar favoritos en el estado global
-      const store = getStore();
-      setStore({
-        favorites: store.favorites.filter(favId => favId !== videoId)
-      });
-
+      const updatedFavorites = getStore().favorites.filter(favId => favId !== videoId);
+      setStore({ favorites: updatedFavorites });
+      localStorage.setItem("userFavorites", JSON.stringify(updatedFavorites));
     } catch (error) {
       console.error("Error removing favorite:", error);
     }
