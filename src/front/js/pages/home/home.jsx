@@ -1,4 +1,4 @@
-import { Slider } from "../../components/home_slider";
+import { Slider2 } from "../../components/slider2";
 import Plaqueta from "../../../img/img_home/icons/rojo_video.png";
 import Bandeja from "../../../img/img_home/icons/rojo_bandeja.png";
 import Escuela from "../../../img/img_home/icons/educacion.png";
@@ -6,14 +6,15 @@ import { Card } from "../../components/card/index";
 import { Sponsor } from "../../components/sponsor";
 import { Carousel } from "../../components/carousel";
 import { CarouselHome } from "../../components/carousel-home";
+import Portada from "../../../img/img_home/portada_cocina.jpg";
 
 export const Home = () => {
   return (
     <main>
-      <Slider />
+      <Slider2 imageSrc={Portada} imageHeight="full" darken={false} />
       {/* <!-- Contenido principal --> */}
       <div>
-        <div className="mb-12 flex justify-between w-full text-white px-32">
+        <div className="mb-12 mt-16 flex justify-between w-full text-white px-32">
           {/* <!-- Primera columna de imagen --> */}
           <div className="text-center w-1/4 h-70 flex flex-col items-center justify-center">
             <a href="/programa">

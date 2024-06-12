@@ -5,6 +5,7 @@ export const programasContent = [
       title: 'Programa 1',
       description: 'Los amantes de la cocina demuestran su talento ante un implacable jurado, preparando sus mejores creaciones para los comensales más exigentes.',
       duration: '03:13:29',
+      videoUrl: "https://res.cloudinary.com/dztgp8g6w/video/upload/v1718147830/programa2_wm4x3l.mp4",
     },
     {
       id: 2,
@@ -12,6 +13,7 @@ export const programasContent = [
       title: 'Programa 2',
       description: 'Los aspirantes se enfrentan al desafío de componer un plato que les transporte a sus orígenes. En la eliminación deben elaborar un espectacular postre.',
       duration: '03:23:45',
+      videoUrl: "https://res.cloudinary.com/dztgp8g6w/video/upload/v1718147829/programa3_hcv0tg.mp4",
     },
     {
       id: 3,
@@ -19,6 +21,7 @@ export const programasContent = [
       title: 'Programa 3',
       description: 'Los concursantes cocinan en las condiciones más adversas para todo un ejército o para las más ilustres personalidades en entornos únicos.',
       duration: '03:36:10',
+      videoUrl: "https://res.cloudinary.com/dztgp8g6w/video/upload/v1718147827/programa1_cj8o5s.mp4",
     },
     {
       id: 4,
@@ -26,6 +29,7 @@ export const programasContent = [
       title: 'Programa 4',
       description: 'Se pone en juego el pin de la inmunidad,  privilegio que pueden utilizar cuando más necesiten. El primer reto consiste en hacer un plato con pescado y la soja marina.',
       duration: '02:59:37',
+      videoUrl: "https://res.cloudinary.com/dztgp8g6w/video/upload/v1718147824/programa5_fiisau.mp4",
     },
     {
       id: 5,
@@ -33,6 +37,7 @@ export const programasContent = [
       title: 'Programa 5',
       description: 'Al llegar a las cocinas, los aspirantes encuentran alimentos habituales de nuestra cocina, pero con algo en común: su extraordinario tamaño.',
       duration: '03:08:35',
+      videoUrl: "https://res.cloudinary.com/dztgp8g6w/video/upload/v1718147818/programa4_tbrlv6.mp4",
     },
     {
       id: 6,
@@ -40,6 +45,7 @@ export const programasContent = [
       title: 'Programa 6',
       description: 'Los aspirantes trabajan por relevos y el jurado se acerca a comprobar el plato para que el siguiente aspirante tome el relevo y cocine el siguiente plato.',
       duration: '03:19:47',
+      videoUrl: "https://res.cloudinary.com/dztgp8g6w/video/upload/v1718147804/programa6_qzlzsp.mp4",
     },
     {
       id: 7,
@@ -47,6 +53,7 @@ export const programasContent = [
       title: 'Programa 7',
       description: 'Los aspirantes ponen rumbo a Oviedo, donde aspirantes y exaspirantes cocinan un menú firmado por el chef Nacho Manzano que catan 110 importantes personalidades.',
       duration: '03:14:25',
+      videoUrl: "https://res.cloudinary.com/dztgp8g6w/video/upload/v1718151962/programa7_ufh6on.mp4",
     },
     {
       id: 8,
@@ -54,6 +61,7 @@ export const programasContent = [
       title: 'Programa 8',
       description: 'Los aspirantes deberán seducir a través de sus platos con algunos ingredientes afrodisiacos como protagonistas.',
       duration: '02:50:00',
+      videoUrl: "https://res.cloudinary.com/dztgp8g6w/video/upload/v1718151962/programa8_htywww.mp4",
     },
     {
       id: 9,
@@ -61,5 +69,6 @@ export const programasContent = [
       title: 'Programa 9',
       description: 'Los delantales negros se enfrentarán a la batalla de los sentidos. Donde cocinarán de forma sucesiva los platos que les indiquen los jueces.',
       duration: '03:20:73',
+      videoUrl: "https://res.cloudinary.com/dztgp8g6w/video/upload/v1718147830/programa2_wm4x3l.mp4",
     },
   ];
