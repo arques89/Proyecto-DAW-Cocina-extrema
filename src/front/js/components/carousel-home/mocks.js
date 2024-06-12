@@ -24,7 +24,7 @@ export const carouselHome = [
     },
     {
       id: "4",
-      image: "src/front/img/img_home/carousel-programas/programa4.jpg",
+      image: "src/front/img/img_home/carousel-programas/programa9.jpg",
       title: "Programa 7",
       subtitle:
         "Repesca. Nueva oportunidad para regresar a las cocinas de Cocina Extrema para nuestros exconcursantes",

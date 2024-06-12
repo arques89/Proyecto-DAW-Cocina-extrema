@@ -50,7 +50,7 @@ export const CarouselHome = () => {
   }, [currentIndex]);
 
   return (
-    <div className="relative w-full h-[640px] px-16 my-4">
+    <div className="relative w-full h-[840px] px-16 mt-12">
       <div className="relative w-full h-full flex items-center">
         <img
           src={carouselHome[currentIndex].image}
