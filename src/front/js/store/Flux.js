@@ -2,7 +2,7 @@
 import loginActions from "./actions/loginActions";
 import registerActions from "./actions/registerActions";
 import forgotPasswordActions from "./actions/forgotPasswordActions";
-import logoutAction from "./actions/logoutAction";
+import logoutAction from "./actions/logOutActions";
 
 // Archivos de configuración 
 import bankDataActions from "./actions/bankDataActions";

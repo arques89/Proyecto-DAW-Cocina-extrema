@@ -12,9 +12,6 @@ from routes.vlog_details import vlog_details_api
 from routes.personal_data import personal_data_api
 from routes.shared_data import shared_data_api
 
-# Registrar otros blueprints si existen
-# api.register_blueprint(other_blueprint)
-
 # Asegúrate de registrar el blueprint 'login_api' en el blueprint 'api'
 api.register_blueprint(home_api)
 api.register_blueprint(register_api)

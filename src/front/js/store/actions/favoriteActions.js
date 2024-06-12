@@ -17,15 +17,10 @@ const favoriteActions = (getStore, getActions, setStore) => ({
         },
       });
 
-      console.log("Response from API:", response);
-
       if (response.ok) {
-        try {
-          const data = await response.json();
-          setStore({ favorites: data });
-        } catch (parseError) {
-          console.error("Error parsing JSON response:", parseError);
-        }
+        const data = await response.json();
+        setStore({ favorites: data });
+        localStorage.setItem("userFavorites", JSON.stringify(data.map(video => video.id)));
       } else {
         console.error("Fetch failed with status:", response.status);
       }
@@ -47,7 +42,9 @@ const favoriteActions = (getStore, getActions, setStore) => ({
       });
 
       if (response.ok) {
-        // Actualizar el estado de la aplicación (volver a cargar favoritos, etc.)
+        const updatedFavorites = [...getStore().favorites, { id: videoId }];
+        setStore({ favorites: updatedFavorites });
+        localStorage.setItem("userFavorites", JSON.stringify(updatedFavorites.map(video => video.id)));
       } else {
         const errorData = await response.json();
         console.error("Error adding favorite:", errorData);
@@ -75,9 +72,9 @@ const favoriteActions = (getStore, getActions, setStore) => ({
       });
 
       if (response.ok) {
-        setStore({
-          favorites: store.favorites.filter((video) => video.id !== videoId),
-        });
+        const updatedFavorites = store.favorites.filter((video) => video.id !== videoId);
+        setStore({ favorites: updatedFavorites });
+        localStorage.setItem("userFavorites", JSON.stringify(updatedFavorites.map(video => video.id)));
       } else {
         const errorData = await response.json();
         console.error("Error deleting favorite:", errorData);

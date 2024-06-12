@@ -36,6 +36,46 @@ class User(db.Model):
             'is_admin': self.is_admin
         }
 
+class Video(db.Model):
+    __tablename__ = "video"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    src = db.Column(db.String(250), nullable=False)
+    description = db.Column(db.String(500), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    comments = db.relationship('Comment', backref='video', lazy=True)
+    likes = db.relationship('Like', backref='video', lazy=True)
+    favorites = db.relationship('Favorite', backref='video', lazy=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    title = db.Column(db.String(100), nullable=False)
+    ingredients_part1 = db.Column(db.Text, nullable=False)
+    ingredients_part2 = db.Column(db.Text, nullable=False)
+    duration = db.Column(db.Float, nullable=False)
+
+    def __repr__(self):
+        return '<Video %r>' % self.description
+
+    def serialize(self):
+        db.session.add(self) #Añade la instancia actual de Video a la sesión
+        db.session.refresh(self) #Actualiza el estado de la instancia desde la base de datos, esto forzara a que la relación de video.user se cargue
+        return {
+            'id': self.id,
+            'src': self.src,
+            'description': self.description,
+            'user_id': self.user_id,
+            'created_at': self.created_at,
+            'title': self.title,
+            'ingredients_part1': self.ingredients_part1,
+            'ingredients_part2': self.ingredients_part2,
+            'duration': self.duration,
+            'likes': len(self.likes),
+            'comments': len(self.comments),
+            'favorites': len(self.favorites),
+            'user': {
+                'name': self.user.name if self.user else 'Anónimo', #Accede al nombre del usuario si existe
+                'surname': self.user.surname if self.user else ''  #Accede al apellido del usuario si existe
+            } if self.user else None 
+        }
+        
 class Comment(db.Model):
     __tablename__ = "comment"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -52,6 +92,38 @@ class Comment(db.Model):
             'id': self.id,
             'text': self.text,
             'timestamp': self.timestamp,
+            'user_id': self.user_id,
+            'video_id': self.video_id
+        }
+        
+class Like(db.Model):
+    __tablename__ = "like"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    video_id = db.Column(db.Integer, db.ForeignKey('video.id'), nullable=False)
+
+    def __repr__(self):
+        return '<Like %r>' % self.id
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'video_id': self.video_id
+        }
+
+class Favorite(db.Model):
+    __tablename__ = "favorite"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    video_id = db.Column(db.Integer, db.ForeignKey('video.id'), nullable=False)
+
+    def __repr__(self):
+        return '<Favorite %r>' % self.id
+
+    def serialize(self):
+        return {
+            'id': self.id,
             'user_id': self.user_id,
             'video_id': self.video_id
         }
@@ -111,81 +183,6 @@ class BankData(db.Model):
             'cvv': self.cvv,
             'is_default': self.is_default
         }
-
-
-class Video(db.Model):
-    __tablename__ = "video"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    src = db.Column(db.String(250), nullable=False)
-    description = db.Column(db.String(500), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    comments = db.relationship('Comment', backref='video', lazy=True)
-    likes = db.relationship('Like', backref='video', lazy=True)
-    favorites = db.relationship('Favorite', backref='video', lazy=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    title = db.Column(db.String(100), nullable=False)
-    ingredients_part1 = db.Column(db.Text, nullable=False)
-    ingredients_part2 = db.Column(db.Text, nullable=False)
-    duration = db.Column(db.Float, nullable=False)
-
-    def __repr__(self):
-        return '<Video %r>' % self.description
-
-    def serialize(self):
-        db.session.add(self) #Añade la instancia actual de Video a la sesión
-        db.session.refresh(self) #Actualiza el estado de la instancia desde la base de datos, esto forzara a que la relación de video.user se cargue
-        return {
-            'id': self.id,
-            'src': self.src,
-            'description': self.description,
-            'user_id': self.user_id,
-            'created_at': self.created_at,
-            'title': self.title,
-            'ingredients_part1': self.ingredients_part1,
-            'ingredients_part2': self.ingredients_part2,
-            'duration': self.duration,
-            'likes': len(self.likes),
-            'comments': len(self.comments),
-            'favorites': len(self.favorites),
-            'user': {
-                'name': self.user.name if self.user else 'Anónimo', #Accede al nombre del usuario si existe
-                'surname': self.user.surname if self.user else ''  #Accede al apellido del usuario si existe
-            } if self.user else None 
-        }
-
-
-class Like(db.Model):
-    __tablename__ = "like"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    video_id = db.Column(db.Integer, db.ForeignKey('video.id'), nullable=False)
-
-    def __repr__(self):
-        return '<Like %r>' % self.id
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'user_id': self.user_id,
-            'video_id': self.video_id
-        }
-
-class Favorite(db.Model):
-    __tablename__ = "favorite"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    video_id = db.Column(db.Integer, db.ForeignKey('video.id'), nullable=False)
-
-    def __repr__(self):
-        return '<Favorite %r>' % self.id
-
-    def serialize(self):
-        return {
-            'id': self.id,
-            'user_id': self.user_id,
-            'video_id': self.video_id
-        }
-
 class Category(db.Model):
     __tablename__ = "category"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -200,7 +197,6 @@ class Category(db.Model):
             'id': self.id,
             'name': self.name
         }
-
 class VideoCategory(db.Model):
     __tablename__ = "video_category"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
