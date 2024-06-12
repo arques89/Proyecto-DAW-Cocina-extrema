@@ -5,8 +5,7 @@ import Appetizer from '../../../icon/vlog/appetizer.png';
 import Fish from '../../../icon/vlog/fish.png';
 import Meet from '../../../icon/vlog/meet.png';
 import Dessert from '../../../icon/vlog/dessert.png';
-import { Slider2 } from "../../components/slider2";
-import Portada from "../../../img/img_home/portada_cocina.jpg";
+import { Slider } from '../../components/vlog_slider';
 
 export const Vlog = () => {
   const { store, actions } = useContext(Context);
@@ -22,7 +21,7 @@ export const Vlog = () => {
 
   return (
     <main className="bg-black text-white">
-      <Slider2 imageSrc={Portada} imageHeight="full" darken={false} />
+      <Slider />
       <div className="mb-12 mt-16 flex justify-between w-full px-32">
         {[
           { img: Appetizer, title: 'APERITIVO', desc: 'Entrantes Para Compartir' },
