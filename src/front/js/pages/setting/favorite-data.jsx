@@ -85,7 +85,7 @@ export const FavoriteData = () => {
         className="fixed inset-0 flex items-center justify-center"
         overlayClassName="fixed inset-0 bg-black bg-opacity-75"
       >
-        <div className="bg-black text-white p-6 rounded-lg w-1/3 h-3/4 flex flex-col items-center justify-between">
+        <div className="bg-shape_primary text-white p-6 rounded-lg w-1/3 h-3/4 flex flex-col items-center justify-between">
           <h2 className="text-2xl mb-4">Comentarios</h2>
           <div className="flex-1 w-full overflow-auto mb-4">
             {(comments || []).map((comment) => (

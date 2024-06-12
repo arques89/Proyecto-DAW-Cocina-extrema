@@ -5,10 +5,10 @@ from models import db, User, Video, Comment, Like, Favorite, Category, VideoCate
 admin = Admin(name='Admin Panel', template_mode='bootstrap3')
 
 class UserModelView(ModelView):
-    column_list = ('id', 'name', 'surname', 'email', 'phone', 'is_active', 'is_admin', 'token')
+    column_list = ('id', 'name', 'surname', 'email', 'phone', 'is_active', 'is_admin', 'token', 'is_matriculate')  # Añadir aquí
     column_searchable_list = ('name', 'surname', 'email', 'phone')
-    column_filters = ('is_active', 'is_admin')
-    form_columns = ('name', 'surname', 'email', 'phone', 'password', 'is_active', 'is_admin', 'token')
+    column_filters = ('is_active', 'is_admin', 'is_matriculate')  # Añadir aquí
+    form_columns = ('name', 'surname', 'email', 'phone', 'password', 'is_active', 'is_admin', 'token', 'is_matriculate')  # Añadir aquí
 
 class VideoModelView(ModelView):
     column_list = ('id', 'user_id', 'src', 'description', 'created_at', 'title', 'ingredients_part1', 'ingredients_part2', 'duration', 'likes', 'comments')
@@ -45,7 +45,7 @@ class VideoCategoryModelView(ModelView):
     column_searchable_list = ('video_id', 'category_id')
     column_filters = ('video_id', 'category_id')
     form_columns = ('video_id', 'category_id')
-    
+
 class PortadaModelView(ModelView):
     column_list = ('id', 'url', 'title', 'description', 'timestamp')
     column_searchable_list = ('title', 'description')
@@ -55,7 +55,7 @@ class PortadaModelView(ModelView):
 class AddressModelView(ModelView):
     column_list = ('id', 'user_id', 'name', 'surname', 'cif_nif', 'address', 'postal_code', 'city', 'phone', 'use_as', 'is_billing_default')
     column_searchable_list = ('name', 'surname', 'cif_nif', 'city')
-    column_filters = ('city', 'postal_code', 'is_billing_default') 
+    column_filters = ('city', 'postal_code', 'is_billing_default')
     form_columns = ('user_id', 'name', 'surname', 'cif_nif', 'address', 'postal_code', 'city', 'phone', 'use_as', 'is_billing_default')
 
 class BankDataModelView(ModelView):

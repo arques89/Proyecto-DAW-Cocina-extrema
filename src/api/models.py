@@ -15,11 +15,12 @@ class User(db.Model):
     is_active = db.Column(db.Boolean(), nullable=False)
     token = db.Column(db.Text, nullable=True)
     is_admin = db.Column(db.Boolean(), default=False)
+    is_matriculate = db.Column(db.Boolean(), default=False)  # Nueva columna
     videos = db.relationship('Video', backref='user', lazy=True)
     comments = db.relationship('Comment', backref='user', lazy=True)
     likes = db.relationship('Like', backref='user', lazy=True)
     favorites = db.relationship('Favorite', backref='user', lazy=True)
-    addresses = db.relationship('Address', backref='user', lazy=True)  # Relación con Address
+    addresses = db.relationship('Address', backref='user', lazy=True)
 
     def __repr__(self):
         return '<User %r>' % self.email
@@ -33,8 +34,10 @@ class User(db.Model):
             'phone': self.phone,
             'is_active': self.is_active,
             'token': self.token,
-            'is_admin': self.is_admin
+            'is_admin': self.is_admin,
+            'is_matriculate': self.is_matriculate  # Añadir aquí
         }
+
 
 class Video(db.Model):
     __tablename__ = "video"

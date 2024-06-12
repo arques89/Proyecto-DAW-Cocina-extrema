@@ -12,6 +12,7 @@ from routes.shared_data import shared_data_api
 from routes.favorite_data import favorites_api
 from routes.address_data import address_api
 from routes.bank_data import bank_data_api
+from routes.content import content_api
 
 from config import Config
 from cors import init_cors
@@ -50,6 +51,7 @@ def create_app():
     app.register_blueprint(favorites_api)
     app.register_blueprint(address_api)
     app.register_blueprint(bank_data_api)
+    app.register_blueprint(content_api)
     # Inicializar la interfaz de administración
     init_admin(app)
 
