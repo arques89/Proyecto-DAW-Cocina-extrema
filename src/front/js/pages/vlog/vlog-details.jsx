@@ -22,6 +22,7 @@ export const VlogDetails = ({ setOpen }) => {
   const [comments, setComments] = useState([]);
   const [visibleComments, setVisibleComments] = useState(5);
   const [newComment, setNewComment] = useState("");
+  const currentUserId = parseInt(localStorage.getItem("userId"));
 
   useEffect(() => {
     if (videoId) {
@@ -38,6 +39,7 @@ export const VlogDetails = ({ setOpen }) => {
           setIsFavorite(userFavorites.includes(parseInt(videoId)));
           setIsLiked(userLikes.includes(parseInt(videoId)));
           setComments(commentsData || []);
+          console.log(commentsData);  // Añadir log para verificar los datos
         })
         .catch((error) => {
           console.error("Error al obtener los detalles del vlog:", error);
@@ -122,6 +124,7 @@ export const VlogDetails = ({ setOpen }) => {
     }
   };
 
+  
   const handleKeyDown = (event) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
@@ -230,7 +233,7 @@ export const VlogDetails = ({ setOpen }) => {
                       <div key={index} className="border p-4 rounded-lg">
                         <CommentCard
                           comment={comment}
-                          currentUserId={parseInt(localStorage.getItem("userId"))}
+                          currentUserId={currentUserId}
                           onDelete={() => 
                             actions.deleteCommentVlogDetails(comment.id, videoId).then((updatedComments) => {
                               setComments(updatedComments || []);

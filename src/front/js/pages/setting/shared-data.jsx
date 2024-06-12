@@ -141,7 +141,7 @@ export const SharedData = () => {
 
     const renderInputSharedData = () => {
         return (
-            <div className="flex space-x-4">
+            <div className="flex">
                 {inputSharedData.map((item) => (
                     <div key={item.id} className="flex-1 border-shape_border_button">
                         <label>
@@ -168,17 +168,17 @@ export const SharedData = () => {
                 <div className="w-full">
                     <div className="border rounded-3xl w-full mt-4">
                         <div className="w-full">
-                            <span className="border border-shape_border_button w-full ps-12 rounded-full pr-44 py-1.5 pl-6 inline-block">
+                            <span className="border border-shape_border_button w-full ps-2 rounded-full pr-44 py-1.5 pl-6 inline-block">
                                 {editRecipe ? "EDITAR RECETA" : "COMPARTIR NUEVA RECETA"}
                             </span>
-                            <div className="block mt-4">
+                            <div className="block mt-4 ms-2">
                                 <label>
                                     Titulo de la receta
                                     <br />
                                     <input
                                         type="text"
                                         name="title"
-                                        className="mt-2 mb-4 bg-shape_input w-full rounded-full border-0 py-1.5 pl-4 pr-44 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                                        className="mt-2 mb-4 bg-shape_input w-full rounded-full border-0 py-1.5 pl-4 pr-30 me-44 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                                         onChange={handleInputChange}
                                         value={recipeData.title}
                                     />
@@ -189,7 +189,7 @@ export const SharedData = () => {
                                     <br />
                                     <textarea
                                         name="description"
-                                        className="mt-2 mb-4 bg-shape_input w-full h-96 rounded border-0 py-1.5 pl-0 pr-0 text-gray-900 sm:text-sm sm:leading-6 placeholder:text-gray-500"
+                                        className="mt-2 mb-4 bg-shape_input w-full h-96 rounded border-0 py-1.5 pl-2 pr-0 text-gray-900 sm:text-sm sm:leading-6 placeholder:text-gray-500"
                                         onChange={handleInputChange}
                                         value={recipeData.description} // Asegurarse de que este valor se inicializa
                                         placeholder={

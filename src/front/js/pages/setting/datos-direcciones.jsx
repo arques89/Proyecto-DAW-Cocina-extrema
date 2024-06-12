@@ -234,7 +234,7 @@ export const DatosDirecciones = () => {
                       name="address"
                       value={newAddress.address}
                       onChange={handleInputChange}
-                      className="block mt-2 mb-4 bg-shape_input w-full rounded-full border-0 py-1.5 pl-4 pr-72 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                      className="block mt-2 mb-4 bg-shape_input w-full rounded-full border-0 py-1.5 pl-4 pr-36 me-36 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     />
                   </label>
                 </div>
@@ -269,18 +269,6 @@ export const DatosDirecciones = () => {
                       type="text"
                       name="phone"
                       value={newAddress.phone}
-                      onChange={handleInputChange}
-                      className="block mt-2 mb-4 bg-shape_input w-full rounded-full border-0 py-1.5 pl-4 pr-72 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-                    />
-                  </label>
-                </div>
-                <div className="border-shape_border_button">
-                  <label>
-                    Usar como
-                    <input
-                      type="text"
-                      name="use_as"
-                      value={newAddress.use_as}
                       onChange={handleInputChange}
                       className="block mt-2 mb-4 bg-shape_input w-full rounded-full border-0 py-1.5 pl-4 pr-72 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     />

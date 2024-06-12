@@ -169,7 +169,7 @@ const vlogDetailActions = (getStore, getActions, setStore) => ({
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            "Authorization": `Bearer ${token}`,  // Asegúrate de que el token se envíe correctamente
           },
         }
       );
@@ -183,6 +183,8 @@ const vlogDetailActions = (getStore, getActions, setStore) => ({
       return [];
     }
   }
+  
+  
 });
 
 export default vlogDetailActions;

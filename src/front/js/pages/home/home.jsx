@@ -2,7 +2,6 @@ import { Slider } from "../../components/home_slider";
 import Plaqueta from "../../../img/img_home/icons/rojo_video.png";
 import Bandeja from "../../../img/img_home/icons/rojo_bandeja.png";
 import Escuela from "../../../img/img_home/icons/educacion.png";
-import Tienda from "../../../img/img_home/icons/tienda.png";
 import { Card } from "../../components/card/index";
 import { Sponsor } from "../../components/sponsor";
 import { Carousel } from "../../components/carousel";
